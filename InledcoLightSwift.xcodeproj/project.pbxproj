@@ -7,13 +7,23 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0BDF2ADF2A10831CBD152E16 /* Pods_InledcoLightSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 39B568DF0573168D0523988A /* Pods_InledcoLightSwift.framework */; };
+		8F8C8B3A1F6CBDB7006F0461 /* DeviceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8C8B391F6CBDB7006F0461 /* DeviceViewController.swift */; };
+		8F8C8B3D1F6CD3C5006F0461 /* ScanDeviceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8C8B3B1F6CD3C5006F0461 /* ScanDeviceViewController.swift */; };
+		8F8C8B3E1F6CD3C5006F0461 /* ScanDeviceViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8F8C8B3C1F6CD3C5006F0461 /* ScanDeviceViewController.xib */; };
+		8F8C8B451F6CD403006F0461 /* ScanDeviceTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8C8B431F6CD403006F0461 /* ScanDeviceTableViewCell.swift */; };
+		8F8C8B461F6CD403006F0461 /* ScanDeviceTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8F8C8B441F6CD403006F0461 /* ScanDeviceTableViewCell.xib */; };
+		8F8CA5F51F5D05A100922993 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8CA5F41F5D05A100922993 /* BaseViewController.swift */; };
 		8FE76F151F2EB09100FC9634 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FE76F141F2EB09100FC9634 /* AppDelegate.swift */; };
-		8FE76F171F2EB09100FC9634 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FE76F161F2EB09100FC9634 /* ViewController.swift */; };
 		8FE76F1A1F2EB09100FC9634 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8FE76F181F2EB09100FC9634 /* Main.storyboard */; };
 		8FE76F1C1F2EB09100FC9634 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8FE76F1B1F2EB09100FC9634 /* Assets.xcassets */; };
 		8FE76F1F1F2EB09100FC9634 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8FE76F1D1F2EB09100FC9634 /* LaunchScreen.storyboard */; };
 		8FE76F2A1F2EB09100FC9634 /* InledcoLightSwiftTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FE76F291F2EB09100FC9634 /* InledcoLightSwiftTests.swift */; };
 		8FE76F351F2EB09100FC9634 /* InledcoLightSwiftUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FE76F341F2EB09100FC9634 /* InledcoLightSwiftUITests.swift */; };
+		8FE76F4A1F2EB22A00FC9634 /* DeviceInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FE76F471F2EB22A00FC9634 /* DeviceInfo.m */; };
+		8FE76F4B1F2EB22A00FC9634 /* libBLEManager.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8FE76F481F2EB22A00FC9634 /* libBLEManager.a */; };
+		92AFAB069800334E0F1548E9 /* Pods_InledcoLightSwiftUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B596BEB8093554619222F321 /* Pods_InledcoLightSwiftUITests.framework */; };
+		FAFDCE123CC3734FAB56F713 /* Pods_InledcoLightSwiftTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E2B570C04BDFC125356B346 /* Pods_InledcoLightSwiftTests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,9 +44,19 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		14581AAF101D984F3E79DE92 /* Pods-InledcoLightSwiftUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InledcoLightSwiftUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-InledcoLightSwiftUITests/Pods-InledcoLightSwiftUITests.release.xcconfig"; sourceTree = "<group>"; };
+		39B568DF0573168D0523988A /* Pods_InledcoLightSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_InledcoLightSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		3E2B570C04BDFC125356B346 /* Pods_InledcoLightSwiftTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_InledcoLightSwiftTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5C0891B0AF528E46D4A84E16 /* Pods-InledcoLightSwift.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InledcoLightSwift.release.xcconfig"; path = "Pods/Target Support Files/Pods-InledcoLightSwift/Pods-InledcoLightSwift.release.xcconfig"; sourceTree = "<group>"; };
+		5F4E474273CA165558F46D96 /* Pods-InledcoLightSwift.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InledcoLightSwift.debug.xcconfig"; path = "Pods/Target Support Files/Pods-InledcoLightSwift/Pods-InledcoLightSwift.debug.xcconfig"; sourceTree = "<group>"; };
+		8F8C8B391F6CBDB7006F0461 /* DeviceViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceViewController.swift; sourceTree = "<group>"; };
+		8F8C8B3B1F6CD3C5006F0461 /* ScanDeviceViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScanDeviceViewController.swift; sourceTree = "<group>"; };
+		8F8C8B3C1F6CD3C5006F0461 /* ScanDeviceViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ScanDeviceViewController.xib; sourceTree = "<group>"; };
+		8F8C8B431F6CD403006F0461 /* ScanDeviceTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScanDeviceTableViewCell.swift; sourceTree = "<group>"; };
+		8F8C8B441F6CD403006F0461 /* ScanDeviceTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ScanDeviceTableViewCell.xib; sourceTree = "<group>"; };
+		8F8CA5F41F5D05A100922993 /* BaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		8FE76F111F2EB09100FC9634 /* InledcoLightSwift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = InledcoLightSwift.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8FE76F141F2EB09100FC9634 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		8FE76F161F2EB09100FC9634 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		8FE76F191F2EB09100FC9634 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		8FE76F1B1F2EB09100FC9634 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8FE76F1E1F2EB09100FC9634 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -47,6 +67,16 @@
 		8FE76F301F2EB09100FC9634 /* InledcoLightSwiftUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = InledcoLightSwiftUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8FE76F341F2EB09100FC9634 /* InledcoLightSwiftUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InledcoLightSwiftUITests.swift; sourceTree = "<group>"; };
 		8FE76F361F2EB09100FC9634 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8FE76F441F2EB22A00FC9634 /* InledcoLightSwift-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "InledcoLightSwift-Bridging-Header.h"; sourceTree = "<group>"; };
+		8FE76F451F2EB22A00FC9634 /* BLEManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLEManager.h; sourceTree = "<group>"; };
+		8FE76F461F2EB22A00FC9634 /* DeviceInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeviceInfo.h; sourceTree = "<group>"; };
+		8FE76F471F2EB22A00FC9634 /* DeviceInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeviceInfo.m; sourceTree = "<group>"; };
+		8FE76F481F2EB22A00FC9634 /* libBLEManager.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libBLEManager.a; sourceTree = "<group>"; };
+		8FE76F491F2EB22A00FC9634 /* oad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = oad.h; sourceTree = "<group>"; };
+		9408CE88DE89B757C79B2502 /* Pods-InledcoLightSwiftTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InledcoLightSwiftTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-InledcoLightSwiftTests/Pods-InledcoLightSwiftTests.debug.xcconfig"; sourceTree = "<group>"; };
+		94A9E8755F48213F8AE93A51 /* Pods-InledcoLightSwiftUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InledcoLightSwiftUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-InledcoLightSwiftUITests/Pods-InledcoLightSwiftUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		B596BEB8093554619222F321 /* Pods_InledcoLightSwiftUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_InledcoLightSwiftUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C8DAB8136F03D28BE0E0CBCC /* Pods-InledcoLightSwiftTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InledcoLightSwiftTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-InledcoLightSwiftTests/Pods-InledcoLightSwiftTests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,6 +84,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8FE76F4B1F2EB22A00FC9634 /* libBLEManager.a in Frameworks */,
+				0BDF2ADF2A10831CBD152E16 /* Pods_InledcoLightSwift.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -61,6 +93,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FAFDCE123CC3734FAB56F713 /* Pods_InledcoLightSwiftTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -68,12 +101,120 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				92AFAB069800334E0F1548E9 /* Pods_InledcoLightSwiftUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		12EB8F7164E0D114B372866D /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				39B568DF0573168D0523988A /* Pods_InledcoLightSwift.framework */,
+				3E2B570C04BDFC125356B346 /* Pods_InledcoLightSwiftTests.framework */,
+				B596BEB8093554619222F321 /* Pods_InledcoLightSwiftUITests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		17F1109B32A56998DF7F5AC5 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				5F4E474273CA165558F46D96 /* Pods-InledcoLightSwift.debug.xcconfig */,
+				5C0891B0AF528E46D4A84E16 /* Pods-InledcoLightSwift.release.xcconfig */,
+				9408CE88DE89B757C79B2502 /* Pods-InledcoLightSwiftTests.debug.xcconfig */,
+				C8DAB8136F03D28BE0E0CBCC /* Pods-InledcoLightSwiftTests.release.xcconfig */,
+				94A9E8755F48213F8AE93A51 /* Pods-InledcoLightSwiftUITests.debug.xcconfig */,
+				14581AAF101D984F3E79DE92 /* Pods-InledcoLightSwiftUITests.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		8F15C45D1F5F821800E29570 /* ScanDevice */ = {
+			isa = PBXGroup;
+			children = (
+				8F15C45E1F5F823600E29570 /* Controller */,
+				8F15C45F1F5F823600E29570 /* Model */,
+				8F15C4601F5F823600E29570 /* View */,
+			);
+			path = ScanDevice;
+			sourceTree = "<group>";
+		};
+		8F15C45E1F5F823600E29570 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				8F8C8B3B1F6CD3C5006F0461 /* ScanDeviceViewController.swift */,
+				8F8C8B3C1F6CD3C5006F0461 /* ScanDeviceViewController.xib */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		8F15C45F1F5F823600E29570 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		8F15C4601F5F823600E29570 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				8F8C8B431F6CD403006F0461 /* ScanDeviceTableViewCell.swift */,
+				8F8C8B441F6CD403006F0461 /* ScanDeviceTableViewCell.xib */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		8F8C8B351F6CBD62006F0461 /* Device */ = {
+			isa = PBXGroup;
+			children = (
+				8F8C8B361F6CBD62006F0461 /* Controller */,
+				8F8C8B371F6CBD62006F0461 /* Model */,
+				8F8C8B381F6CBD62006F0461 /* View */,
+			);
+			path = Device;
+			sourceTree = "<group>";
+		};
+		8F8C8B361F6CBD62006F0461 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				8F8C8B391F6CBDB7006F0461 /* DeviceViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		8F8C8B371F6CBD62006F0461 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		8F8C8B381F6CBD62006F0461 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		8F8CA5F31F5D056300922993 /* BaseClass */ = {
+			isa = PBXGroup;
+			children = (
+				8F8CA5F41F5D05A100922993 /* BaseViewController.swift */,
+			);
+			path = BaseClass;
+			sourceTree = "<group>";
+		};
+		8FE2C4C91F31DF24000DE7E8 /* CodeClass */ = {
+			isa = PBXGroup;
+			children = (
+				8F8C8B351F6CBD62006F0461 /* Device */,
+				8F15C45D1F5F821800E29570 /* ScanDevice */,
+			);
+			path = CodeClass;
+			sourceTree = "<group>";
+		};
 		8FE76F081F2EB09000FC9634 = {
 			isa = PBXGroup;
 			children = (
@@ -81,6 +222,8 @@
 				8FE76F281F2EB09100FC9634 /* InledcoLightSwiftTests */,
 				8FE76F331F2EB09100FC9634 /* InledcoLightSwiftUITests */,
 				8FE76F121F2EB09100FC9634 /* Products */,
+				17F1109B32A56998DF7F5AC5 /* Pods */,
+				12EB8F7164E0D114B372866D /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -98,11 +241,13 @@
 			isa = PBXGroup;
 			children = (
 				8FE76F141F2EB09100FC9634 /* AppDelegate.swift */,
-				8FE76F161F2EB09100FC9634 /* ViewController.swift */,
 				8FE76F181F2EB09100FC9634 /* Main.storyboard */,
 				8FE76F1B1F2EB09100FC9634 /* Assets.xcassets */,
 				8FE76F1D1F2EB09100FC9634 /* LaunchScreen.storyboard */,
 				8FE76F201F2EB09100FC9634 /* Info.plist */,
+				8F8CA5F31F5D056300922993 /* BaseClass */,
+				8FE2C4C91F31DF24000DE7E8 /* CodeClass */,
+				8FE76F421F2EB1CB00FC9634 /* Tools */,
 			);
 			path = InledcoLightSwift;
 			sourceTree = "<group>";
@@ -125,6 +270,27 @@
 			path = InledcoLightSwiftUITests;
 			sourceTree = "<group>";
 		};
+		8FE76F421F2EB1CB00FC9634 /* Tools */ = {
+			isa = PBXGroup;
+			children = (
+				8FE76F431F2EB1CB00FC9634 /* BleSDK */,
+			);
+			path = Tools;
+			sourceTree = "<group>";
+		};
+		8FE76F431F2EB1CB00FC9634 /* BleSDK */ = {
+			isa = PBXGroup;
+			children = (
+				8FE76F451F2EB22A00FC9634 /* BLEManager.h */,
+				8FE76F461F2EB22A00FC9634 /* DeviceInfo.h */,
+				8FE76F471F2EB22A00FC9634 /* DeviceInfo.m */,
+				8FE76F481F2EB22A00FC9634 /* libBLEManager.a */,
+				8FE76F491F2EB22A00FC9634 /* oad.h */,
+				8FE76F441F2EB22A00FC9634 /* InledcoLightSwift-Bridging-Header.h */,
+			);
+			path = BleSDK;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -132,9 +298,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 8FE76F391F2EB09100FC9634 /* Build configuration list for PBXNativeTarget "InledcoLightSwift" */;
 			buildPhases = (
+				3C810D5549653BAB205C40EE /* [CP] Check Pods Manifest.lock */,
 				8FE76F0D1F2EB09000FC9634 /* Sources */,
 				8FE76F0E1F2EB09000FC9634 /* Frameworks */,
 				8FE76F0F1F2EB09000FC9634 /* Resources */,
+				AA74888D51E1010BD92B99FB /* [CP] Embed Pods Frameworks */,
+				C3057D0B5BE8C00B19008143 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -149,9 +318,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 8FE76F3C1F2EB09100FC9634 /* Build configuration list for PBXNativeTarget "InledcoLightSwiftTests" */;
 			buildPhases = (
+				C408609C8DAE637316FC1D96 /* [CP] Check Pods Manifest.lock */,
 				8FE76F211F2EB09100FC9634 /* Sources */,
 				8FE76F221F2EB09100FC9634 /* Frameworks */,
 				8FE76F231F2EB09100FC9634 /* Resources */,
+				179754D2A29243D941B941B9 /* [CP] Embed Pods Frameworks */,
+				716EE94A65CA1181705E7FB9 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -167,9 +339,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 8FE76F3F1F2EB09100FC9634 /* Build configuration list for PBXNativeTarget "InledcoLightSwiftUITests" */;
 			buildPhases = (
+				8D59E523BE88E127A4D56532 /* [CP] Check Pods Manifest.lock */,
 				8FE76F2C1F2EB09100FC9634 /* Sources */,
 				8FE76F2D1F2EB09100FC9634 /* Frameworks */,
 				8FE76F2E1F2EB09100FC9634 /* Resources */,
+				59982995E3B0F42CA20B21A0 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -194,6 +368,7 @@
 					8FE76F101F2EB09000FC9634 = {
 						CreatedOnToolsVersion = 8.3.2;
 						DevelopmentTeam = TP2XCH35TP;
+						LastSwiftMigration = 0830;
 						ProvisioningStyle = Automatic;
 					};
 					8FE76F241F2EB09100FC9634 = {
@@ -236,6 +411,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				8FE76F1F1F2EB09100FC9634 /* LaunchScreen.storyboard in Resources */,
+				8F8C8B3E1F6CD3C5006F0461 /* ScanDeviceViewController.xib in Resources */,
+				8F8C8B461F6CD403006F0461 /* ScanDeviceTableViewCell.xib in Resources */,
 				8FE76F1C1F2EB09100FC9634 /* Assets.xcassets in Resources */,
 				8FE76F1A1F2EB09100FC9634 /* Main.storyboard in Resources */,
 			);
@@ -257,12 +434,139 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		179754D2A29243D941B941B9 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-InledcoLightSwiftTests/Pods-InledcoLightSwiftTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		3C810D5549653BAB205C40EE /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		59982995E3B0F42CA20B21A0 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-InledcoLightSwiftUITests/Pods-InledcoLightSwiftUITests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		716EE94A65CA1181705E7FB9 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-InledcoLightSwiftTests/Pods-InledcoLightSwiftTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		8D59E523BE88E127A4D56532 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		AA74888D51E1010BD92B99FB /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-InledcoLightSwift/Pods-InledcoLightSwift-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C3057D0B5BE8C00B19008143 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-InledcoLightSwift/Pods-InledcoLightSwift-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C408609C8DAE637316FC1D96 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		8FE76F0D1F2EB09000FC9634 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8FE76F171F2EB09100FC9634 /* ViewController.swift in Sources */,
+				8FE76F4A1F2EB22A00FC9634 /* DeviceInfo.m in Sources */,
+				8F8C8B3D1F6CD3C5006F0461 /* ScanDeviceViewController.swift in Sources */,
+				8F8CA5F51F5D05A100922993 /* BaseViewController.swift in Sources */,
+				8F8C8B3A1F6CBDB7006F0461 /* DeviceViewController.swift in Sources */,
+				8F8C8B451F6CD403006F0461 /* ScanDeviceTableViewCell.swift in Sources */,
 				8FE76F151F2EB09100FC9634 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -415,32 +719,50 @@
 		};
 		8FE76F3A1F2EB09100FC9634 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5F4E474273CA165558F46D96 /* Pods-InledcoLightSwift.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				DEVELOPMENT_TEAM = TP2XCH35TP;
 				INFOPLIST_FILE = InledcoLightSwift/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/InledcoLightSwift/Tools/BleSDK",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.ledinpro.InledcoLightSwift;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "InledcoLightSwift/Tools/BleSDK/InledcoLightSwift-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
 		8FE76F3B1F2EB09100FC9634 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5C0891B0AF528E46D4A84E16 /* Pods-InledcoLightSwift.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				DEVELOPMENT_TEAM = TP2XCH35TP;
 				INFOPLIST_FILE = InledcoLightSwift/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/InledcoLightSwift/Tools/BleSDK",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.ledinpro.InledcoLightSwift;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "InledcoLightSwift/Tools/BleSDK/InledcoLightSwift-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
 		8FE76F3D1F2EB09100FC9634 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9408CE88DE89B757C79B2502 /* Pods-InledcoLightSwiftTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -456,6 +778,7 @@
 		};
 		8FE76F3E1F2EB09100FC9634 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C8DAB8136F03D28BE0E0CBCC /* Pods-InledcoLightSwiftTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -471,6 +794,7 @@
 		};
 		8FE76F401F2EB09100FC9634 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 94A9E8755F48213F8AE93A51 /* Pods-InledcoLightSwiftUITests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				DEVELOPMENT_TEAM = TP2XCH35TP;
@@ -485,6 +809,7 @@
 		};
 		8FE76F411F2EB09100FC9634 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 14581AAF101D984F3E79DE92 /* Pods-InledcoLightSwiftUITests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				DEVELOPMENT_TEAM = TP2XCH35TP;
@@ -516,6 +841,7 @@
 				8FE76F3B1F2EB09100FC9634 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		8FE76F3C1F2EB09100FC9634 /* Build configuration list for PBXNativeTarget "InledcoLightSwiftTests" */ = {
 			isa = XCConfigurationList;
@@ -524,6 +850,7 @@
 				8FE76F3E1F2EB09100FC9634 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		8FE76F3F1F2EB09100FC9634 /* Build configuration list for PBXNativeTarget "InledcoLightSwiftUITests" */ = {
 			isa = XCConfigurationList;
@@ -532,6 +859,7 @@
 				8FE76F411F2EB09100FC9634 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
