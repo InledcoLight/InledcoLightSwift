@@ -8,16 +8,25 @@
 
 import UIKit
 
-class BaseViewController: UIViewController,BLEManagerDelegate {
+class BaseViewController: UIViewController {
 
-    var bleManager:BLEManager<AnyObject, AnyObject>!
+    // 声明为不会为空
+    var bleManager: BLEManager<AnyObject, AnyObject>! = BLEManager<AnyObject, AnyObject>.default()
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        bleManager = BLEManager<AnyObject, AnyObject>.default()
         // Do any additional setup after loading the view.
     }
 
+    // 声明两个方法，控制器重写
+    func prepareData(){
+        // 不能写任何代码，供子类重写使用
+    }
+    
+    func setViews() {
+        // 不能写任何代码，供子类重写使用
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

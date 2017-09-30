@@ -8,20 +8,21 @@
 
 /* Begin PBXBuildFile section */
 		0BDF2ADF2A10831CBD152E16 /* Pods_InledcoLightSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 39B568DF0573168D0523988A /* Pods_InledcoLightSwift.framework */; };
+		8F66B5FD1F7DE8550086E350 /* DeviceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F66B5FC1F7DE8550086E350 /* DeviceModel.swift */; };
+		8F66B5FF1F7DEE990086E350 /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F66B5FE1F7DEE990086E350 /* CoreBluetooth.framework */; };
 		8F8C8B3A1F6CBDB7006F0461 /* DeviceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8C8B391F6CBDB7006F0461 /* DeviceViewController.swift */; };
 		8F8C8B3D1F6CD3C5006F0461 /* ScanDeviceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8C8B3B1F6CD3C5006F0461 /* ScanDeviceViewController.swift */; };
 		8F8C8B3E1F6CD3C5006F0461 /* ScanDeviceViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8F8C8B3C1F6CD3C5006F0461 /* ScanDeviceViewController.xib */; };
 		8F8C8B451F6CD403006F0461 /* ScanDeviceTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8C8B431F6CD403006F0461 /* ScanDeviceTableViewCell.swift */; };
 		8F8C8B461F6CD403006F0461 /* ScanDeviceTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8F8C8B441F6CD403006F0461 /* ScanDeviceTableViewCell.xib */; };
 		8F8CA5F51F5D05A100922993 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8CA5F41F5D05A100922993 /* BaseViewController.swift */; };
+		8FC6D67E1F7D0A9E00C2B64B /* libBLEManager.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8FC6D67B1F7D085E00C2B64B /* libBLEManager.a */; };
 		8FE76F151F2EB09100FC9634 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FE76F141F2EB09100FC9634 /* AppDelegate.swift */; };
 		8FE76F1A1F2EB09100FC9634 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8FE76F181F2EB09100FC9634 /* Main.storyboard */; };
 		8FE76F1C1F2EB09100FC9634 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8FE76F1B1F2EB09100FC9634 /* Assets.xcassets */; };
 		8FE76F1F1F2EB09100FC9634 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8FE76F1D1F2EB09100FC9634 /* LaunchScreen.storyboard */; };
 		8FE76F2A1F2EB09100FC9634 /* InledcoLightSwiftTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FE76F291F2EB09100FC9634 /* InledcoLightSwiftTests.swift */; };
 		8FE76F351F2EB09100FC9634 /* InledcoLightSwiftUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FE76F341F2EB09100FC9634 /* InledcoLightSwiftUITests.swift */; };
-		8FE76F4A1F2EB22A00FC9634 /* DeviceInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FE76F471F2EB22A00FC9634 /* DeviceInfo.m */; };
-		8FE76F4B1F2EB22A00FC9634 /* libBLEManager.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8FE76F481F2EB22A00FC9634 /* libBLEManager.a */; };
 		92AFAB069800334E0F1548E9 /* Pods_InledcoLightSwiftUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B596BEB8093554619222F321 /* Pods_InledcoLightSwiftUITests.framework */; };
 		FAFDCE123CC3734FAB56F713 /* Pods_InledcoLightSwiftTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E2B570C04BDFC125356B346 /* Pods_InledcoLightSwiftTests.framework */; };
 /* End PBXBuildFile section */
@@ -49,12 +50,20 @@
 		3E2B570C04BDFC125356B346 /* Pods_InledcoLightSwiftTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_InledcoLightSwiftTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5C0891B0AF528E46D4A84E16 /* Pods-InledcoLightSwift.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InledcoLightSwift.release.xcconfig"; path = "Pods/Target Support Files/Pods-InledcoLightSwift/Pods-InledcoLightSwift.release.xcconfig"; sourceTree = "<group>"; };
 		5F4E474273CA165558F46D96 /* Pods-InledcoLightSwift.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InledcoLightSwift.debug.xcconfig"; path = "Pods/Target Support Files/Pods-InledcoLightSwift/Pods-InledcoLightSwift.debug.xcconfig"; sourceTree = "<group>"; };
+		8F66B5FC1F7DE8550086E350 /* DeviceModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceModel.swift; sourceTree = "<group>"; };
+		8F66B5FE1F7DEE990086E350 /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
+		8F66B6001F7DEF5E0086E350 /* InledcoLightSwift-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "InledcoLightSwift-Bridging-Header.h"; sourceTree = "<group>"; };
 		8F8C8B391F6CBDB7006F0461 /* DeviceViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceViewController.swift; sourceTree = "<group>"; };
 		8F8C8B3B1F6CD3C5006F0461 /* ScanDeviceViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScanDeviceViewController.swift; sourceTree = "<group>"; };
 		8F8C8B3C1F6CD3C5006F0461 /* ScanDeviceViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ScanDeviceViewController.xib; sourceTree = "<group>"; };
 		8F8C8B431F6CD403006F0461 /* ScanDeviceTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScanDeviceTableViewCell.swift; sourceTree = "<group>"; };
 		8F8C8B441F6CD403006F0461 /* ScanDeviceTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ScanDeviceTableViewCell.xib; sourceTree = "<group>"; };
 		8F8CA5F41F5D05A100922993 /* BaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
+		8FC6D6781F7D085E00C2B64B /* BLEManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BLEManager.h; sourceTree = "<group>"; };
+		8FC6D6791F7D085E00C2B64B /* DeviceInfo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DeviceInfo.h; sourceTree = "<group>"; };
+		8FC6D67A1F7D085E00C2B64B /* DeviceInfo.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DeviceInfo.m; sourceTree = "<group>"; };
+		8FC6D67B1F7D085E00C2B64B /* libBLEManager.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libBLEManager.a; sourceTree = "<group>"; };
+		8FC6D67C1F7D085E00C2B64B /* oad.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = oad.h; sourceTree = "<group>"; };
 		8FE76F111F2EB09100FC9634 /* InledcoLightSwift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = InledcoLightSwift.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8FE76F141F2EB09100FC9634 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8FE76F191F2EB09100FC9634 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -67,12 +76,6 @@
 		8FE76F301F2EB09100FC9634 /* InledcoLightSwiftUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = InledcoLightSwiftUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8FE76F341F2EB09100FC9634 /* InledcoLightSwiftUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InledcoLightSwiftUITests.swift; sourceTree = "<group>"; };
 		8FE76F361F2EB09100FC9634 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		8FE76F441F2EB22A00FC9634 /* InledcoLightSwift-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "InledcoLightSwift-Bridging-Header.h"; sourceTree = "<group>"; };
-		8FE76F451F2EB22A00FC9634 /* BLEManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLEManager.h; sourceTree = "<group>"; };
-		8FE76F461F2EB22A00FC9634 /* DeviceInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeviceInfo.h; sourceTree = "<group>"; };
-		8FE76F471F2EB22A00FC9634 /* DeviceInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeviceInfo.m; sourceTree = "<group>"; };
-		8FE76F481F2EB22A00FC9634 /* libBLEManager.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libBLEManager.a; sourceTree = "<group>"; };
-		8FE76F491F2EB22A00FC9634 /* oad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = oad.h; sourceTree = "<group>"; };
 		9408CE88DE89B757C79B2502 /* Pods-InledcoLightSwiftTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InledcoLightSwiftTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-InledcoLightSwiftTests/Pods-InledcoLightSwiftTests.debug.xcconfig"; sourceTree = "<group>"; };
 		94A9E8755F48213F8AE93A51 /* Pods-InledcoLightSwiftUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InledcoLightSwiftUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-InledcoLightSwiftUITests/Pods-InledcoLightSwiftUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		B596BEB8093554619222F321 /* Pods_InledcoLightSwiftUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_InledcoLightSwiftUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -84,7 +87,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8FE76F4B1F2EB22A00FC9634 /* libBLEManager.a in Frameworks */,
+				8F66B5FF1F7DEE990086E350 /* CoreBluetooth.framework in Frameworks */,
+				8FC6D67E1F7D0A9E00C2B64B /* libBLEManager.a in Frameworks */,
 				0BDF2ADF2A10831CBD152E16 /* Pods_InledcoLightSwift.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -111,6 +115,7 @@
 		12EB8F7164E0D114B372866D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				8F66B5FE1F7DEE990086E350 /* CoreBluetooth.framework */,
 				39B568DF0573168D0523988A /* Pods_InledcoLightSwift.framework */,
 				3E2B570C04BDFC125356B346 /* Pods_InledcoLightSwiftTests.framework */,
 				B596BEB8093554619222F321 /* Pods_InledcoLightSwiftUITests.framework */,
@@ -166,6 +171,14 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		8F66B5FB1F7DE8350086E350 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				8F66B5FC1F7DE8550086E350 /* DeviceModel.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		8F8C8B351F6CBD62006F0461 /* Device */ = {
 			isa = PBXGroup;
 			children = (
@@ -206,9 +219,22 @@
 			path = BaseClass;
 			sourceTree = "<group>";
 		};
+		8FC6D6771F7D085E00C2B64B /* BleSdk */ = {
+			isa = PBXGroup;
+			children = (
+				8FC6D6781F7D085E00C2B64B /* BLEManager.h */,
+				8FC6D6791F7D085E00C2B64B /* DeviceInfo.h */,
+				8FC6D67A1F7D085E00C2B64B /* DeviceInfo.m */,
+				8FC6D67B1F7D085E00C2B64B /* libBLEManager.a */,
+				8FC6D67C1F7D085E00C2B64B /* oad.h */,
+			);
+			path = BleSdk;
+			sourceTree = "<group>";
+		};
 		8FE2C4C91F31DF24000DE7E8 /* CodeClass */ = {
 			isa = PBXGroup;
 			children = (
+				8F66B5FB1F7DE8350086E350 /* Models */,
 				8F8C8B351F6CBD62006F0461 /* Device */,
 				8F15C45D1F5F821800E29570 /* ScanDevice */,
 			);
@@ -273,22 +299,10 @@
 		8FE76F421F2EB1CB00FC9634 /* Tools */ = {
 			isa = PBXGroup;
 			children = (
-				8FE76F431F2EB1CB00FC9634 /* BleSDK */,
+				8FC6D6771F7D085E00C2B64B /* BleSdk */,
+				8F66B6001F7DEF5E0086E350 /* InledcoLightSwift-Bridging-Header.h */,
 			);
 			path = Tools;
-			sourceTree = "<group>";
-		};
-		8FE76F431F2EB1CB00FC9634 /* BleSDK */ = {
-			isa = PBXGroup;
-			children = (
-				8FE76F451F2EB22A00FC9634 /* BLEManager.h */,
-				8FE76F461F2EB22A00FC9634 /* DeviceInfo.h */,
-				8FE76F471F2EB22A00FC9634 /* DeviceInfo.m */,
-				8FE76F481F2EB22A00FC9634 /* libBLEManager.a */,
-				8FE76F491F2EB22A00FC9634 /* oad.h */,
-				8FE76F441F2EB22A00FC9634 /* InledcoLightSwift-Bridging-Header.h */,
-			);
-			path = BleSDK;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -562,12 +576,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8FE76F4A1F2EB22A00FC9634 /* DeviceInfo.m in Sources */,
 				8F8C8B3D1F6CD3C5006F0461 /* ScanDeviceViewController.swift in Sources */,
 				8F8CA5F51F5D05A100922993 /* BaseViewController.swift in Sources */,
 				8F8C8B3A1F6CBDB7006F0461 /* DeviceViewController.swift in Sources */,
 				8F8C8B451F6CD403006F0461 /* ScanDeviceTableViewCell.swift in Sources */,
 				8FE76F151F2EB09100FC9634 /* AppDelegate.swift in Sources */,
+				8F66B5FD1F7DE8550086E350 /* DeviceModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -725,15 +739,17 @@
 				CLANG_ENABLE_MODULES = YES;
 				DEVELOPMENT_TEAM = TP2XCH35TP;
 				INFOPLIST_FILE = InledcoLightSwift/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/InledcoLightSwift/Tools/BleSDK",
+					"$(PROJECT_DIR)/InledcoLightSwift/Tools/BleSdk",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.ledinpro.InledcoLightSwift;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "InledcoLightSwift/Tools/BleSDK/InledcoLightSwift-Bridging-Header.h";
+				SWIFT_INSTALL_OBJC_HEADER = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "InledcoLightSwift/Tools/InledcoLightSwift-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 			};
@@ -747,15 +763,17 @@
 				CLANG_ENABLE_MODULES = YES;
 				DEVELOPMENT_TEAM = TP2XCH35TP;
 				INFOPLIST_FILE = InledcoLightSwift/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/InledcoLightSwift/Tools/BleSDK",
+					"$(PROJECT_DIR)/InledcoLightSwift/Tools/BleSdk",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.ledinpro.InledcoLightSwift;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "InledcoLightSwift/Tools/BleSDK/InledcoLightSwift-Bridging-Header.h";
+				SWIFT_INSTALL_OBJC_HEADER = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "InledcoLightSwift/Tools/InledcoLightSwift-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
