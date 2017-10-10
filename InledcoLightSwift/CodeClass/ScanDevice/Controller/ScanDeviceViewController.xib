@@ -24,15 +24,31 @@
                     <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </tableView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LOs-qW-umC">
+                    <rect key="frame" x="162" y="567" width="50" height="50"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="50" id="i19-Wt-i2U"/>
+                        <constraint firstAttribute="height" constant="50" id="zZw-VF-vb7"/>
+                    </constraints>
+                    <state key="normal" image="saveScanDevice"/>
+                    <connections>
+                        <action selector="saveDeviceAction:" destination="-1" eventType="touchUpInside" id="WLJ-Ve-WyS"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstItem="RHS-YM-nEC" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="E8q-LO-u5Y"/>
-                <constraint firstAttribute="trailing" secondItem="RHS-YM-nEC" secondAttribute="trailing" id="PIM-Hl-hJC"/>
-                <constraint firstItem="RHS-YM-nEC" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="SHc-mc-ayD"/>
-                <constraint firstAttribute="bottom" secondItem="RHS-YM-nEC" secondAttribute="bottom" id="hIs-Jq-lPy"/>
+                <constraint firstAttribute="trailing" secondItem="RHS-YM-nEC" secondAttribute="trailing" id="GNX-Mr-d3J"/>
+                <constraint firstAttribute="bottom" secondItem="LOs-qW-umC" secondAttribute="bottom" constant="50" id="Ivw-hK-n7b"/>
+                <constraint firstItem="RHS-YM-nEC" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="mON-sS-8D9"/>
+                <constraint firstAttribute="bottom" secondItem="RHS-YM-nEC" secondAttribute="bottom" id="oOw-Il-zy4"/>
+                <constraint firstItem="RHS-YM-nEC" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="qtf-c3-5da"/>
+                <constraint firstItem="LOs-qW-umC" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="x9m-ci-2qg"/>
             </constraints>
-            <point key="canvasLocation" x="-407.5" y="-50.5"/>
+            <point key="canvasLocation" x="-1140" y="-317"/>
         </view>
     </objects>
+    <resources>
+        <image name="saveScanDevice" width="200" height="200"/>
+    </resources>
 </document>

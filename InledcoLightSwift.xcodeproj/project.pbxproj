@@ -16,7 +16,16 @@
 		8F8C8B451F6CD403006F0461 /* ScanDeviceTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8C8B431F6CD403006F0461 /* ScanDeviceTableViewCell.swift */; };
 		8F8C8B461F6CD403006F0461 /* ScanDeviceTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8F8C8B441F6CD403006F0461 /* ScanDeviceTableViewCell.xib */; };
 		8F8CA5F51F5D05A100922993 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8CA5F41F5D05A100922993 /* BaseViewController.swift */; };
+		8FB994C21F8CB643008C6ACF /* DeviceDataCoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FB994C11F8CB643008C6ACF /* DeviceDataCoreManager.swift */; };
+		8FB994EA1F8CC14E008C6ACF /* BleDevice+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FB994E41F8CC14E008C6ACF /* BleDevice+CoreDataClass.swift */; };
+		8FB994EB1F8CC14E008C6ACF /* BleDevice+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FB994E51F8CC14E008C6ACF /* BleDevice+CoreDataProperties.swift */; };
+		8FB994EC1F8CC14E008C6ACF /* BleBrand+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FB994E61F8CC14E008C6ACF /* BleBrand+CoreDataClass.swift */; };
+		8FB994ED1F8CC14E008C6ACF /* BleBrand+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FB994E71F8CC14E008C6ACF /* BleBrand+CoreDataProperties.swift */; };
+		8FB994EE1F8CC14E008C6ACF /* BleGroup+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FB994E81F8CC14E008C6ACF /* BleGroup+CoreDataClass.swift */; };
+		8FB994EF1F8CC14E008C6ACF /* BleGroup+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FB994E91F8CC14E008C6ACF /* BleGroup+CoreDataProperties.swift */; };
 		8FC6D67E1F7D0A9E00C2B64B /* libBLEManager.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8FC6D67B1F7D085E00C2B64B /* libBLEManager.a */; };
+		8FE41AD91F7F753B00825501 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8FE41AD81F7F753B00825501 /* CoreData.framework */; };
+		8FE41ADD1F7F75BF00825501 /* DeviceModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8FE41ADB1F7F75BF00825501 /* DeviceModel.xcdatamodeld */; };
 		8FE76F151F2EB09100FC9634 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FE76F141F2EB09100FC9634 /* AppDelegate.swift */; };
 		8FE76F1A1F2EB09100FC9634 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8FE76F181F2EB09100FC9634 /* Main.storyboard */; };
 		8FE76F1C1F2EB09100FC9634 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8FE76F1B1F2EB09100FC9634 /* Assets.xcassets */; };
@@ -52,18 +61,27 @@
 		5F4E474273CA165558F46D96 /* Pods-InledcoLightSwift.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InledcoLightSwift.debug.xcconfig"; path = "Pods/Target Support Files/Pods-InledcoLightSwift/Pods-InledcoLightSwift.debug.xcconfig"; sourceTree = "<group>"; };
 		8F66B5FC1F7DE8550086E350 /* DeviceModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceModel.swift; sourceTree = "<group>"; };
 		8F66B5FE1F7DEE990086E350 /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
-		8F66B6001F7DEF5E0086E350 /* InledcoLightSwift-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "InledcoLightSwift-Bridging-Header.h"; sourceTree = "<group>"; };
 		8F8C8B391F6CBDB7006F0461 /* DeviceViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceViewController.swift; sourceTree = "<group>"; };
 		8F8C8B3B1F6CD3C5006F0461 /* ScanDeviceViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScanDeviceViewController.swift; sourceTree = "<group>"; };
 		8F8C8B3C1F6CD3C5006F0461 /* ScanDeviceViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ScanDeviceViewController.xib; sourceTree = "<group>"; };
 		8F8C8B431F6CD403006F0461 /* ScanDeviceTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScanDeviceTableViewCell.swift; sourceTree = "<group>"; };
 		8F8C8B441F6CD403006F0461 /* ScanDeviceTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ScanDeviceTableViewCell.xib; sourceTree = "<group>"; };
 		8F8CA5F41F5D05A100922993 /* BaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
+		8FB994C11F8CB643008C6ACF /* DeviceDataCoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceDataCoreManager.swift; sourceTree = "<group>"; };
+		8FB994E41F8CC14E008C6ACF /* BleDevice+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BleDevice+CoreDataClass.swift"; sourceTree = "<group>"; };
+		8FB994E51F8CC14E008C6ACF /* BleDevice+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BleDevice+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		8FB994E61F8CC14E008C6ACF /* BleBrand+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BleBrand+CoreDataClass.swift"; sourceTree = "<group>"; };
+		8FB994E71F8CC14E008C6ACF /* BleBrand+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BleBrand+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		8FB994E81F8CC14E008C6ACF /* BleGroup+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BleGroup+CoreDataClass.swift"; sourceTree = "<group>"; };
+		8FB994E91F8CC14E008C6ACF /* BleGroup+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BleGroup+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		8FC2A3C11F8B686500BEAE90 /* InledcoLightSwift-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "InledcoLightSwift-Bridging-Header.h"; sourceTree = "<group>"; };
 		8FC6D6781F7D085E00C2B64B /* BLEManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BLEManager.h; sourceTree = "<group>"; };
 		8FC6D6791F7D085E00C2B64B /* DeviceInfo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DeviceInfo.h; sourceTree = "<group>"; };
 		8FC6D67A1F7D085E00C2B64B /* DeviceInfo.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DeviceInfo.m; sourceTree = "<group>"; };
 		8FC6D67B1F7D085E00C2B64B /* libBLEManager.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libBLEManager.a; sourceTree = "<group>"; };
 		8FC6D67C1F7D085E00C2B64B /* oad.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = oad.h; sourceTree = "<group>"; };
+		8FE41AD81F7F753B00825501 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		8FE41ADC1F7F75BF00825501 /* DeviceModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DeviceModel.xcdatamodel; sourceTree = "<group>"; };
 		8FE76F111F2EB09100FC9634 /* InledcoLightSwift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = InledcoLightSwift.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8FE76F141F2EB09100FC9634 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8FE76F191F2EB09100FC9634 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -87,6 +105,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8FE41AD91F7F753B00825501 /* CoreData.framework in Frameworks */,
 				8F66B5FF1F7DEE990086E350 /* CoreBluetooth.framework in Frameworks */,
 				8FC6D67E1F7D0A9E00C2B64B /* libBLEManager.a in Frameworks */,
 				0BDF2ADF2A10831CBD152E16 /* Pods_InledcoLightSwift.framework in Frameworks */,
@@ -115,6 +134,7 @@
 		12EB8F7164E0D114B372866D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				8FE41AD81F7F753B00825501 /* CoreData.framework */,
 				8F66B5FE1F7DEE990086E350 /* CoreBluetooth.framework */,
 				39B568DF0573168D0523988A /* Pods_InledcoLightSwift.framework */,
 				3E2B570C04BDFC125356B346 /* Pods_InledcoLightSwiftTests.framework */,
@@ -219,6 +239,28 @@
 			path = BaseClass;
 			sourceTree = "<group>";
 		};
+		8FB994D71F8CC093008C6ACF /* DeviceDataCore1 */ = {
+			isa = PBXGroup;
+			children = (
+				8FB994E41F8CC14E008C6ACF /* BleDevice+CoreDataClass.swift */,
+				8FB994E51F8CC14E008C6ACF /* BleDevice+CoreDataProperties.swift */,
+				8FB994E61F8CC14E008C6ACF /* BleBrand+CoreDataClass.swift */,
+				8FB994E71F8CC14E008C6ACF /* BleBrand+CoreDataProperties.swift */,
+				8FB994E81F8CC14E008C6ACF /* BleGroup+CoreDataClass.swift */,
+				8FB994E91F8CC14E008C6ACF /* BleGroup+CoreDataProperties.swift */,
+			);
+			path = DeviceDataCore1;
+			sourceTree = "<group>";
+		};
+		8FC2A3B41F8B5FCB00BEAE90 /* DataManager */ = {
+			isa = PBXGroup;
+			children = (
+				8FB994D71F8CC093008C6ACF /* DeviceDataCore1 */,
+				8FB994C11F8CB643008C6ACF /* DeviceDataCoreManager.swift */,
+			);
+			path = DataManager;
+			sourceTree = "<group>";
+		};
 		8FC6D6771F7D085E00C2B64B /* BleSdk */ = {
 			isa = PBXGroup;
 			children = (
@@ -239,6 +281,29 @@
 				8F15C45D1F5F821800E29570 /* ScanDevice */,
 			);
 			path = CodeClass;
+			sourceTree = "<group>";
+		};
+		8FE41AD61F7F6BCD00825501 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Images;
+			sourceTree = "<group>";
+		};
+		8FE41ADA1F7F756300825501 /* DeviceData */ = {
+			isa = PBXGroup;
+			children = (
+				8FE41ADB1F7F75BF00825501 /* DeviceModel.xcdatamodeld */,
+			);
+			name = DeviceData;
+			path = InledcoLightSwift/DeviceData;
+			sourceTree = SOURCE_ROOT;
+		};
+		8FE41ADE1F7F8A1A00825501 /* DataController */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = DataController;
 			sourceTree = "<group>";
 		};
 		8FE76F081F2EB09000FC9634 = {
@@ -274,6 +339,8 @@
 				8F8CA5F31F5D056300922993 /* BaseClass */,
 				8FE2C4C91F31DF24000DE7E8 /* CodeClass */,
 				8FE76F421F2EB1CB00FC9634 /* Tools */,
+				8FE41AD61F7F6BCD00825501 /* Images */,
+				8FE41ADA1F7F756300825501 /* DeviceData */,
 			);
 			path = InledcoLightSwift;
 			sourceTree = "<group>";
@@ -299,8 +366,10 @@
 		8FE76F421F2EB1CB00FC9634 /* Tools */ = {
 			isa = PBXGroup;
 			children = (
+				8FC2A3C11F8B686500BEAE90 /* InledcoLightSwift-Bridging-Header.h */,
+				8FC2A3B41F8B5FCB00BEAE90 /* DataManager */,
+				8FE41ADE1F7F8A1A00825501 /* DataController */,
 				8FC6D6771F7D085E00C2B64B /* BleSdk */,
-				8F66B6001F7DEF5E0086E350 /* InledcoLightSwift-Bridging-Header.h */,
 			);
 			path = Tools;
 			sourceTree = "<group>";
@@ -382,18 +451,20 @@
 					8FE76F101F2EB09000FC9634 = {
 						CreatedOnToolsVersion = 8.3.2;
 						DevelopmentTeam = TP2XCH35TP;
-						LastSwiftMigration = 0830;
+						LastSwiftMigration = 0900;
 						ProvisioningStyle = Automatic;
 					};
 					8FE76F241F2EB09100FC9634 = {
 						CreatedOnToolsVersion = 8.3.2;
 						DevelopmentTeam = TP2XCH35TP;
+						LastSwiftMigration = 0900;
 						ProvisioningStyle = Automatic;
 						TestTargetID = 8FE76F101F2EB09000FC9634;
 					};
 					8FE76F2F1F2EB09100FC9634 = {
 						CreatedOnToolsVersion = 8.3.2;
 						DevelopmentTeam = TP2XCH35TP;
+						LastSwiftMigration = 0900;
 						ProvisioningStyle = Automatic;
 						TestTargetID = 8FE76F101F2EB09000FC9634;
 					};
@@ -576,9 +647,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8FE41ADD1F7F75BF00825501 /* DeviceModel.xcdatamodeld in Sources */,
+				8FB994EB1F8CC14E008C6ACF /* BleDevice+CoreDataProperties.swift in Sources */,
 				8F8C8B3D1F6CD3C5006F0461 /* ScanDeviceViewController.swift in Sources */,
+				8FB994C21F8CB643008C6ACF /* DeviceDataCoreManager.swift in Sources */,
+				8FB994EC1F8CC14E008C6ACF /* BleBrand+CoreDataClass.swift in Sources */,
+				8FB994EF1F8CC14E008C6ACF /* BleGroup+CoreDataProperties.swift in Sources */,
+				8FB994EE1F8CC14E008C6ACF /* BleGroup+CoreDataClass.swift in Sources */,
 				8F8CA5F51F5D05A100922993 /* BaseViewController.swift in Sources */,
 				8F8C8B3A1F6CBDB7006F0461 /* DeviceViewController.swift in Sources */,
+				8FB994ED1F8CC14E008C6ACF /* BleBrand+CoreDataProperties.swift in Sources */,
+				8FB994EA1F8CC14E008C6ACF /* BleDevice+CoreDataClass.swift in Sources */,
 				8F8C8B451F6CD403006F0461 /* ScanDeviceTableViewCell.swift in Sources */,
 				8FE76F151F2EB09100FC9634 /* AppDelegate.swift in Sources */,
 				8F66B5FD1F7DE8550086E350 /* DeviceModel.swift in Sources */,
@@ -677,7 +756,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -722,7 +801,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
@@ -751,7 +830,8 @@
 				SWIFT_INSTALL_OBJC_HEADER = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "InledcoLightSwift/Tools/InledcoLightSwift-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
 		};
@@ -774,7 +854,8 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_INSTALL_OBJC_HEADER = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "InledcoLightSwift/Tools/InledcoLightSwift-Bridging-Header.h";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Release;
 		};
@@ -789,7 +870,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ledinpro.InledcoLightSwiftTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/InledcoLightSwift.app/InledcoLightSwift";
 			};
 			name = Debug;
@@ -805,7 +887,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ledinpro.InledcoLightSwiftTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/InledcoLightSwift.app/InledcoLightSwift";
 			};
 			name = Release;
@@ -820,7 +903,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ledinpro.InledcoLightSwiftUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
 				TEST_TARGET_NAME = InledcoLightSwift;
 			};
 			name = Debug;
@@ -835,7 +919,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ledinpro.InledcoLightSwiftUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
 				TEST_TARGET_NAME = InledcoLightSwift;
 			};
 			name = Release;
@@ -880,6 +965,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		8FE41ADB1F7F75BF00825501 /* DeviceModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				8FE41ADC1F7F75BF00825501 /* DeviceModel.xcdatamodel */,
+			);
+			currentVersion = 8FE41ADC1F7F75BF00825501 /* DeviceModel.xcdatamodel */;
+			path = DeviceModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 8FE76F091F2EB09000FC9634 /* Project object */;
 }

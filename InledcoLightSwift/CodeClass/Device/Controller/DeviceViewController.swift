@@ -7,36 +7,43 @@
 //
 
 import UIKit
+import CoreData
 
 class DeviceViewController: BaseViewController,UITableViewDelegate,UITableViewDataSource,BLEManagerDelegate {
 
     @IBOutlet weak var deviceTableView: UITableView!
     @IBOutlet weak var scanBarButtonItem: UIBarButtonItem!
-    private var deviceDataSourceArray: NSMutableArray = [];
+    private var deviceDataSourceArray = [BleDevice]();
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
         
-        // 准备数据
-        prepareData()
-        
         // 视图设置
         setViews()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        prepareData()
     }
     
     override func prepareData() {
         super.prepareData()
         self.bleManager.delegate = self
         
-        for _ in 1...10 {
-            let deviceModel: DeviceModel! = DeviceModel()
+        deviceDataSourceArray.removeAll()
+        // 从数据库中读取数据
+        let fetch = NSFetchRequest<NSFetchRequestResult>(entityName: "BleDevice")
+        let deviceMOC = DeviceDataCoreManager.getDataCoreContext()
+        do {
+            self.deviceDataSourceArray = try deviceMOC.fetch(fetch) as! [BleDevice]
             
-            deviceModel.brand = "defaultBrand"
-            
-            deviceDataSourceArray.add(deviceModel)
+        }catch{
+            print("读取数据库出错\(error)")
         }
+        
+        self.deviceTableView.reloadData()
     }
     
     override func setViews() {
@@ -59,8 +66,8 @@ class DeviceViewController: BaseViewController,UITableViewDelegate,UITableViewDa
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell:UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "cell")!
         
-        let deviceModel: DeviceModel = deviceDataSourceArray.object(at: indexPath.row) as! DeviceModel
-        cell.textLabel?.text = deviceModel.brand
+        let deviceModel = deviceDataSourceArray[indexPath.row]
+        cell.textLabel?.text = deviceModel.name
         
         return cell;
     }
