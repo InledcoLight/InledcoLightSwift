@@ -10,12 +10,21 @@
 		0BDF2ADF2A10831CBD152E16 /* Pods_InledcoLightSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 39B568DF0573168D0523988A /* Pods_InledcoLightSwift.framework */; };
 		8F66B5FD1F7DE8550086E350 /* DeviceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F66B5FC1F7DE8550086E350 /* DeviceModel.swift */; };
 		8F66B5FF1F7DEE990086E350 /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F66B5FE1F7DEE990086E350 /* CoreBluetooth.framework */; };
+		8F6C77331F8DDF3100E0A22D /* DeviceTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F6C77311F8DDF3100E0A22D /* DeviceTableViewCell.swift */; };
+		8F6C77341F8DDF3100E0A22D /* DeviceTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8F6C77321F8DDF3100E0A22D /* DeviceTableViewCell.xib */; };
 		8F8C8B3A1F6CBDB7006F0461 /* DeviceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8C8B391F6CBDB7006F0461 /* DeviceViewController.swift */; };
 		8F8C8B3D1F6CD3C5006F0461 /* ScanDeviceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8C8B3B1F6CD3C5006F0461 /* ScanDeviceViewController.swift */; };
 		8F8C8B3E1F6CD3C5006F0461 /* ScanDeviceViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8F8C8B3C1F6CD3C5006F0461 /* ScanDeviceViewController.xib */; };
 		8F8C8B451F6CD403006F0461 /* ScanDeviceTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8C8B431F6CD403006F0461 /* ScanDeviceTableViewCell.swift */; };
 		8F8C8B461F6CD403006F0461 /* ScanDeviceTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8F8C8B441F6CD403006F0461 /* ScanDeviceTableViewCell.xib */; };
 		8F8CA5F51F5D05A100922993 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8CA5F41F5D05A100922993 /* BaseViewController.swift */; };
+		8F9952EE1F9064ED00155C82 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F9952ED1F9064ED00155C82 /* SettingViewController.swift */; };
+		8F9952F51F9082C000155C82 /* LanguageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F9952F31F9082C000155C82 /* LanguageViewController.swift */; };
+		8F9952F61F9082C000155C82 /* LanguageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8F9952F41F9082C000155C82 /* LanguageViewController.xib */; };
+		8F9952FD1F9090EC00155C82 /* LanguageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F9952FB1F9090EC00155C82 /* LanguageTableViewCell.swift */; };
+		8F9952FE1F9090EC00155C82 /* LanguageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8F9952FC1F9090EC00155C82 /* LanguageTableViewCell.xib */; };
+		8F9D906E1F8F45CC00AAC57F /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8F9D90701F8F45CC00AAC57F /* Localizable.strings */; };
+		8F9D90761F8F481300AAC57F /* LanguageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F9D90751F8F481300AAC57F /* LanguageManager.swift */; };
 		8FB994C21F8CB643008C6ACF /* DeviceDataCoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FB994C11F8CB643008C6ACF /* DeviceDataCoreManager.swift */; };
 		8FB994EA1F8CC14E008C6ACF /* BleDevice+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FB994E41F8CC14E008C6ACF /* BleDevice+CoreDataClass.swift */; };
 		8FB994EB1F8CC14E008C6ACF /* BleDevice+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FB994E51F8CC14E008C6ACF /* BleDevice+CoreDataProperties.swift */; };
@@ -61,12 +70,23 @@
 		5F4E474273CA165558F46D96 /* Pods-InledcoLightSwift.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InledcoLightSwift.debug.xcconfig"; path = "Pods/Target Support Files/Pods-InledcoLightSwift/Pods-InledcoLightSwift.debug.xcconfig"; sourceTree = "<group>"; };
 		8F66B5FC1F7DE8550086E350 /* DeviceModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceModel.swift; sourceTree = "<group>"; };
 		8F66B5FE1F7DEE990086E350 /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
+		8F6C77311F8DDF3100E0A22D /* DeviceTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceTableViewCell.swift; sourceTree = "<group>"; };
+		8F6C77321F8DDF3100E0A22D /* DeviceTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DeviceTableViewCell.xib; sourceTree = "<group>"; };
 		8F8C8B391F6CBDB7006F0461 /* DeviceViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceViewController.swift; sourceTree = "<group>"; };
 		8F8C8B3B1F6CD3C5006F0461 /* ScanDeviceViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScanDeviceViewController.swift; sourceTree = "<group>"; };
 		8F8C8B3C1F6CD3C5006F0461 /* ScanDeviceViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ScanDeviceViewController.xib; sourceTree = "<group>"; };
 		8F8C8B431F6CD403006F0461 /* ScanDeviceTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScanDeviceTableViewCell.swift; sourceTree = "<group>"; };
 		8F8C8B441F6CD403006F0461 /* ScanDeviceTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ScanDeviceTableViewCell.xib; sourceTree = "<group>"; };
 		8F8CA5F41F5D05A100922993 /* BaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
+		8F9952ED1F9064ED00155C82 /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
+		8F9952F31F9082C000155C82 /* LanguageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageViewController.swift; sourceTree = "<group>"; };
+		8F9952F41F9082C000155C82 /* LanguageViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LanguageViewController.xib; sourceTree = "<group>"; };
+		8F9952FB1F9090EC00155C82 /* LanguageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageTableViewCell.swift; sourceTree = "<group>"; };
+		8F9952FC1F9090EC00155C82 /* LanguageTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LanguageTableViewCell.xib; sourceTree = "<group>"; };
+		8F9952FF1F90BC6900155C82 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		8F9D906F1F8F45CC00AAC57F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		8F9D90711F8F45E100AAC57F /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
+		8F9D90751F8F481300AAC57F /* LanguageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageManager.swift; sourceTree = "<group>"; };
 		8FB994C11F8CB643008C6ACF /* DeviceDataCoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceDataCoreManager.swift; sourceTree = "<group>"; };
 		8FB994E41F8CC14E008C6ACF /* BleDevice+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BleDevice+CoreDataClass.swift"; sourceTree = "<group>"; };
 		8FB994E51F8CC14E008C6ACF /* BleDevice+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BleDevice+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -227,6 +247,8 @@
 		8F8C8B381F6CBD62006F0461 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				8F6C77311F8DDF3100E0A22D /* DeviceTableViewCell.swift */,
+				8F6C77321F8DDF3100E0A22D /* DeviceTableViewCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -237,6 +259,81 @@
 				8F8CA5F41F5D05A100922993 /* BaseViewController.swift */,
 			);
 			path = BaseClass;
+			sourceTree = "<group>";
+		};
+		8F9952E71F90645800155C82 /* Setting */ = {
+			isa = PBXGroup;
+			children = (
+				8F9952E81F90645800155C82 /* Controller */,
+				8F9952E91F90645800155C82 /* Model */,
+				8F9952EA1F90645800155C82 /* View */,
+			);
+			path = Setting;
+			sourceTree = "<group>";
+		};
+		8F9952E81F90645800155C82 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				8F9952ED1F9064ED00155C82 /* SettingViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		8F9952E91F90645800155C82 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		8F9952EA1F90645800155C82 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		8F9952EF1F9071AF00155C82 /* LanguageSetting */ = {
+			isa = PBXGroup;
+			children = (
+				8F9952F01F9071AF00155C82 /* Controller */,
+				8F9952F11F9071AF00155C82 /* Model */,
+				8F9952F21F9071AF00155C82 /* View */,
+			);
+			path = LanguageSetting;
+			sourceTree = "<group>";
+		};
+		8F9952F01F9071AF00155C82 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				8F9952F31F9082C000155C82 /* LanguageViewController.swift */,
+				8F9952F41F9082C000155C82 /* LanguageViewController.xib */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		8F9952F11F9071AF00155C82 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		8F9952F21F9071AF00155C82 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				8F9952FB1F9090EC00155C82 /* LanguageTableViewCell.swift */,
+				8F9952FC1F9090EC00155C82 /* LanguageTableViewCell.xib */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		8F9D90721F8F46BA00AAC57F /* LanguageManager */ = {
+			isa = PBXGroup;
+			children = (
+				8F9D90751F8F481300AAC57F /* LanguageManager.swift */,
+			);
+			path = LanguageManager;
 			sourceTree = "<group>";
 		};
 		8FB994D71F8CC093008C6ACF /* DeviceDataCore1 */ = {
@@ -276,6 +373,8 @@
 		8FE2C4C91F31DF24000DE7E8 /* CodeClass */ = {
 			isa = PBXGroup;
 			children = (
+				8F9952EF1F9071AF00155C82 /* LanguageSetting */,
+				8F9952E71F90645800155C82 /* Setting */,
 				8F66B5FB1F7DE8350086E350 /* Models */,
 				8F8C8B351F6CBD62006F0461 /* Device */,
 				8F15C45D1F5F821800E29570 /* ScanDevice */,
@@ -367,9 +466,11 @@
 			isa = PBXGroup;
 			children = (
 				8FC2A3C11F8B686500BEAE90 /* InledcoLightSwift-Bridging-Header.h */,
+				8F9D90721F8F46BA00AAC57F /* LanguageManager */,
 				8FC2A3B41F8B5FCB00BEAE90 /* DataManager */,
 				8FE41ADE1F7F8A1A00825501 /* DataController */,
 				8FC6D6771F7D085E00C2B64B /* BleSdk */,
+				8F9D90701F8F45CC00AAC57F /* Localizable.strings */,
 			);
 			path = Tools;
 			sourceTree = "<group>";
@@ -477,6 +578,8 @@
 			knownRegions = (
 				en,
 				Base,
+				fr,
+				"zh-Hans",
 			);
 			mainGroup = 8FE76F081F2EB09000FC9634;
 			productRefGroup = 8FE76F121F2EB09100FC9634 /* Products */;
@@ -496,9 +599,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				8FE76F1F1F2EB09100FC9634 /* LaunchScreen.storyboard in Resources */,
+				8F6C77341F8DDF3100E0A22D /* DeviceTableViewCell.xib in Resources */,
 				8F8C8B3E1F6CD3C5006F0461 /* ScanDeviceViewController.xib in Resources */,
+				8F9D906E1F8F45CC00AAC57F /* Localizable.strings in Resources */,
 				8F8C8B461F6CD403006F0461 /* ScanDeviceTableViewCell.xib in Resources */,
+				8F9952FE1F9090EC00155C82 /* LanguageTableViewCell.xib in Resources */,
 				8FE76F1C1F2EB09100FC9634 /* Assets.xcassets in Resources */,
+				8F9952F61F9082C000155C82 /* LanguageViewController.xib in Resources */,
 				8FE76F1A1F2EB09100FC9634 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -649,18 +756,23 @@
 			files = (
 				8FE41ADD1F7F75BF00825501 /* DeviceModel.xcdatamodeld in Sources */,
 				8FB994EB1F8CC14E008C6ACF /* BleDevice+CoreDataProperties.swift in Sources */,
+				8F9952F51F9082C000155C82 /* LanguageViewController.swift in Sources */,
 				8F8C8B3D1F6CD3C5006F0461 /* ScanDeviceViewController.swift in Sources */,
 				8FB994C21F8CB643008C6ACF /* DeviceDataCoreManager.swift in Sources */,
 				8FB994EC1F8CC14E008C6ACF /* BleBrand+CoreDataClass.swift in Sources */,
+				8F9952EE1F9064ED00155C82 /* SettingViewController.swift in Sources */,
 				8FB994EF1F8CC14E008C6ACF /* BleGroup+CoreDataProperties.swift in Sources */,
 				8FB994EE1F8CC14E008C6ACF /* BleGroup+CoreDataClass.swift in Sources */,
 				8F8CA5F51F5D05A100922993 /* BaseViewController.swift in Sources */,
 				8F8C8B3A1F6CBDB7006F0461 /* DeviceViewController.swift in Sources */,
 				8FB994ED1F8CC14E008C6ACF /* BleBrand+CoreDataProperties.swift in Sources */,
+				8F6C77331F8DDF3100E0A22D /* DeviceTableViewCell.swift in Sources */,
 				8FB994EA1F8CC14E008C6ACF /* BleDevice+CoreDataClass.swift in Sources */,
 				8F8C8B451F6CD403006F0461 /* ScanDeviceTableViewCell.swift in Sources */,
+				8F9952FD1F9090EC00155C82 /* LanguageTableViewCell.swift in Sources */,
 				8FE76F151F2EB09100FC9634 /* AppDelegate.swift in Sources */,
 				8F66B5FD1F7DE8550086E350 /* DeviceModel.swift in Sources */,
+				8F9D90761F8F481300AAC57F /* LanguageManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -696,6 +808,16 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		8F9D90701F8F45CC00AAC57F /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				8F9D906F1F8F45CC00AAC57F /* en */,
+				8F9D90711F8F45E100AAC57F /* fr */,
+				8F9952FF1F90BC6900155C82 /* zh-Hans */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
 		8FE76F181F2EB09100FC9634 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -719,6 +841,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
@@ -770,6 +893,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";

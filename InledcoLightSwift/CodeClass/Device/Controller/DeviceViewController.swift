@@ -13,31 +13,43 @@ class DeviceViewController: BaseViewController,UITableViewDelegate,UITableViewDa
 
     @IBOutlet weak var deviceTableView: UITableView!
     @IBOutlet weak var scanBarButtonItem: UIBarButtonItem!
-    private var deviceDataSourceArray = [BleDevice]();
+    private var deviceDataSourceArray: NSMutableArray = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        
+        print("ViewDideLoad")
         // 视图设置
         setViews()
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        print("")
         prepareData()
     }
     
     override func prepareData() {
         super.prepareData()
         self.bleManager.delegate = self
+        self.deviceDataSourceArray.removeAllObjects()
         
-        deviceDataSourceArray.removeAll()
         // 从数据库中读取数据
         let fetch = NSFetchRequest<NSFetchRequestResult>(entityName: "BleDevice")
         let deviceMOC = DeviceDataCoreManager.getDataCoreContext()
         do {
-            self.deviceDataSourceArray = try deviceMOC.fetch(fetch) as! [BleDevice]
+            // 使用这个获取到的数据局不能直接当做数据源，这些事内存中的数据
+            let dataArray = try deviceMOC.fetch(fetch)
+            for dev in dataArray {
+                
+                let deviceInfo = dev as! BleDevice
+                let deviceModel = DeviceModel()
+                
+                deviceModel.name = deviceInfo.name
+                deviceModel.typeCode = deviceInfo.typeCode
+                
+                self.deviceDataSourceArray.add(deviceModel)
+            }
             
         }catch{
             print("读取数据库出错\(error)")
@@ -50,9 +62,9 @@ class DeviceViewController: BaseViewController,UITableViewDelegate,UITableViewDa
         super.setViews()
         
         self.automaticallyAdjustsScrollViewInsets = false
-        deviceTableView.delegate = self
-        deviceTableView.dataSource = self
-        deviceTableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        self.deviceTableView.delegate = self
+        self.deviceTableView.dataSource = self
+        self.deviceTableView.register(UINib.init(nibName: "DeviceTableViewCell", bundle: nil), forCellReuseIdentifier: "DeviceTableViewCell")
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -64,10 +76,12 @@ class DeviceViewController: BaseViewController,UITableViewDelegate,UITableViewDa
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell:UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "cell")!
+        let cell = tableView.dequeueReusableCell(withIdentifier: "DeviceTableViewCell", for: indexPath) as! DeviceTableViewCell
         
-        let deviceModel = deviceDataSourceArray[indexPath.row]
-        cell.textLabel?.text = deviceModel.name
+        let deviceModel = deviceDataSourceArray[indexPath.row] as! DeviceModel
+        
+        cell.lightNameLabel.text = deviceModel.name
+        cell.lightDetailLabel.text = deviceModel.typeCode
         
         return cell;
     }

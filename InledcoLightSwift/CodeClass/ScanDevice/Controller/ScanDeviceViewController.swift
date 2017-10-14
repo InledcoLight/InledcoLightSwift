@@ -61,6 +61,7 @@ class ScanDeviceViewController: BaseViewController,BLEManagerDelegate,UITableVie
     override func setViews() {
         super.setViews()
         
+        self.title = languageManager.getTextForKey(key: "scanTitle")
         scanBarButtonItem = UIBarButtonItem.init(title: "Scan", style: UIBarButtonItemStyle.plain, target: self, action: #selector(scanBarButtonItemClickAction(barButtonItem:)))
         
         self.navigationItem.rightBarButtonItem = scanBarButtonItem
@@ -81,20 +82,12 @@ class ScanDeviceViewController: BaseViewController,BLEManagerDelegate,UITableVie
         self.deviceDataSourceArray.removeAllObjects()
         self.deviceNeedConnectDataSourceArray.removeAllObjects()
         
-        let dataCoreContext = DeviceDataCoreManager.getDataCoreContext()
-        let fetch = NSFetchRequest<NSFetchRequestResult>(entityName: "BleDevice")
         for device in array {
             let deviceInfo: DeviceInfo = device as! DeviceInfo
-            // 判断是否在数据库中存在，每次只是改变谓词就行
-            fetch.predicate = NSPredicate(format: "uuid == %@", deviceInfo.uuidString)
-            
-            do {
-                let results = try dataCoreContext.fetch(fetch)
-                if results.count > 0 {
-                    continue
-                }
-            }catch{
-                print("查询出错!")
+            // 查询数据库中是否
+            let result = DeviceDataCoreManager.getDataWithFromTableWithCol(tableName: DeviceDataCoreManager.deviceTableName, colName: DeviceDataCoreManager.deviceTableUuidName, colVal: deviceInfo.uuidString)
+            if result.count > 0 {
+                continue
             }
             
             // 打印扫描到的信息
@@ -236,6 +229,7 @@ macAddrss = \(deviceInfo.macAddrss)\r\n UUIDString = \(deviceInfo.uuidString)\r\
             let saveDevice = NSEntityDescription.insertNewObject(forEntityName: "BleDevice", into: context) as! BleDevice
             saveDevice.name = deviceModel.name
             saveDevice.uuid = deviceModel.uuidString
+            saveDevice.macAddress = deviceModel.macAddress
             
             do {
                 try context.save()
@@ -260,6 +254,7 @@ macAddrss = \(deviceInfo.macAddrss)\r\n UUIDString = \(deviceInfo.uuidString)\r\
         let deviceModel = self.deviceDataSourceArray.object(at: indexPath.row) as! DeviceModel
         
         cell.selectionStyle = .none
+        // 闭包，也就是使用大括号括起来，实现闭包的方法
         cell.selectCallBack = {
             (sender)->() in
             if deviceModel.isSelected! {

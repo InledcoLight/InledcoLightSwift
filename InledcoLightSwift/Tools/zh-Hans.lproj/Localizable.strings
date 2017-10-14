@@ -1,0 +1,18 @@
+/* 
+  Localizable.strings
+  InledcoLightSwift
+
+  Created by huang zhengguo on 2017/10/12.
+  Copyright © 2017年 huang zhengguo. All rights reserved.
+*/
+homeTitle = "我的鱼缸";
+scanTitle = "扫描设备";
+settingTitle = "设置";
+settingLanguage = "语言";
+auto = "自动";
+en = "英文";
+fr = "法语";
+zh-Hans = "中文";
+done = "完成";
+cancel = "取消";
+

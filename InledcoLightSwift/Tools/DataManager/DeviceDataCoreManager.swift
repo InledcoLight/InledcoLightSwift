@@ -9,8 +9,14 @@
 import UIKit
 import CoreData
 
-class DeviceDataCoreManager: NSObject {
+class DeviceDataCoreManager {
+    static let deviceTableName: String! = "BleDevice"
+    static let deviceTableUuidName: String! = "uuid"
+    
     // 类方法func前面添加class
+    /**
+     * 获取数据库上下文
+     */
     class func getDataCoreContext() -> NSManagedObjectContext {
         // 1.获取实体路径
         guard let modelURL = Bundle.main.url(forResource: "DeviceModel", withExtension: "momd") else {
@@ -39,5 +45,25 @@ class DeviceDataCoreManager: NSObject {
         context.persistentStoreCoordinator = psc
         
         return context
+    }
+    
+    /**
+     * 获取指定表，指定列符合条件的值
+     */
+    class func getDataWithFromTableWithCol(tableName: String, colName: String, colVal: String) -> [Any] {
+        let dataCoreContext = getDataCoreContext()
+        let fetch = NSFetchRequest<NSFetchRequestResult>(entityName: tableName)
+        
+        fetch.predicate = NSPredicate(format: "%@ == %@", colName, colVal)
+        
+        do {
+            let results = try dataCoreContext.fetch(fetch)
+            
+            return results;
+        }catch{
+            print("查询出错!\(error)")
+        }
+        
+        return []
     }
 }
