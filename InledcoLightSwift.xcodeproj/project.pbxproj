@@ -12,6 +12,8 @@
 		8F66B5FF1F7DEE990086E350 /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F66B5FE1F7DEE990086E350 /* CoreBluetooth.framework */; };
 		8F6C77331F8DDF3100E0A22D /* DeviceTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F6C77311F8DDF3100E0A22D /* DeviceTableViewCell.swift */; };
 		8F6C77341F8DDF3100E0A22D /* DeviceTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8F6C77321F8DDF3100E0A22D /* DeviceTableViewCell.xib */; };
+		8F74C8A21F91AAAC00032C06 /* BlueToothManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F74C8A11F91AAAC00032C06 /* BlueToothManager.swift */; };
+		8F74C8A51F91F01900032C06 /* StringManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F74C8A41F91F01900032C06 /* StringManager.swift */; };
 		8F8C8B3A1F6CBDB7006F0461 /* DeviceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8C8B391F6CBDB7006F0461 /* DeviceViewController.swift */; };
 		8F8C8B3D1F6CD3C5006F0461 /* ScanDeviceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8C8B3B1F6CD3C5006F0461 /* ScanDeviceViewController.swift */; };
 		8F8C8B3E1F6CD3C5006F0461 /* ScanDeviceViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8F8C8B3C1F6CD3C5006F0461 /* ScanDeviceViewController.xib */; };
@@ -72,6 +74,8 @@
 		8F66B5FE1F7DEE990086E350 /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
 		8F6C77311F8DDF3100E0A22D /* DeviceTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceTableViewCell.swift; sourceTree = "<group>"; };
 		8F6C77321F8DDF3100E0A22D /* DeviceTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DeviceTableViewCell.xib; sourceTree = "<group>"; };
+		8F74C8A11F91AAAC00032C06 /* BlueToothManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlueToothManager.swift; sourceTree = "<group>"; };
+		8F74C8A41F91F01900032C06 /* StringManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringManager.swift; sourceTree = "<group>"; };
 		8F8C8B391F6CBDB7006F0461 /* DeviceViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceViewController.swift; sourceTree = "<group>"; };
 		8F8C8B3B1F6CD3C5006F0461 /* ScanDeviceViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScanDeviceViewController.swift; sourceTree = "<group>"; };
 		8F8C8B3C1F6CD3C5006F0461 /* ScanDeviceViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ScanDeviceViewController.xib; sourceTree = "<group>"; };
@@ -218,6 +222,23 @@
 			);
 			path = Models;
 			sourceTree = "<group>";
+		};
+		8F74C8A01F91AA7B00032C06 /* BleManager */ = {
+			isa = PBXGroup;
+			children = (
+				8F74C8A11F91AAAC00032C06 /* BlueToothManager.swift */,
+			);
+			path = BleManager;
+			sourceTree = "<group>";
+		};
+		8F74C8A31F91EF8300032C06 /* StringManager */ = {
+			isa = PBXGroup;
+			children = (
+				8F74C8A41F91F01900032C06 /* StringManager.swift */,
+			);
+			name = StringManager;
+			path = InledcoLightSwift/StringManager;
+			sourceTree = SOURCE_ROOT;
 		};
 		8F8C8B351F6CBD62006F0461 /* Device */ = {
 			isa = PBXGroup;
@@ -466,6 +487,8 @@
 			isa = PBXGroup;
 			children = (
 				8FC2A3C11F8B686500BEAE90 /* InledcoLightSwift-Bridging-Header.h */,
+				8F74C8A31F91EF8300032C06 /* StringManager */,
+				8F74C8A01F91AA7B00032C06 /* BleManager */,
 				8F9D90721F8F46BA00AAC57F /* LanguageManager */,
 				8FC2A3B41F8B5FCB00BEAE90 /* DataManager */,
 				8FE41ADE1F7F8A1A00825501 /* DataController */,
@@ -760,6 +783,7 @@
 				8F8C8B3D1F6CD3C5006F0461 /* ScanDeviceViewController.swift in Sources */,
 				8FB994C21F8CB643008C6ACF /* DeviceDataCoreManager.swift in Sources */,
 				8FB994EC1F8CC14E008C6ACF /* BleBrand+CoreDataClass.swift in Sources */,
+				8F74C8A21F91AAAC00032C06 /* BlueToothManager.swift in Sources */,
 				8F9952EE1F9064ED00155C82 /* SettingViewController.swift in Sources */,
 				8FB994EF1F8CC14E008C6ACF /* BleGroup+CoreDataProperties.swift in Sources */,
 				8FB994EE1F8CC14E008C6ACF /* BleGroup+CoreDataClass.swift in Sources */,
@@ -771,6 +795,7 @@
 				8F8C8B451F6CD403006F0461 /* ScanDeviceTableViewCell.swift in Sources */,
 				8F9952FD1F9090EC00155C82 /* LanguageTableViewCell.swift in Sources */,
 				8FE76F151F2EB09100FC9634 /* AppDelegate.swift in Sources */,
+				8F74C8A51F91F01900032C06 /* StringManager.swift in Sources */,
 				8F66B5FD1F7DE8550086E350 /* DeviceModel.swift in Sources */,
 				8F9D90761F8F481300AAC57F /* LanguageManager.swift in Sources */,
 			);

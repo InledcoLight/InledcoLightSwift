@@ -8,18 +8,24 @@
 
 import UIKit
 import CoreData
+import LGAlertView
 
-class DeviceViewController: BaseViewController,UITableViewDelegate,UITableViewDataSource,BLEManagerDelegate {
+class DeviceViewController: BaseViewController,UITableViewDelegate,UITableViewDataSource {
 
     @IBOutlet weak var deviceTableView: UITableView!
     @IBOutlet weak var scanBarButtonItem: UIBarButtonItem!
+    private var alertController: UIAlertController!
+    private var connectAlertController: LGAlertView?
+    private var connectFailedAlertController: LGAlertView?
     private var deviceDataSourceArray: NSMutableArray = []
+    private var selectDeviceModel: DeviceModel?
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        print("ViewDideLoad")
+        prepareBluetoothData()
+        createAlertController()
         // 视图设置
         setViews()
     }
@@ -29,9 +35,86 @@ class DeviceViewController: BaseViewController,UITableViewDelegate,UITableViewDa
         prepareData()
     }
     
+    /// 蓝牙初始化
+    /// - parameter one:
+    /// - parameter two:
+    ///
+    /// - returns:
+    func prepareBluetoothData() -> Void {
+        // 1.连接成功回调
+        self.blueToothManager.completeReceiveDataCallback = {
+            (receiveDataStr) in
+            // 跳转界面等
+            print("接收到的数据\(String(describing: receiveDataStr))")
+            // 解析设备数据，跳转界面
+            
+            
+            self.connectAlertController?.dismiss(animated: true, completionHandler: nil)
+        }
+        
+        // 2.连接失败回调
+        self.blueToothManager.connectFailedCallback = {
+            (receiveDataStr) in
+            Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(self.connectFailed(timer:)), userInfo: nil, repeats: false)
+            
+            self.connectAlertController?.dismiss(animated: true, completionHandler: nil)
+            self.connectFailedAlertController?.show(animated: true, completionHandler: nil)
+        }
+    }
+    
+    @objc func connectFailed(timer: Timer) -> Void {
+        self.connectFailedAlertController?.dismiss(animated: true, completionHandler: nil)
+    }
+    
+    func createAlertController() {
+        // 1.连接提示视图
+        connectAlertController = LGAlertView.init(activityIndicatorAndTitle: languageManager.getTextForKey(key: "connecting"), message: "", style: .alert, buttonTitles: nil, cancelButtonTitle: languageManager.getTextForKey(key: "cancel"), destructiveButtonTitle: nil)
+        
+        connectAlertController?.cancelHandler = {
+            (alertView) in
+            // 取消连接设备
+            
+        }
+        
+        // 2.连接失败提示视图
+        connectFailedAlertController = LGAlertView.init(title: languageManager.getTextForKey(key: "connectFailed"), message: nil, style: .alert, buttonTitles: nil, cancelButtonTitle: nil, destructiveButtonTitle: nil)
+        
+        
+        // 3.操作弹出视图
+         alertController = UIAlertController(title: languageManager.getTextForKey(key: "operation"), message: nil, preferredStyle: .actionSheet)
+        // 删除操作
+        let deleteAction: UIAlertAction = UIAlertAction(title: languageManager.getTextForKey(key: "delete"), style: .destructive) { (alertAction) in
+            print("删除")
+        }
+        
+        // 重命名操作
+        let renameAction: UIAlertAction = UIAlertAction(title: languageManager.getTextForKey(key: "rename"), style: .default, handler: {
+            (alterAction) in
+            print("重命名")
+        })
+        
+        // 重命名操作
+        let connectAction: UIAlertAction = UIAlertAction(title: languageManager.getTextForKey(key: "connect"), style: .default) { (alertAction) in
+            if self.selectDeviceModel != nil {
+                self.connectAlertController?.show(animated: true, completionHandler: nil)
+                self.blueToothManager.connectDeviceWithUuid(uuid: self.selectDeviceModel?.uuidString)
+            }
+        }
+        
+        // 取消操作
+        let cancalAction: UIAlertAction = UIAlertAction(title: languageManager.getTextForKey(key: "cancel"), style: .cancel) { (alertAction) in
+            print("取消")
+        }
+        
+        alertController.addAction(deleteAction)
+        alertController.addAction(renameAction)
+        alertController.addAction(connectAction)
+        alertController.addAction(cancalAction)
+    }
+    
     override func prepareData() {
+        // 这里只做从数据库中的操作
         super.prepareData()
-        self.bleManager.delegate = self
         self.deviceDataSourceArray.removeAllObjects()
         
         // 从数据库中读取数据
@@ -47,6 +130,7 @@ class DeviceViewController: BaseViewController,UITableViewDelegate,UITableViewDa
                 
                 deviceModel.name = deviceInfo.name
                 deviceModel.typeCode = deviceInfo.typeCode
+                deviceModel.uuidString = deviceInfo.uuid
                 
                 self.deviceDataSourceArray.add(deviceModel)
             }
@@ -68,11 +152,11 @@ class DeviceViewController: BaseViewController,UITableViewDelegate,UITableViewDa
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return  1;
+        return  1
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return deviceDataSourceArray.count;
+        return deviceDataSourceArray.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -83,18 +167,24 @@ class DeviceViewController: BaseViewController,UITableViewDelegate,UITableViewDa
         cell.lightNameLabel.text = deviceModel.name
         cell.lightDetailLabel.text = deviceModel.typeCode
         
-        return cell;
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 60.0
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        self.selectDeviceModel = self.deviceDataSourceArray.object(at: indexPath.row) as? DeviceModel
+        self.present(alertController, animated: true, completion: nil)
     }
     
     // 扫描跳转方法
     @IBAction func scanBarButtonAction(_ sender: UIBarButtonItem) {
         let scanDeviceViewController: ScanDeviceViewController! = ScanDeviceViewController();
         
+        scanDeviceViewController.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(scanDeviceViewController, animated: true)
-    }
-    
-    func connectDeviceSuccess(_ device: CBPeripheral!, error: Error!) {
-        print("蓝牙连接成功!")
     }
     
     override func didReceiveMemoryWarning() {

@@ -11,5 +11,6 @@
 
 #import "BLEManager.h"
 #import "DeviceInfo.h"
+#import "LGAlertView/LGAlertView.h"
 
 #endif /* InledcoLightSwift_Bridging_Header_h */

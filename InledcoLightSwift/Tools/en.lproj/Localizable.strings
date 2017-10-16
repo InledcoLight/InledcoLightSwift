@@ -15,4 +15,9 @@ fr = "French";
 zh-Hans = "Chinese";
 done = "Done";
 cancel = "Cancel";
-
+operation = "Operation";
+delete = "Delete";
+rename = "Rename";
+connect = "Connect";
+connecting = "Connecting";
+connectFailed = "Connect Failed!";

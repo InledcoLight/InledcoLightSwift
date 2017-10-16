@@ -23,6 +23,7 @@ class ScanDeviceViewController: BaseViewController,BLEManagerDelegate,UITableVie
     private let deviceDataSourceArray: NSMutableArray = []
     private let deviceNeedConnectDataSourceArray: NSMutableArray = []
     var scanBarButtonItem: UIBarButtonItem?
+    private let bleManager: BLEManager! = BLEManager<AnyObject, AnyObject>.default()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -228,6 +229,7 @@ macAddrss = \(deviceInfo.macAddrss)\r\n UUIDString = \(deviceInfo.uuidString)\r\
             
             let saveDevice = NSEntityDescription.insertNewObject(forEntityName: "BleDevice", into: context) as! BleDevice
             saveDevice.name = deviceModel.name
+            saveDevice.typeCode = deviceModel.typeCode
             saveDevice.uuid = deviceModel.uuidString
             saveDevice.macAddress = deviceModel.macAddress
             
