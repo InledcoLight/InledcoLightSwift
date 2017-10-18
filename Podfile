@@ -6,7 +6,8 @@ target 'InledcoLightSwift' do
   use_frameworks!
   pod 'LGAlertView', '~> 2.0.13'
   # Pods for InledcoLightSwift
-
+  pod 'Charts'
+  
   target 'InledcoLightSwiftTests' do
     inherit! :search_paths
     # Pods for testing

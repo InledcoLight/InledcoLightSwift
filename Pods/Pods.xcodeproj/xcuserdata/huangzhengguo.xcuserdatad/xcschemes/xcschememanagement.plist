@@ -4,6 +4,11 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>Charts.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>LGAlertView.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -26,27 +31,6 @@
 		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
-	<dict>
-		<key>2252F46682431106F93645DF49EFC503</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>8B09658D764285F9C76E2E9E2F0F2FBE</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>9864DE0E2E09D6DAE2287B77C058B08E</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>AFB3D3541F7E78878FF88D369E62F405</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-	</dict>
+	<dict/>
 </dict>
 </plist>

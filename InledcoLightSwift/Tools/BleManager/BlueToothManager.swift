@@ -9,21 +9,29 @@
 
 import UIKit
 
+// 设备开关状态
+enum DeviceState {
+    case POWER_ON
+    case POWER_OFF
+    case UNKNOWN_STATE
+}
+
+// 蓝牙设置运行模式
+enum DeviceRunMode {
+    case MANUAL_RUN_MODE
+    case AUTO_RUN_MODE
+    case UNKNOWN_RUN_MODE
+}
+
+// 命令类型
+enum CommandType {
+    case SYNCTIME_COMMAND
+    case POWERON_COMMAND
+    case UNKNOWN_COMMAND
+}
+
 class BlueToothManager: NSObject, BLEManagerDelegate {
-    // 蓝牙设置运行模式
-    enum DeviceRunMode {
-        case MANUAL_RUN_MODE
-        case AUTO_RUN_MODE
-        case UNKNOW_RUN_MODE
-    }
-    
-    // 命令类型
-    enum CommandType {
-        case SYNCTIME_COMMAND
-        case POWERON_COMMAND
-        case UNKNOW_COMMAND
-    }
-    
+
     private static var bluetoothManager: BlueToothManager?;
     private let bleManager: BLEManager! = BLEManager<AnyObject, AnyObject>.default()
     private let reconnectInterval: TimeInterval! = 2
@@ -33,7 +41,7 @@ class BlueToothManager: NSObject, BLEManagerDelegate {
     private var isReceiveDataAll: Bool! = false
     private var lastCommandSendTime: TimeInterval! = 0.0
     private let maxCommandLength: Int = 30
-    private var currentCommandType: CommandType! = .UNKNOW_COMMAND
+    private var currentCommandType: CommandType! = .UNKNOWN_COMMAND
     private var receivedData: String = ""
     typealias oneStrParameterType = (_ dataStr: String?) -> Void
     var completeReceiveDataCallback: oneStrParameterType?
@@ -260,11 +268,124 @@ class BlueToothManager: NSObject, BLEManagerDelegate {
     
     /// 1.解析数据
     /// - parameter receiveData: 接收到的数据
-    /// - parameter two:
+    /// - parameter parameterModel: 参数模型
     ///
     /// - returns: void
-    func parseDeviceDataFromReceiveStrToModel(receiveData: String) -> Void {
+    func parseDeviceDataFromReceiveStrToModel(receiveData: String, parameterModel: DeviceParameterModel) -> Void {
+        // 解析参数模型数据
+        var index = 0
+        var commandCharacters: [Character]! = [Character]()
+        for c in receiveData {
+            commandCharacters.append(c)
+        }
+        // 解析命令帧头
+        parameterModel.commandHeader.append(commandCharacters[index])
+        parameterModel.commandHeader.append(commandCharacters[index + 1])
         
+        // 解析命令码
+        index = index + 2
+        parameterModel.commandCode.append(commandCharacters[index])
+        parameterModel.commandCode.append(commandCharacters[index + 1])
+        
+        // 解析设备运行模式
+        index = index + 2
+        var runModeStr: String = ""
+        runModeStr.append(commandCharacters[index])
+        runModeStr.append(commandCharacters[index + 1])
+     
+        if runModeStr == "00" {
+            // 手动模式
+            parameterModel.runMode = DeviceRunMode.MANUAL_RUN_MODE
+            
+            // 解析开关状态
+            index = index + 2
+            var powerStateStr: String = ""
+            powerStateStr.append(commandCharacters[index])
+            powerStateStr.append(commandCharacters[index + 1])
+            if powerStateStr == "00" {
+                parameterModel.powerState = DeviceState.POWER_OFF
+            } else if powerStateStr == "01" {
+                parameterModel.powerState = DeviceState.POWER_ON
+            } else {
+                parameterModel.powerState = DeviceState.UNKNOWN_STATE
+                return
+            }
+            
+            // 解析动态模式
+            index = index + 2
+            parameterModel.dynamicMode?.append(commandCharacters[index])
+            parameterModel.dynamicMode?.append(commandCharacters[index + 1])
+            
+            // 解析手动模式下，所有通道的数据，按照键值1,2,3,4,5...存储到字典中
+            index = index + 2
+            var colorStr: String?
+            var colorIndex = 0
+            for _ in Int8(0) ..< parameterModel.channelNum! {
+                colorStr = ""
+                colorStr?.append(commandCharacters[index])
+                colorStr?.append(commandCharacters[index + 1])
+                colorStr?.append(commandCharacters[index + 2])
+                colorStr?.append(commandCharacters[index + 3])
+                
+                parameterModel.manualModeValueDic[colorIndex] = colorStr
+                
+                colorIndex = colorIndex + 1
+                index = index + 4
+            }
+            
+            // 解析用户自定义数据
+            colorStr = ""
+            colorIndex = 0
+            for _ in 0 ..< 4 {
+                colorStr = ""
+                for _ in Int8(0) ..< parameterModel.channelNum! * 2 {
+                    colorStr?.append(commandCharacters[index])
+                    index = index + 1
+                }
+                
+                parameterModel.userDefinedValueDic![colorIndex] = colorStr
+                colorIndex = colorIndex + 1
+            }
+            
+        } else if runModeStr == "01" {
+            // 自动模式
+            parameterModel.runMode = DeviceRunMode.AUTO_RUN_MODE
+            let timePointNum = 2
+            var timePointStr = ""
+            var colorStr = ""
+            for i in 0 ..< timePointNum {
+                // 开始时间
+                for _ in 0 ..< 4 {
+                    timePointStr.append(commandCharacters[index])
+                    index = index + 1
+                }
+                
+                parameterModel.timePointArray.append(timePointStr)
+                
+                // 结束时间
+                timePointStr = ""
+                for _ in 0 ..< 4 {
+                    timePointStr.append(commandCharacters[index])
+                    index = index + 1
+                }
+                parameterModel.timePointArray.append(timePointStr)
+                
+                // 解析时间对应的颜色值
+                for _ in Int8(0) ..< parameterModel.channelNum! * 2 {
+                    colorStr.append(commandCharacters[index])
+                    index = index + 1
+                }
+
+                parameterModel.timePointValueDic[i] = colorStr
+                
+                timePointStr = ""
+                colorStr = ""
+            }
+        } else {
+            // 解析数据出错
+            parameterModel.runMode = DeviceRunMode.UNKNOWN_RUN_MODE
+            return
+        }
     }
 }
 

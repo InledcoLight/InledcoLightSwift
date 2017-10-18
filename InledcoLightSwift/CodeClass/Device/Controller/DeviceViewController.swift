@@ -36,8 +36,6 @@ class DeviceViewController: BaseViewController,UITableViewDelegate,UITableViewDa
     }
     
     /// 蓝牙初始化
-    /// - parameter one:
-    /// - parameter two:
     ///
     /// - returns:
     func prepareBluetoothData() -> Void {
@@ -46,10 +44,26 @@ class DeviceViewController: BaseViewController,UITableViewDelegate,UITableViewDa
             (receiveDataStr) in
             // 跳转界面等
             print("接收到的数据\(String(describing: receiveDataStr))")
-            // 解析设备数据，跳转界面
+            // 获取当前数据动态信息
+            let deviceCodeInfo = DeviceTypeData.getDeviceInfoWithTypeCode(deviceTypeCode: DeviceTypeData.DeviceTypeCode(rawValue: (self.selectDeviceModel?.typeCode)!)!)
             
+            // 解析数据
+            let parameterModel: DeviceParameterModel = DeviceParameterModel()
+            parameterModel.channelNum = deviceCodeInfo.channelNum
+            
+            self.blueToothManager.parseDeviceDataFromReceiveStrToModel(receiveData: receiveDataStr!, parameterModel: parameterModel)
+            
+            parameterModel.typeCode = deviceCodeInfo.deviceTypeCode
+            parameterModel.uuid = self.selectDeviceModel?.uuidString
             
             self.connectAlertController?.dismiss(animated: true, completionHandler: nil)
+            // 解析设备数据，跳转界面
+            let colorSettingViewController = ColorSettingViewController(nibName: "ColorSettingViewController", bundle: Bundle.main)
+            
+            colorSettingViewController.parameterModel = parameterModel
+            colorSettingViewController.hidesBottomBarWhenPushed = true
+        
+            self.navigationController?.pushViewController(colorSettingViewController, animated: true)
         }
         
         // 2.连接失败回调
