@@ -7,6 +7,7 @@ target 'InledcoLightSwift' do
   pod 'LGAlertView', '~> 2.0.13'
   # Pods for InledcoLightSwift
   pod 'Charts'
+  pod 'HGCircularSlider'
   
   target 'InledcoLightSwiftTests' do
     inherit! :search_paths

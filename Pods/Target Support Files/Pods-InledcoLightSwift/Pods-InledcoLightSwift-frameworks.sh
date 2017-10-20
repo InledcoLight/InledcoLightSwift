@@ -85,9 +85,11 @@ strip_invalid_archs() {
 
 if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "$BUILT_PRODUCTS_DIR/Charts/Charts.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/HGCircularSlider/HGCircularSlider.framework"
   install_framework "$BUILT_PRODUCTS_DIR/LGAlertView/LGAlertView.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "$BUILT_PRODUCTS_DIR/Charts/Charts.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/HGCircularSlider/HGCircularSlider.framework"
   install_framework "$BUILT_PRODUCTS_DIR/LGAlertView/LGAlertView.framework"
 fi

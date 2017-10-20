@@ -15,6 +15,9 @@ class ColorSettingViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        let manualView = ManualCircleView(frame: CGRect(x:0, y:128, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.width), channelNum: 4, colorArray: nil, colorPercentArray: nil, colorTitleArray: nil)
+        
+        self.view.addSubview(manualView)
     }
 
     override func didReceiveMemoryWarning() {
