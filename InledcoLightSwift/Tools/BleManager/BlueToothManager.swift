@@ -23,10 +23,24 @@ enum DeviceRunMode {
     case UNKNOWN_RUN_MODE
 }
 
+// 命令头
+enum CommandHeader: String {
+    case COMMANDHEAD_ONE = "6801"
+    case COMMANDHEAD_TWO = "6802"
+    case COMMANDHEAD_THREE = "6803"
+    case COMMANDHEAD_FOUR = "6804"
+    case COMMANDHEAD_FIVE = "6805"
+}
+
 // 命令类型
 enum CommandType {
     case SYNCTIME_COMMAND
     case POWERON_COMMAND
+    case POWEROFF_COMMAND
+    case FINDDEVICE_COMMAND
+    case READTIME_COMMAND
+    case MANUALMODE_COMMAN
+    case AUTOMODE_COMMAN
     case UNKNOWN_COMMAND
 }
 
@@ -71,6 +85,15 @@ class BlueToothManager: NSObject, BLEManagerDelegate {
     func connectDeviceWithUuid(uuid: String!) -> Void {
         self.connectCount = 0
         self.connectTimer = Timer.scheduledTimer(timeInterval: reconnectInterval, target: self, selector: #selector(sendConnectCommandToDevice(timer:)), userInfo: uuid, repeats: true)
+    }
+    
+    ///
+    /// - parameter one:
+    /// - parameter two:
+    ///
+    /// - returns:
+    func disConnectDevice(uuid: String!) -> Void {
+        self.bleManager.disconnectDevice(self.bleManager.getDeviceByUUID(uuid))
     }
     
     /// 连接设备定时器方法
@@ -135,7 +158,7 @@ class BlueToothManager: NSObject, BLEManagerDelegate {
     ///
     /// - returns: void
     func sendPowerOffCommand(uuid: String) -> Void {
-         sendCommandToDevice(uuid: uuid, commandStr: "680300", commandType: .POWERON_COMMAND, isXORCommand: true)
+         sendCommandToDevice(uuid: uuid, commandStr: "680300", commandType: .POWEROFF_COMMAND, isXORCommand: true)
     }
     
     /// 发送手动模式命令
@@ -143,7 +166,7 @@ class BlueToothManager: NSObject, BLEManagerDelegate {
     ///
     /// - returns: void
     func sendManualModeCommand(uuid: String) -> Void {
-        sendCommandToDevice(uuid: uuid, commandStr: "680200", commandType: .POWERON_COMMAND, isXORCommand: true)
+        sendCommandToDevice(uuid: uuid, commandStr: "680200", commandType: .MANUALMODE_COMMAN, isXORCommand: true)
     }
     
     /// 发送自动模式命令
@@ -151,7 +174,7 @@ class BlueToothManager: NSObject, BLEManagerDelegate {
     ///
     /// - returns: void
     func sendAutoModeCommand(uuid: String) -> Void {
-        sendCommandToDevice(uuid: uuid, commandStr: "680200", commandType: .POWERON_COMMAND, isXORCommand: true)
+        sendCommandToDevice(uuid: uuid, commandStr: "680201", commandType: .AUTOMODE_COMMAN, isXORCommand: true)
     }
     
     /// 发送读取时间命令
@@ -159,7 +182,7 @@ class BlueToothManager: NSObject, BLEManagerDelegate {
     ///sendFindDeviceCommand
     /// - returns: void
     func sendReadTimeCommand(uuid: String) -> Void {
-        sendCommandToDevice(uuid: uuid, commandStr: "680D", commandType: .POWERON_COMMAND, isXORCommand: true)
+        sendCommandToDevice(uuid: uuid, commandStr: "680D", commandType: .READTIME_COMMAND, isXORCommand: true)
     }
     
     /// 发送查找设备命令
@@ -167,7 +190,18 @@ class BlueToothManager: NSObject, BLEManagerDelegate {
     ///
     /// - returns: void
     func sendFindDeviceCommand(uuid: String) -> Void {
-        sendCommandToDevice(uuid: uuid, commandStr: "680F", commandType: .POWERON_COMMAND, isXORCommand: true)
+        sendCommandToDevice(uuid: uuid, commandStr: "680F", commandType: .FINDDEVICE_COMMAND, isXORCommand: true)
+    }
+    
+    /// 设置设备名称
+    /// - parameter one:
+    /// - parameter two:
+    ///
+    /// - returns:
+    func setDeviceName(uuid:String , name: String!) -> Void {
+        self.bleManager.isEncryption = false
+        self.bleManager.setDeviceName(name, device: self.bleManager.getDeviceByUUID(uuid))
+        self.bleManager.isEncryption = true
     }
     
     /// 发送命令：所有的命令发送都要通过这个方法发送，该方法可以放松任意长度的命令
@@ -180,6 +214,7 @@ class BlueToothManager: NSObject, BLEManagerDelegate {
     /// - returns: void
     func sendCommandToDevice(uuid: String, commandStr: String, commandType: CommandType, isXORCommand: Bool, commandInterval: TimeInterval = 50) -> Void {
         
+        self.isReceiveDataAll = false
         var xorCommand: String! = commandStr
         if isXORCommand {
             // 计算校验码
@@ -248,20 +283,25 @@ class BlueToothManager: NSObject, BLEManagerDelegate {
         
         // 检验数据是否接收完毕
         if self.receivedData.calculateXor() == "00" {
-            print("接收到的完整数据:\(self.receivedData)")
+            self.isReceiveDataAll = true
+            // print("接收到的完整数据:\(self.receivedData)")
             
             // 根据命令类型，处理返回的数据
+            print("发送的命令：\(self.currentCommandType)")
             switch self.currentCommandType {
-            case .SYNCTIME_COMMAND:
-                print("同步设置时间")
+            case .SYNCTIME_COMMAND,
+                 .POWERON_COMMAND,
+                 .POWEROFF_COMMAND,
+                 .MANUALMODE_COMMAN,
+                 .AUTOMODE_COMMAN:
                 if self.completeReceiveDataCallback != nil {
                     self.completeReceiveDataCallback!(self.receivedData)
                 }
+              
             default:
                 print("未知命令")
             }
             
-            self.isReceiveDataAll = true
             self.receivedData = ""
         }
     }
@@ -292,13 +332,13 @@ class BlueToothManager: NSObject, BLEManagerDelegate {
         var runModeStr: String = ""
         runModeStr.append(commandCharacters[index])
         runModeStr.append(commandCharacters[index + 1])
+        index = index + 2
      
         if runModeStr == "00" {
             // 手动模式
             parameterModel.runMode = DeviceRunMode.MANUAL_RUN_MODE
             
             // 解析开关状态
-            index = index + 2
             var powerStateStr: String = ""
             powerStateStr.append(commandCharacters[index])
             powerStateStr.append(commandCharacters[index + 1])
@@ -320,13 +360,14 @@ class BlueToothManager: NSObject, BLEManagerDelegate {
             index = index + 2
             var colorStr: String?
             var colorIndex = 0
-            for _ in Int8(0) ..< parameterModel.channelNum! {
+            for _ in 0 ..< parameterModel.channelNum! {
                 colorStr = ""
-                colorStr?.append(commandCharacters[index])
-                colorStr?.append(commandCharacters[index + 1])
+                // 由于高位在后，需要先添加高位
                 colorStr?.append(commandCharacters[index + 2])
                 colorStr?.append(commandCharacters[index + 3])
-                
+                colorStr?.append(commandCharacters[index])
+                colorStr?.append(commandCharacters[index + 1])
+
                 parameterModel.manualModeValueDic[colorIndex] = colorStr
                 
                 colorIndex = colorIndex + 1
@@ -338,7 +379,7 @@ class BlueToothManager: NSObject, BLEManagerDelegate {
             colorIndex = 0
             for _ in 0 ..< 4 {
                 colorStr = ""
-                for _ in Int8(0) ..< parameterModel.channelNum! * 2 {
+                for _ in 0 ..< parameterModel.channelNum! * 2 {
                     colorStr?.append(commandCharacters[index])
                     index = index + 1
                 }
@@ -371,7 +412,7 @@ class BlueToothManager: NSObject, BLEManagerDelegate {
                 parameterModel.timePointArray.append(timePointStr)
                 
                 // 解析时间对应的颜色值
-                for _ in Int8(0) ..< parameterModel.channelNum! * 2 {
+                for _ in 0 ..< parameterModel.channelNum! * 2 {
                     colorStr.append(commandCharacters[index])
                     index = index + 1
                 }

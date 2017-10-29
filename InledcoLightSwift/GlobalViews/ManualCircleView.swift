@@ -18,30 +18,89 @@ class ManualCircleView: UIView {
         // Drawing code
     }
     */
-    var circleBackgroundView: UIView!
     
-    init(frame: CGRect, channelNum: Int, colorArray: [UIColor]?, colorPercentArray: [Int]?, colorTitleArray: [String]?) {
+    typealias circleSliderPassValueType = (Int, Int) -> Void
+    var passColorValueCallback: circleSliderPassValueType?
+    var progressViewArray: [CircularSlider]! = [CircularSlider]()
+    
+    init(frame: CGRect, channelNum: Int!, colorArray: [UIColor]!, colorPercentArray: [Int]!, colorTitleArray: [String]!) {
         super.init(frame: frame)
         
-        // 圆形调光图形背景
-        circleBackgroundView = UIView(frame: CGRect(x: 0, y:0, width:frame.size.width, height:frame.size.width))
-        circleBackgroundView.backgroundColor = UIColor.green
+        self.frame = frame
         
         // 根据通道数量添加圆形调光
-        let centerCircleWidth = 55
-        let circleLineWidth = 20
+        let centerCircleWidth = CGFloat(60)
+        let circleLineWidth = CGFloat(frame.size.width - CGFloat(centerCircleWidth)) / CGFloat(channelNum * 2)
         var progressView: CircularSlider?
+        var progressViewCenter:CGPoint? = nil
+        let colorArray = [UIColor.red, UIColor.green, UIColor.blue, UIColor.white]
         for i in 0 ..< channelNum {
-            progressView = CircularSlider(frame: CGRect(x: 0.0, y:0.0, width: Double(centerCircleWidth + 2 * circleLineWidth * (i + 1)), height: Double(centerCircleWidth + 2 * circleLineWidth * (i + 1))))
+            progressView = CircularSlider(frame: CGRect(x: 0.0, y:0.0, width: Double(centerCircleWidth + CGFloat(2 * (channelNum - i)) * circleLineWidth), height: Double(centerCircleWidth + CGFloat(2 * (channelNum - i)) * circleLineWidth)))
             
-            progressView?.layer.zPosition = CGFloat(channelNum - i)
-            progressView?.lineWidth = 20
-            progressView?.trackColor = UIColor.red
-            progressView?.center = CGPoint(x: UIScreen.main.bounds.width / 2, y: 0)
-            circleBackgroundView.addSubview(progressView!)
+            progressView?.tag = 1000 + i
+            progressView?.minimumValue = 0.0
+            progressView?.maximumValue = 1000.0
+            progressView?.layer.zPosition = CGFloat(i)
+            progressView?.lineWidth = circleLineWidth
+            progressView?.backtrackLineWidth = circleLineWidth
+            progressView?.backgroundColor = UIColor.white
+            progressView?.trackColor = colorArray[i]
+            progressView?.layer.cornerRadius = (progressView?.frame.size.width)! / 2;
+            progressView?.clipsToBounds = true
+            progressView?.layer.masksToBounds = true
+            
+            if progressViewCenter != nil {
+                progressView?.center = progressViewCenter!
+            } else {
+                progressView?.center = CGPoint(x: UIScreen.main.bounds.width / 2, y: (progressView?.center.y)!)
+            }
+            
+            progressView?.addTarget(self, action: #selector(colorValueChanged(view:)), for: UIControlEvents.valueChanged)
+            
+            progressViewArray?.append(progressView!)
+            self.addSubview(progressView!)
+            
+            progressViewCenter = progressView?.center
         }
         
-        self.addSubview(circleBackgroundView)
+        updateManualCircleView(colorPercentArray: colorPercentArray)
+    }
+    
+    override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
+        for progressView in self.progressViewArray {
+            if touchPointInsideCircle(center: progressView.center, radius: progressView.layer.cornerRadius + progressView.lineWidth / 2.0, point: point) && touchPointOutsideCircle(center: progressView.center, radius: progressView.layer.cornerRadius - progressView.lineWidth / 2.0, point: point) {
+                return progressView
+            }
+        }
+        return nil
+    }
+    
+    func touchPointInsideCircle(center: CGPoint, radius: CGFloat, point: CGPoint) -> Bool {
+        let x = (point.x - center.x) * (point.x - center.x)
+        let y = (point.y - center.y) * (point.y - center.y)
+        let dist: CGFloat  = CGFloat(sqrtf(Float(x + y)))
+        return (dist <= radius)
+    }
+    
+    func touchPointOutsideCircle(center: CGPoint, radius: CGFloat, point: CGPoint) -> Bool {
+        let x = (point.x - center.x) * (point.x - center.x)
+        let y = (point.y - center.y) * (point.y - center.y)
+        let dist: CGFloat  = CGFloat(sqrtf(Float(x + y)))
+        return (dist > radius)
+    }
+    
+    @objc func colorValueChanged(view: UIView) -> Void {
+        let progressView: CircularSlider! = view as! CircularSlider;
+    
+        if passColorValueCallback != nil {
+            passColorValueCallback!(progressView.tag - 1000, Int(progressView.endPointValue))
+        }
+    }
+    
+    func updateManualCircleView(colorPercentArray: [Int]!) -> Void {
+        for i in 0 ..< colorPercentArray.count {
+            progressViewArray![i].endPointValue = CGFloat(colorPercentArray[i])
+        }
     }
     
     required init?(coder aDecoder: NSCoder) {

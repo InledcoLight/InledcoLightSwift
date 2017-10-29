@@ -18,7 +18,7 @@ class DeviceParameterModel: NSObject {
     // 命令码
     var commandCode: String! = ""
     // 通道数量
-    var channelNum: Int8?
+    var channelNum: Int?
     // 运行模式
     var runMode: DeviceRunMode?
     // 开关状态
@@ -27,7 +27,7 @@ class DeviceParameterModel: NSObject {
     var dynamicMode: String?
     // 自动模式数据
     // 时间点个数
-    var timePointNum: Int8?
+    var timePointNum: Int?
     // 时间点数组
     var timePointArray: [String]! = [String]()
     // 自动模式时间点对应值
@@ -36,35 +36,36 @@ class DeviceParameterModel: NSObject {
     var manualModeValueDic: [Int: String]! = [Int: String]()
     // 用户自定义数据
     var userDefinedValueDic: [Int: String]! = [Int: String]()
+    
+    func parameterModelCopy(parameterModel: DeviceParameterModel) -> Void {
+        parameterModel.typeCode = self.typeCode
+        parameterModel.uuid = self.uuid
+        parameterModel.commandHeader = self.commandHeader
+        parameterModel.commandCode = self.commandCode
+        parameterModel.channelNum = self.channelNum
+        parameterModel.runMode = self.runMode
+        parameterModel.powerState = self.powerState
+        parameterModel.dynamicMode = self.dynamicMode
+        parameterModel.timePointNum = self.timePointNum
+        
+        parameterModel.timePointArray.removeAll()
+        for timePoint in self.timePointArray {
+            parameterModel.timePointArray.append(timePoint)
+        }
+        
+        timePointValueDic.removeAll()
+        for key in timePointValueDic.keys {
+            parameterModel.timePointValueDic[key] = timePointValueDic[key]
+        }
+        
+        manualModeValueDic.removeAll()
+        for key in manualModeValueDic.keys {
+            parameterModel.manualModeValueDic[key] = manualModeValueDic[key]
+        }
+        
+        userDefinedValueDic.removeAll()
+        for key in userDefinedValueDic.keys {
+            parameterModel.userDefinedValueDic[key] = userDefinedValueDic[key]
+        }
+    }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

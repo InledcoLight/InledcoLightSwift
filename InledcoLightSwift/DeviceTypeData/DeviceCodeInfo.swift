@@ -12,7 +12,7 @@ class DeviceCodeInfo: NSObject {
     var deviceTypeCode: DeviceTypeData.DeviceTypeCode?
     var deviceName: String?
     var pictureName: String?
-    var channelNum: Int8?
+    var channelNum: Int?
     var firmwaredId: Int?
     var channelColorArray: [UIColor]?
     var channelColorTitleArray: [String]?

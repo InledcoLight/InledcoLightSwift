@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		0BDF2ADF2A10831CBD152E16 /* Pods_InledcoLightSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 39B568DF0573168D0523988A /* Pods_InledcoLightSwift.framework */; };
 		8F2AAF2A1F97339F002A176D /* ManualCircleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F2AAF291F97339F002A176D /* ManualCircleView.swift */; };
+		8F4C886A1FA1AB5700C8D37D /* SystemInfoTools.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F4C88691FA1AA5500C8D37D /* SystemInfoTools.swift */; };
 		8F66B5FD1F7DE8550086E350 /* DeviceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F66B5FC1F7DE8550086E350 /* DeviceModel.swift */; };
 		8F66B5FF1F7DEE990086E350 /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F66B5FE1F7DEE990086E350 /* CoreBluetooth.framework */; };
 		8F6C77331F8DDF3100E0A22D /* DeviceTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F6C77311F8DDF3100E0A22D /* DeviceTableViewCell.swift */; };
@@ -18,6 +19,7 @@
 		8F7B78101F95AEA600DF4048 /* ColorSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7B780E1F95AEA600DF4048 /* ColorSettingViewController.swift */; };
 		8F7B78111F95AEA600DF4048 /* ColorSettingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8F7B780F1F95AEA600DF4048 /* ColorSettingViewController.xib */; };
 		8F7B78131F95B04300DF4048 /* DeviceParameterModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7B78121F95B04300DF4048 /* DeviceParameterModel.swift */; };
+		8F8AB62E1FA175140049D7F1 /* ManualAutoSwitchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8AB62D1FA175140049D7F1 /* ManualAutoSwitchView.swift */; };
 		8F8C8B3A1F6CBDB7006F0461 /* DeviceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8C8B391F6CBDB7006F0461 /* DeviceViewController.swift */; };
 		8F8C8B3D1F6CD3C5006F0461 /* ScanDeviceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8C8B3B1F6CD3C5006F0461 /* ScanDeviceViewController.swift */; };
 		8F8C8B3E1F6CD3C5006F0461 /* ScanDeviceViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8F8C8B3C1F6CD3C5006F0461 /* ScanDeviceViewController.xib */; };
@@ -31,6 +33,13 @@
 		8F9952FE1F9090EC00155C82 /* LanguageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8F9952FC1F9090EC00155C82 /* LanguageTableViewCell.xib */; };
 		8F9D906E1F8F45CC00AAC57F /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8F9D90701F8F45CC00AAC57F /* Localizable.strings */; };
 		8F9D90761F8F481300AAC57F /* LanguageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F9D90751F8F481300AAC57F /* LanguageManager.swift */; };
+		8F9F8B491FA2DC9C006E562D /* AutoColorChareView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F9F8B481FA2DC9C006E562D /* AutoColorChareView.swift */; };
+		8F9F8B4D1FA33CE3006E562D /* LayoutTools.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F9F8B4C1FA33CE3006E562D /* LayoutTools.swift */; };
+		8F9F8B541FA34767006E562D /* AutoColorEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F9F8B521FA34767006E562D /* AutoColorEditViewController.swift */; };
+		8F9F8B551FA34767006E562D /* AutoColorEditViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8F9F8B531FA34767006E562D /* AutoColorEditViewController.xib */; };
+		8F9F8B571FA34D0C006E562D /* ManualSliderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F9F8B561FA34D0C006E562D /* ManualSliderView.swift */; };
+		8FA1C1AA1FA47FC200DBD42B /* TimePointTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FA1C1A81FA47FC200DBD42B /* TimePointTableViewCell.swift */; };
+		8FA1C1AB1FA47FC200DBD42B /* TimePointTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8FA1C1A91FA47FC200DBD42B /* TimePointTableViewCell.xib */; };
 		8FB994C21F8CB643008C6ACF /* DeviceDataCoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FB994C11F8CB643008C6ACF /* DeviceDataCoreManager.swift */; };
 		8FB994EA1F8CC14E008C6ACF /* BleDevice+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FB994E41F8CC14E008C6ACF /* BleDevice+CoreDataClass.swift */; };
 		8FB994EB1F8CC14E008C6ACF /* BleDevice+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FB994E51F8CC14E008C6ACF /* BleDevice+CoreDataProperties.swift */; };
@@ -77,6 +86,7 @@
 		5C0891B0AF528E46D4A84E16 /* Pods-InledcoLightSwift.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InledcoLightSwift.release.xcconfig"; path = "Pods/Target Support Files/Pods-InledcoLightSwift/Pods-InledcoLightSwift.release.xcconfig"; sourceTree = "<group>"; };
 		5F4E474273CA165558F46D96 /* Pods-InledcoLightSwift.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InledcoLightSwift.debug.xcconfig"; path = "Pods/Target Support Files/Pods-InledcoLightSwift/Pods-InledcoLightSwift.debug.xcconfig"; sourceTree = "<group>"; };
 		8F2AAF291F97339F002A176D /* ManualCircleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManualCircleView.swift; sourceTree = "<group>"; };
+		8F4C88691FA1AA5500C8D37D /* SystemInfoTools.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemInfoTools.swift; sourceTree = "<group>"; };
 		8F66B5FC1F7DE8550086E350 /* DeviceModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceModel.swift; sourceTree = "<group>"; };
 		8F66B5FE1F7DEE990086E350 /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
 		8F6C77311F8DDF3100E0A22D /* DeviceTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceTableViewCell.swift; sourceTree = "<group>"; };
@@ -86,6 +96,7 @@
 		8F7B780E1F95AEA600DF4048 /* ColorSettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorSettingViewController.swift; sourceTree = "<group>"; };
 		8F7B780F1F95AEA600DF4048 /* ColorSettingViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ColorSettingViewController.xib; sourceTree = "<group>"; };
 		8F7B78121F95B04300DF4048 /* DeviceParameterModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceParameterModel.swift; sourceTree = "<group>"; };
+		8F8AB62D1FA175140049D7F1 /* ManualAutoSwitchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManualAutoSwitchView.swift; sourceTree = "<group>"; };
 		8F8C8B391F6CBDB7006F0461 /* DeviceViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceViewController.swift; sourceTree = "<group>"; };
 		8F8C8B3B1F6CD3C5006F0461 /* ScanDeviceViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScanDeviceViewController.swift; sourceTree = "<group>"; };
 		8F8C8B3C1F6CD3C5006F0461 /* ScanDeviceViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ScanDeviceViewController.xib; sourceTree = "<group>"; };
@@ -101,6 +112,13 @@
 		8F9D906F1F8F45CC00AAC57F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		8F9D90711F8F45E100AAC57F /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		8F9D90751F8F481300AAC57F /* LanguageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageManager.swift; sourceTree = "<group>"; };
+		8F9F8B481FA2DC9C006E562D /* AutoColorChareView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoColorChareView.swift; sourceTree = "<group>"; };
+		8F9F8B4C1FA33CE3006E562D /* LayoutTools.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutTools.swift; sourceTree = "<group>"; };
+		8F9F8B521FA34767006E562D /* AutoColorEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoColorEditViewController.swift; sourceTree = "<group>"; };
+		8F9F8B531FA34767006E562D /* AutoColorEditViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AutoColorEditViewController.xib; sourceTree = "<group>"; };
+		8F9F8B561FA34D0C006E562D /* ManualSliderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManualSliderView.swift; sourceTree = "<group>"; };
+		8FA1C1A81FA47FC200DBD42B /* TimePointTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimePointTableViewCell.swift; sourceTree = "<group>"; };
+		8FA1C1A91FA47FC200DBD42B /* TimePointTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TimePointTableViewCell.xib; sourceTree = "<group>"; };
 		8FB994C11F8CB643008C6ACF /* DeviceDataCoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceDataCoreManager.swift; sourceTree = "<group>"; };
 		8FB994E41F8CC14E008C6ACF /* BleDevice+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BleDevice+CoreDataClass.swift"; sourceTree = "<group>"; };
 		8FB994E51F8CC14E008C6ACF /* BleDevice+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BleDevice+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -231,10 +249,21 @@
 			isa = PBXGroup;
 			children = (
 				8F2AAF291F97339F002A176D /* ManualCircleView.swift */,
+				8F8AB62D1FA175140049D7F1 /* ManualAutoSwitchView.swift */,
+				8F9F8B481FA2DC9C006E562D /* AutoColorChareView.swift */,
+				8F9F8B561FA34D0C006E562D /* ManualSliderView.swift */,
 			);
 			name = GlobalViews;
 			path = InledcoLightSwift/GlobalViews;
 			sourceTree = SOURCE_ROOT;
+		};
+		8F4C88681FA1AA4D00C8D37D /* SystemInfoTools */ = {
+			isa = PBXGroup;
+			children = (
+				8F4C88691FA1AA5500C8D37D /* SystemInfoTools.swift */,
+			);
+			path = SystemInfoTools;
+			sourceTree = "<group>";
 		};
 		8F66B5FB1F7DE8350086E350 /* Models */ = {
 			isa = PBXGroup;
@@ -412,6 +441,49 @@
 			path = LanguageManager;
 			sourceTree = "<group>";
 		};
+		8F9F8B4B1FA33CCF006E562D /* LayoutTools */ = {
+			isa = PBXGroup;
+			children = (
+				8F9F8B4C1FA33CE3006E562D /* LayoutTools.swift */,
+			);
+			path = LayoutTools;
+			sourceTree = "<group>";
+		};
+		8F9F8B4E1FA34739006E562D /* AutoColorEdit */ = {
+			isa = PBXGroup;
+			children = (
+				8F9F8B4F1FA34745006E562D /* Controller */,
+				8F9F8B501FA34746006E562D /* Model */,
+				8F9F8B511FA34746006E562D /* View */,
+			);
+			path = AutoColorEdit;
+			sourceTree = "<group>";
+		};
+		8F9F8B4F1FA34745006E562D /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				8F9F8B521FA34767006E562D /* AutoColorEditViewController.swift */,
+				8F9F8B531FA34767006E562D /* AutoColorEditViewController.xib */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		8F9F8B501FA34746006E562D /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		8F9F8B511FA34746006E562D /* View */ = {
+			isa = PBXGroup;
+			children = (
+				8FA1C1A81FA47FC200DBD42B /* TimePointTableViewCell.swift */,
+				8FA1C1A91FA47FC200DBD42B /* TimePointTableViewCell.xib */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		8FB994D71F8CC093008C6ACF /* DeviceDataCore1 */ = {
 			isa = PBXGroup;
 			children = (
@@ -459,6 +531,7 @@
 		8FE2C4C91F31DF24000DE7E8 /* CodeClass */ = {
 			isa = PBXGroup;
 			children = (
+				8F9F8B4E1FA34739006E562D /* AutoColorEdit */,
 				8F7B780A1F95AE7A00DF4048 /* ColorSetting */,
 				8F9952EF1F9071AF00155C82 /* LanguageSetting */,
 				8F9952E71F90645800155C82 /* Setting */,
@@ -553,6 +626,8 @@
 			isa = PBXGroup;
 			children = (
 				8FC2A3C11F8B686500BEAE90 /* InledcoLightSwift-Bridging-Header.h */,
+				8F9F8B4B1FA33CCF006E562D /* LayoutTools */,
+				8F4C88681FA1AA4D00C8D37D /* SystemInfoTools */,
 				8F2AAF281F9732D8002A176D /* GlobalViews */,
 				8FBD22EC1F970331006B73C9 /* DeviceTypeData */,
 				8F74C8A31F91EF8300032C06 /* StringManager */,
@@ -696,7 +771,9 @@
 				8F8C8B461F6CD403006F0461 /* ScanDeviceTableViewCell.xib in Resources */,
 				8F7B78111F95AEA600DF4048 /* ColorSettingViewController.xib in Resources */,
 				8F9952FE1F9090EC00155C82 /* LanguageTableViewCell.xib in Resources */,
+				8FA1C1AB1FA47FC200DBD42B /* TimePointTableViewCell.xib in Resources */,
 				8FE76F1C1F2EB09100FC9634 /* Assets.xcassets in Resources */,
+				8F9F8B551FA34767006E562D /* AutoColorEditViewController.xib in Resources */,
 				8F9952F61F9082C000155C82 /* LanguageViewController.xib in Resources */,
 				8FE76F1A1F2EB09100FC9634 /* Main.storyboard in Resources */,
 			);
@@ -846,16 +923,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8F4C886A1FA1AB5700C8D37D /* SystemInfoTools.swift in Sources */,
 				8F7B78101F95AEA600DF4048 /* ColorSettingViewController.swift in Sources */,
 				8FE41ADD1F7F75BF00825501 /* DeviceModel.xcdatamodeld in Sources */,
+				8F9F8B4D1FA33CE3006E562D /* LayoutTools.swift in Sources */,
 				8FB994EB1F8CC14E008C6ACF /* BleDevice+CoreDataProperties.swift in Sources */,
 				8FBD22EE1F970350006B73C9 /* DeviceTypeData.swift in Sources */,
 				8F2AAF2A1F97339F002A176D /* ManualCircleView.swift in Sources */,
 				8F9952F51F9082C000155C82 /* LanguageViewController.swift in Sources */,
 				8F8C8B3D1F6CD3C5006F0461 /* ScanDeviceViewController.swift in Sources */,
+				8F8AB62E1FA175140049D7F1 /* ManualAutoSwitchView.swift in Sources */,
 				8F7B78131F95B04300DF4048 /* DeviceParameterModel.swift in Sources */,
 				8FB994C21F8CB643008C6ACF /* DeviceDataCoreManager.swift in Sources */,
 				8FB994EC1F8CC14E008C6ACF /* BleBrand+CoreDataClass.swift in Sources */,
+				8F9F8B571FA34D0C006E562D /* ManualSliderView.swift in Sources */,
 				8F74C8A21F91AAAC00032C06 /* BlueToothManager.swift in Sources */,
 				8F9952EE1F9064ED00155C82 /* SettingViewController.swift in Sources */,
 				8FB994EF1F8CC14E008C6ACF /* BleGroup+CoreDataProperties.swift in Sources */,
@@ -863,14 +944,17 @@
 				8F8CA5F51F5D05A100922993 /* BaseViewController.swift in Sources */,
 				8F8C8B3A1F6CBDB7006F0461 /* DeviceViewController.swift in Sources */,
 				8FB994ED1F8CC14E008C6ACF /* BleBrand+CoreDataProperties.swift in Sources */,
+				8F9F8B491FA2DC9C006E562D /* AutoColorChareView.swift in Sources */,
 				8F6C77331F8DDF3100E0A22D /* DeviceTableViewCell.swift in Sources */,
 				8FB994EA1F8CC14E008C6ACF /* BleDevice+CoreDataClass.swift in Sources */,
 				8F8C8B451F6CD403006F0461 /* ScanDeviceTableViewCell.swift in Sources */,
+				8FA1C1AA1FA47FC200DBD42B /* TimePointTableViewCell.swift in Sources */,
 				8FBD22F01F971C7B006B73C9 /* DeviceCodeInfo.swift in Sources */,
 				8F9952FD1F9090EC00155C82 /* LanguageTableViewCell.swift in Sources */,
 				8FE76F151F2EB09100FC9634 /* AppDelegate.swift in Sources */,
 				8F74C8A51F91F01900032C06 /* StringManager.swift in Sources */,
 				8F66B5FD1F7DE8550086E350 /* DeviceModel.swift in Sources */,
+				8F9F8B541FA34767006E562D /* AutoColorEditViewController.swift in Sources */,
 				8F9D90761F8F481300AAC57F /* LanguageManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

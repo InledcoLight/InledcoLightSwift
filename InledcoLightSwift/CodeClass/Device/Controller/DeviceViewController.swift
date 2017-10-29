@@ -24,14 +24,17 @@ class DeviceViewController: BaseViewController,UITableViewDelegate,UITableViewDa
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        prepareBluetoothData()
-        createAlertController()
         // 视图设置
         setViews()
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        print("")
+        // 断开蓝牙
+        if self.selectDeviceModel != nil && self.selectDeviceModel?.uuidString != nil {
+            self.blueToothManager.disConnectDevice(uuid: self.selectDeviceModel?.uuidString)
+        }
+        
+        // 准备数据
         prepareData()
     }
     
@@ -42,8 +45,6 @@ class DeviceViewController: BaseViewController,UITableViewDelegate,UITableViewDa
         // 1.连接成功回调
         self.blueToothManager.completeReceiveDataCallback = {
             (receiveDataStr) in
-            // 跳转界面等
-            print("接收到的数据\(String(describing: receiveDataStr))")
             // 获取当前数据动态信息
             let deviceCodeInfo = DeviceTypeData.getDeviceInfoWithTypeCode(deviceTypeCode: DeviceTypeData.DeviceTypeCode(rawValue: (self.selectDeviceModel?.typeCode)!)!)
             
@@ -98,14 +99,7 @@ class DeviceViewController: BaseViewController,UITableViewDelegate,UITableViewDa
          alertController = UIAlertController(title: languageManager.getTextForKey(key: "operation"), message: nil, preferredStyle: .actionSheet)
         // 删除操作
         let deleteAction: UIAlertAction = UIAlertAction(title: languageManager.getTextForKey(key: "delete"), style: .destructive) { (alertAction) in
-            print("删除")
         }
-        
-        // 重命名操作
-        let renameAction: UIAlertAction = UIAlertAction(title: languageManager.getTextForKey(key: "rename"), style: .default, handler: {
-            (alterAction) in
-            print("重命名")
-        })
         
         // 重命名操作
         let connectAction: UIAlertAction = UIAlertAction(title: languageManager.getTextForKey(key: "connect"), style: .default) { (alertAction) in
@@ -121,7 +115,6 @@ class DeviceViewController: BaseViewController,UITableViewDelegate,UITableViewDa
         }
         
         alertController.addAction(deleteAction)
-        alertController.addAction(renameAction)
         alertController.addAction(connectAction)
         alertController.addAction(cancalAction)
     }
@@ -129,6 +122,9 @@ class DeviceViewController: BaseViewController,UITableViewDelegate,UITableViewDa
     override func prepareData() {
         // 这里只做从数据库中的操作
         super.prepareData()
+        prepareBluetoothData()
+        createAlertController()
+        
         self.deviceDataSourceArray.removeAllObjects()
         
         // 从数据库中读取数据

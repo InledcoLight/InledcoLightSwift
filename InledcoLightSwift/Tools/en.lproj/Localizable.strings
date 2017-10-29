@@ -21,3 +21,25 @@ rename = "Rename";
 connect = "Connect";
 connecting = "Connecting";
 connectFailed = "Connect Failed!";
+manualMode = "Manual";
+autoMode = "Auto";
+add = "Add";
+save = "Save";
+giveUpSave = "Give Up Save?";
+confirm = "Confirm";
+timePoint24 = "Time Points-24H";
+preview = "Preview";
+run = "Run";
+edit = "Edit";
+
+
+
+
+
+
+
+
+
+
+
+
