@@ -33,7 +33,7 @@
 		8F9952FE1F9090EC00155C82 /* LanguageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8F9952FC1F9090EC00155C82 /* LanguageTableViewCell.xib */; };
 		8F9D906E1F8F45CC00AAC57F /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8F9D90701F8F45CC00AAC57F /* Localizable.strings */; };
 		8F9D90761F8F481300AAC57F /* LanguageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F9D90751F8F481300AAC57F /* LanguageManager.swift */; };
-		8F9F8B491FA2DC9C006E562D /* AutoColorChareView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F9F8B481FA2DC9C006E562D /* AutoColorChareView.swift */; };
+		8F9F8B491FA2DC9C006E562D /* AutoColorChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F9F8B481FA2DC9C006E562D /* AutoColorChartView.swift */; };
 		8F9F8B4D1FA33CE3006E562D /* LayoutTools.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F9F8B4C1FA33CE3006E562D /* LayoutTools.swift */; };
 		8F9F8B541FA34767006E562D /* AutoColorEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F9F8B521FA34767006E562D /* AutoColorEditViewController.swift */; };
 		8F9F8B551FA34767006E562D /* AutoColorEditViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8F9F8B531FA34767006E562D /* AutoColorEditViewController.xib */; };
@@ -112,7 +112,7 @@
 		8F9D906F1F8F45CC00AAC57F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		8F9D90711F8F45E100AAC57F /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		8F9D90751F8F481300AAC57F /* LanguageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageManager.swift; sourceTree = "<group>"; };
-		8F9F8B481FA2DC9C006E562D /* AutoColorChareView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoColorChareView.swift; sourceTree = "<group>"; };
+		8F9F8B481FA2DC9C006E562D /* AutoColorChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoColorChartView.swift; sourceTree = "<group>"; };
 		8F9F8B4C1FA33CE3006E562D /* LayoutTools.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutTools.swift; sourceTree = "<group>"; };
 		8F9F8B521FA34767006E562D /* AutoColorEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoColorEditViewController.swift; sourceTree = "<group>"; };
 		8F9F8B531FA34767006E562D /* AutoColorEditViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AutoColorEditViewController.xib; sourceTree = "<group>"; };
@@ -250,7 +250,7 @@
 			children = (
 				8F2AAF291F97339F002A176D /* ManualCircleView.swift */,
 				8F8AB62D1FA175140049D7F1 /* ManualAutoSwitchView.swift */,
-				8F9F8B481FA2DC9C006E562D /* AutoColorChareView.swift */,
+				8F9F8B481FA2DC9C006E562D /* AutoColorChartView.swift */,
 				8F9F8B561FA34D0C006E562D /* ManualSliderView.swift */,
 			);
 			name = GlobalViews;
@@ -944,7 +944,7 @@
 				8F8CA5F51F5D05A100922993 /* BaseViewController.swift in Sources */,
 				8F8C8B3A1F6CBDB7006F0461 /* DeviceViewController.swift in Sources */,
 				8FB994ED1F8CC14E008C6ACF /* BleBrand+CoreDataProperties.swift in Sources */,
-				8F9F8B491FA2DC9C006E562D /* AutoColorChareView.swift in Sources */,
+				8F9F8B491FA2DC9C006E562D /* AutoColorChartView.swift in Sources */,
 				8F6C77331F8DDF3100E0A22D /* DeviceTableViewCell.swift in Sources */,
 				8FB994EA1F8CC14E008C6ACF /* BleDevice+CoreDataClass.swift in Sources */,
 				8F8C8B451F6CD403006F0461 /* ScanDeviceTableViewCell.swift in Sources */,
