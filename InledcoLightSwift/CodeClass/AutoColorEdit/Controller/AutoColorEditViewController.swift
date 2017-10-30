@@ -63,7 +63,7 @@ class AutoColorEditViewController: BaseViewController, UITableViewDelegate, UITa
             (index, colorValue) in
             // 根据时间点信息，把更改同步到模型中
             if self.selectedTimePointIndex != nil {
-                String.saveColorValueToModel(timePointCount: self.parameterModel?.timePointArray.count, timePointIndex: self.selectedTimePointIndex, colorIndex: index, colorValue: colorValue, parameterModel: self.editParameterModel)
+                String.saveColorValueToModel(timePointCount: self.editParameterModel?.timePointArray.count, timePointIndex: self.selectedTimePointIndex, colorIndex: index, colorValue: colorValue, parameterModel: self.editParameterModel)
                 print(self.editParameterModel?.timePointValueDic[0] ?? "a")
             }
         }

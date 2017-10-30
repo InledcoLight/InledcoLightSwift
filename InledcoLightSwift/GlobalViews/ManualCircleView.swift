@@ -33,17 +33,18 @@ class ManualCircleView: UIView {
         let circleLineWidth = CGFloat(frame.size.width - CGFloat(centerCircleWidth)) / CGFloat(channelNum * 2)
         var progressView: CircularSlider?
         var progressViewCenter:CGPoint? = nil
-        let colorArray = [UIColor.red, UIColor.green, UIColor.blue, UIColor.white]
         for i in 0 ..< channelNum {
             progressView = CircularSlider(frame: CGRect(x: 0.0, y:0.0, width: Double(centerCircleWidth + CGFloat(2 * (channelNum - i)) * circleLineWidth), height: Double(centerCircleWidth + CGFloat(2 * (channelNum - i)) * circleLineWidth)))
             
             progressView?.tag = 1000 + i
             progressView?.minimumValue = 0.0
-            progressView?.maximumValue = 1000.0
+            progressView?.maximumValue = 1000
             progressView?.layer.zPosition = CGFloat(i)
             progressView?.lineWidth = circleLineWidth
             progressView?.backtrackLineWidth = circleLineWidth
-            progressView?.backgroundColor = UIColor.white
+            progressView?.backgroundColor = UIColor.clear
+            progressView?.endThumbTintColor = colorArray[i]
+            progressView?.endThumbStrokeColor = UIColor.gray
             progressView?.trackColor = colorArray[i]
             progressView?.layer.cornerRadius = (progressView?.frame.size.width)! / 2;
             progressView?.clipsToBounds = true

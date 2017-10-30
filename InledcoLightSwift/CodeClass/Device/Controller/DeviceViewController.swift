@@ -44,7 +44,7 @@ class DeviceViewController: BaseViewController,UITableViewDelegate,UITableViewDa
     func prepareBluetoothData() -> Void {
         // 1.连接成功回调
         self.blueToothManager.completeReceiveDataCallback = {
-            (receiveDataStr) in
+            (receiveDataStr, commandType) in
             // 获取当前数据动态信息
             let deviceCodeInfo = DeviceTypeData.getDeviceInfoWithTypeCode(deviceTypeCode: DeviceTypeData.DeviceTypeCode(rawValue: (self.selectDeviceModel?.typeCode)!)!)
             
@@ -69,7 +69,7 @@ class DeviceViewController: BaseViewController,UITableViewDelegate,UITableViewDa
         
         // 2.连接失败回调
         self.blueToothManager.connectFailedCallback = {
-            (receiveDataStr) in
+            (receiveDataStr, commandType) in
             Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(self.connectFailed(timer:)), userInfo: nil, repeats: false)
             
             self.connectAlertController?.dismiss(animated: true, completionHandler: nil)

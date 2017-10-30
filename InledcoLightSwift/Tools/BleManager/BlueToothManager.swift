@@ -30,6 +30,9 @@ enum CommandHeader: String {
     case COMMANDHEAD_THREE = "6803"
     case COMMANDHEAD_FOUR = "6804"
     case COMMANDHEAD_FIVE = "6805"
+    case COMMANDHEAD_SIX = "6806"
+    case COMMANDHEAD_ELEVEN = "680B"
+    case COMMANDHEAD_TWELVE = "680C"
 }
 
 // 命令类型
@@ -38,6 +41,7 @@ enum CommandType {
     case POWERON_COMMAND
     case POWEROFF_COMMAND
     case FINDDEVICE_COMMAND
+    case SETTINGUSERDEFINED_COMMAND
     case READTIME_COMMAND
     case MANUALMODE_COMMAN
     case AUTOMODE_COMMAN
@@ -57,7 +61,7 @@ class BlueToothManager: NSObject, BLEManagerDelegate {
     private let maxCommandLength: Int = 30
     private var currentCommandType: CommandType! = .UNKNOWN_COMMAND
     private var receivedData: String = ""
-    typealias oneStrParameterType = (_ dataStr: String?) -> Void
+    typealias oneStrParameterType = (_ dataStr: String?, _ commandType: CommandType) -> Void
     var completeReceiveDataCallback: oneStrParameterType?
     var connectFailedCallback: oneStrParameterType?
     
@@ -108,7 +112,7 @@ class BlueToothManager: NSObject, BLEManagerDelegate {
             
             // 调用连接超时回调
             if connectFailedCallback != nil {
-                self.connectFailedCallback!(nil)
+                self.connectFailedCallback!(nil, CommandType.UNKNOWN_COMMAND)
             }
             
             return
@@ -287,15 +291,16 @@ class BlueToothManager: NSObject, BLEManagerDelegate {
             // print("接收到的完整数据:\(self.receivedData)")
             
             // 根据命令类型，处理返回的数据
-            print("发送的命令：\(self.currentCommandType)")
+            print("发送的命令：\(self.currentCommandType),receivedData=\(String(self.receivedData))")
             switch self.currentCommandType {
             case .SYNCTIME_COMMAND,
                  .POWERON_COMMAND,
                  .POWEROFF_COMMAND,
                  .MANUALMODE_COMMAN,
+                 .SETTINGUSERDEFINED_COMMAND,
                  .AUTOMODE_COMMAN:
                 if self.completeReceiveDataCallback != nil {
-                    self.completeReceiveDataCallback!(self.receivedData)
+                    self.completeReceiveDataCallback!(self.receivedData, self.currentCommandType)
                 }
               
             default:

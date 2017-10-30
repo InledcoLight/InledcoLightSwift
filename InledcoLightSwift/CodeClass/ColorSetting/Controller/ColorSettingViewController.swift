@@ -18,9 +18,13 @@ class ColorSettingViewController: BaseViewController {
     var manualPowerButton: UIButton?
     var manualAutoViewFrame: CGRect?
     var deviceInfo: DeviceCodeInfo?
-    
+    var isShowSaveSuccessful: Bool! = true
+    var quickPreviewTimer: Timer?
+    var previewCount: Int! = 0
     var autoModeView: UIView?
     var autoColorChartView: AutoColorChartView?
+    var timeCountArray: [Int]! = [Int]()
+    var timeCountIntervalArray: [Int]! = [Int]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,6 +39,22 @@ class ColorSettingViewController: BaseViewController {
         // Do any additional setup after loading the view.
         prepareData()
         setViews()
+    }
+    
+    override func prepareData() {
+        super.prepareData()
+        deviceInfo = DeviceTypeData.getDeviceInfoWithTypeCode(deviceTypeCode: (parameterModel?.typeCode)!)
+        self.blueToothManager.completeReceiveDataCallback = {
+            (receivedDataStr, commandType) in
+            self.blueToothManager.parseDeviceDataFromReceiveStrToModel(receiveData: receivedDataStr!, parameterModel: self.parameterModel!)
+            // 更新界面
+            self.setManualAutoViews()
+            
+            // 提示保存当前设置成功
+            if commandType == CommandType.SETTINGUSERDEFINED_COMMAND {
+                self.showMessageWithTitle(title: "保存成功", time: 1.5, isShow: true)
+            }
+        }
     }
     
     override func setViews() {
@@ -120,6 +140,7 @@ class ColorSettingViewController: BaseViewController {
             self.autoModeView?.isHidden = true
         }
         
+        let manualPercentArray = getManualColorPercentArray(parameterModel: self.parameterModel)
         if manualModeView == nil {
             // 创建手动模式视图
             manualModeView = UIView(frame: manualAutoViewFrame!)
@@ -127,10 +148,6 @@ class ColorSettingViewController: BaseViewController {
             
             // 1.圆形调光视图
             let manualColorViewFrame = CGRect(x: 0, y: 16, width: SystemInfoTools.screenWidth - 50, height: SystemInfoTools.screenWidth - 50)
-            var manualPercentArray = [Int]()
-            for key in (parameterModel?.manualModeValueDic.keys)! {
-                manualPercentArray.append((parameterModel?.manualModeValueDic[key]?.hexaToDecimal)!)
-            }
             manualColorView = ManualCircleView(frame: manualColorViewFrame, channelNum: (parameterModel?.channelNum)!, colorArray: deviceInfo?.channelColorArray, colorPercentArray: manualPercentArray, colorTitleArray: deviceInfo?.channelColorTitleArray)
             manualColorView?.passColorValueCallback = {
                 (colorIndex, colorValue) in
@@ -143,6 +160,9 @@ class ColorSettingViewController: BaseViewController {
                         }
                     }
                 self.blueToothManager.sendCommandToDevice(uuid: (self.parameterModel?.uuid)!, commandStr: commandStr, commandType: CommandType.UNKNOWN_COMMAND, isXORCommand: true)
+                
+                // 更新模型数据
+                self.parameterModel?.manualModeValueDic[colorIndex] = String.init(format: "%04x", colorValue)
             }
             
             manualModeView?.addSubview(manualColorView!)
@@ -157,7 +177,23 @@ class ColorSettingViewController: BaseViewController {
                 commandStr.append((userColorStr?.convertUserPercentToHexColorValue())!)
                 
                 self.blueToothManager.sendCommandToDevice(uuid: (self.parameterModel?.uuid)!, commandStr: commandStr, commandType: .UNKNOWN_COMMAND, isXORCommand: true)
+                // 更新模型
+                for i in 0 ..< (self.parameterModel?.channelNum)! {
+                    let colorStr = userColorStr?.convertUserPercentToHexColorValue()
+                    self.parameterModel?.manualModeValueDic[i] = (colorStr! as NSString).substring(with: NSRange.init(location: i * 4, length: 4))
+                }
+                
+                // 更新圆盘
+                self.manualColorView?.updateManualCircleView(colorPercentArray: self.getManualColorPercentArray(parameterModel: self.parameterModel))
             }
+            
+            userDefineView.buttonLongPressCallback = {
+                (index) in
+                let commandStr = String.init(format: "%@%02x", CommandHeader.COMMANDHEAD_SIX.rawValue, index)
+                
+                self.blueToothManager.sendCommandToDevice(uuid: (self.parameterModel?.uuid)!, commandStr: commandStr, commandType: CommandType.SETTINGUSERDEFINED_COMMAND, isXORCommand: true)
+            }
+            
             manualModeView?.addSubview(userDefineView)
             
             // 3.开关按钮
@@ -179,7 +215,22 @@ class ColorSettingViewController: BaseViewController {
         } else {
             // 更新视图
             manualModeView?.isHidden = false
+            manualColorView?.updateManualCircleView(colorPercentArray: manualPercentArray)
         }
+    }
+    
+    /// 从参数模型中获取用户半分比
+    /// - parameter one:
+    /// - parameter two:
+    ///
+    /// - returns:
+    func getManualColorPercentArray(parameterModel: DeviceParameterModel!) -> [Int] {
+        var manualPercentArray = [Int]()
+        for key in (parameterModel?.manualModeValueDic.keys)! {
+            manualPercentArray.append((parameterModel?.manualModeValueDic[key]?.hexaToDecimal)!)
+        }
+        
+        return manualPercentArray
     }
     
     /// 开关方法
@@ -195,14 +246,6 @@ class ColorSettingViewController: BaseViewController {
             self.blueToothManager.sendPowerOnCommand(uuid: (parameterModel?.uuid)!)
             parameterModel?.powerState = DeviceState.POWER_ON
         }
-    }
-    
-    /// 用户自定义方法:点击后把用户对应的设置设置到灯体
-    /// - parameter sender:
-    ///
-    /// - returns:
-    @objc func userDefineAction(sender: UIButton) -> Void {
-        
     }
     
     func setAutoModeViews() -> Void {
@@ -229,9 +272,10 @@ class ColorSettingViewController: BaseViewController {
             bottomView.buttonActionCallback = {
                 (buttonTag) -> Void in
                     if (buttonTag == 0) {
-                        
+                        // 1.预览功能
+                        self.beginPreview()
                     } else if (buttonTag == 1) {
-                        
+                        // 2.发送设置到设备
                     } else {
                         // 3.跳转到编辑界面
                         let autoColorEditViewController = AutoColorEditViewController(nibName: "AutoColorEditViewController", bundle: Bundle.main)
@@ -255,15 +299,118 @@ class ColorSettingViewController: BaseViewController {
         }
     }
     
-    override func prepareData() {
-        super.prepareData()
-        deviceInfo = DeviceTypeData.getDeviceInfoWithTypeCode(deviceTypeCode: (parameterModel?.typeCode)!)
-        self.blueToothManager.completeReceiveDataCallback = {
-            (receivedDataStr) in
-            self.blueToothManager.parseDeviceDataFromReceiveStrToModel(receiveData: receivedDataStr!, parameterModel: self.parameterModel!)
-            // 更新界面
-            self.setManualAutoViews()
+    /// 开始预览功能
+    /// - parameter one:
+    /// - parameter two:
+    ///
+    /// - returns: Void
+    func beginPreview() -> Void {
+        previewCount = 0
+        
+        if timeCountArray.count == 0 {
+            var index = 0
+            for timeStr in (self.parameterModel?.timePointArray)! {
+                timeCountArray.append(timeStr.converTimeStrToMinute(timeStr: timeStr)!)
+                if index > 0 && index % 2 != 0 {
+                    timeCountIntervalArray.append(timeCountArray[index] - timeCountArray[index - 1])
+                }
+                index = index + 1
+            }
         }
+
+        quickPreviewTimer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(sendQuickPreviewCommand(timer:)), userInfo: nil, repeats: true)
+    }
+    
+    /// 取消预览功能
+    /// - parameter one:
+    /// - parameter two:
+    ///
+    /// - returns: Void
+    func cancelPreview() -> Void {
+        if quickPreviewTimer != nil {
+            quickPreviewTimer?.invalidate()
+            quickPreviewTimer = nil
+        }
+
+        self.blueToothManager.sendCommandToDevice(uuid: (self.parameterModel?.uuid)!, commandStr: CommandHeader.COMMANDHEAD_TWELVE.rawValue, commandType: CommandType.UNKNOWN_COMMAND, isXORCommand: true)
+    }
+    
+    /// 快速预览发送命令方法
+    /// - parameter timer: 定时器
+    ///
+    /// - returns:
+    @objc func sendQuickPreviewCommand(timer: Timer) -> Void {
+        var commandStr = String(CommandHeader.COMMANDHEAD_ELEVEN.rawValue)
+        
+        self.autoColorChartView?.hightValue(x: Double(previewCount), index: (self.parameterModel?.channelNum)! - 1)
+        
+        // 根据 previewCount 计算发送的数值
+        commandStr.append((calculateColorValue(previewCount: previewCount)))
+        print("commandStr = \(String(commandStr))")
+        self.blueToothManager.sendCommandToDevice(uuid: (self.parameterModel?.uuid)!, commandStr: commandStr, commandType: CommandType.UNKNOWN_COMMAND, isXORCommand: true)
+        
+        if Double(previewCount) >= (autoColorChartView?.lineChart?.chartXMax)! {
+            cancelPreview()
+        }
+        
+        previewCount = previewCount + 2
+    }
+    
+    /// 根据数值计算当前的颜色值
+    /// - parameter previewCount: 当前点数
+    ///
+    /// - returns:
+    func calculateColorValue(previewCount: Int!) -> String {
+        var colorValueStr: String! = ""
+        var previewColorValueStr: String! = ""
+        var nextColorValueStr: String! = ""
+        
+        for i in 0 ..< timeCountArray.count {
+            print("previewCount = \(previewCount)")
+            if previewCount < timeCountArray[0] || previewCount > timeCountArray[timeCountArray.count - 1] {
+                print("夜晚")
+                colorValueStr = self.parameterModel?.timePointValueDic[timeCountArray.count / 2 - 1]
+                let colorValueArray = colorValueStr.convertColorStrToDoubleValue()
+                colorValueStr = ""
+                for value in colorValueArray! {
+                    colorValueStr = colorValueStr.appendingFormat("%04x", Int(value / 100.0 * 1000.0))
+                }
+                
+                break
+            } else if i % 2 == 0 && previewCount > timeCountArray[i] && previewCount < timeCountArray[i + 1] {
+                print("变化")
+                if i == 0 || i == timeCountArray.count - 1 {
+                    previewColorValueStr = self.parameterModel?.timePointValueDic[timeCountArray.count / 2 - 1]
+                    nextColorValueStr = self.parameterModel?.timePointValueDic[0]
+                } else {
+                    previewColorValueStr = self.parameterModel?.timePointValueDic[i / 2 - 1]
+                    nextColorValueStr = self.parameterModel?.timePointValueDic[i / 2]
+                }
+                
+                // 计算值
+                var previewColorDoubleArray = previewColorValueStr.convertColorStrToDoubleValue()
+                var nextColorDoubleArray = nextColorValueStr.convertColorStrToDoubleValue()
+                for j in 0 ..< (self.parameterModel?.channelNum)! {
+                    let percent = Double((previewCount - timeCountArray[i])) / Double(timeCountIntervalArray[i / 2])
+                    let colorValue = previewColorDoubleArray![j] / 100.0 * 1000 - ((previewColorDoubleArray![j] - nextColorDoubleArray![j])) / 100.0 * 1000.0 * percent
+                    
+                    colorValueStr = colorValueStr.appendingFormat("%04x", Int(colorValue))
+                }
+                break
+            } else if i % 2 != 0 && previewCount > timeCountArray[i] && previewCount < timeCountArray[i + 1] {
+                print("不变化")
+                colorValueStr = self.parameterModel?.timePointValueDic[(i - 1) / 2]
+                let colorValueArray = colorValueStr.convertColorStrToDoubleValue()
+                colorValueStr = ""
+                for value in colorValueArray! {
+                    colorValueStr = colorValueStr.appendingFormat("%04x", Int(value / 100.0 * 1000.0))
+                }
+                break
+            }
+        }
+        
+        print("colorValueStr = \(String(colorValueStr))")
+        return colorValueStr
     }
     
     override func didReceiveMemoryWarning() {

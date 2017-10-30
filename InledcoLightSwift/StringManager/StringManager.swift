@@ -179,10 +179,10 @@ extension String {
     }
     
     /// 转换协议数据为所有时间点对应的数组
-    /// - parameter one:
-    /// - parameter two:
+    /// - parameter timePointArray: 时间点信息
+    /// - parameter timePointColorDic: 时间点对应的颜色值信息
     ///
-    /// - returns:
+    /// - returns: 时间点对应的double型颜色值
     static func convertColorValue(timePointArray: [String]!, timePointColorDic: [Int: String]!) -> [Int: [Double]?]? {
         var colorDic = [Int: [Double]!]()
         

@@ -29,6 +29,37 @@ class BaseViewController: UIViewController {
         // 不能写任何代码，供子类重写使用
     }
     
+    /// 显示指定时间的提示框
+    /// - parameter title: 标题
+    /// - parameter time: 显示时间
+    /// - parameter isShow: 是否显示提示
+    ///
+    /// - returns:
+    func showMessageWithTitle(title: String!, time: Double!, isShow: Bool!) -> Void {
+        let backView = UIView(frame: CGRect(x: 0, y: 0, width: 150, height: 40))
+        backView.tag = 10000001
+        if self.view.viewWithTag(10000001) != nil {
+            return
+        }
+        
+        let titleLabel = UILabel(frame: backView.frame)
+        
+        titleLabel.text = title;
+        titleLabel.font = UIFont.boldSystemFont(ofSize: 15.0)
+        titleLabel.textAlignment = .center;
+        backView.addSubview(titleLabel)
+        
+        backView.layer.cornerRadius = 3;
+        backView.backgroundColor = UIColor.gray
+        backView.center = self.view.center;
+        
+        self.view.addSubview(backView)
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+            backView.removeFromSuperview()
+        }
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

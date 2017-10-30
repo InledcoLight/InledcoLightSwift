@@ -53,19 +53,19 @@ class DeviceParameterModel: NSObject {
             parameterModel.timePointArray.append(timePoint)
         }
         
-        timePointValueDic.removeAll()
-        for key in timePointValueDic.keys {
-            parameterModel.timePointValueDic[key] = timePointValueDic[key]
+        parameterModel.timePointValueDic.removeAll()
+        for key in self.timePointValueDic.keys {
+            parameterModel.timePointValueDic[key] = self.timePointValueDic[key]
         }
         
-        manualModeValueDic.removeAll()
-        for key in manualModeValueDic.keys {
-            parameterModel.manualModeValueDic[key] = manualModeValueDic[key]
+        parameterModel.manualModeValueDic.removeAll()
+        for key in self.manualModeValueDic.keys {
+            parameterModel.manualModeValueDic[key] = self.manualModeValueDic[key]
         }
         
-        userDefinedValueDic.removeAll()
-        for key in userDefinedValueDic.keys {
-            parameterModel.userDefinedValueDic[key] = userDefinedValueDic[key]
+        parameterModel.userDefinedValueDic.removeAll()
+        for key in self.userDefinedValueDic.keys {
+            parameterModel.userDefinedValueDic[key] = self.userDefinedValueDic[key]
         }
     }
 }

@@ -11,6 +11,7 @@ import UIKit
 class LayoutToolsView: UIView {
     typealias PassButtonTagType = (Int) -> Void
     var buttonActionCallback: PassButtonTagType?
+    var buttonLongPressCallback: PassButtonTagType?
     
     init(viewNum: Int!, viewWidth: CGFloat!, viewHeight: CGFloat!, viewInterval: CGFloat!, viewTitleArray: [String]!, frame: CGRect) {
         super.init(frame: frame)
@@ -19,21 +20,36 @@ class LayoutToolsView: UIView {
             let buttonFrame = CGRect(x: calculateXPosition(viewNum: viewNum, index: i, viewInterval: viewInterval, viewWidth: viewWidth)!, y: 0, width: viewWidth, height: viewHeight)
             let button = UIButton(frame: buttonFrame)
             
+            button.tag = 1000 + i
             button.backgroundColor = UIColor.blue
             button.layer.cornerRadius = 5
             button.layer.masksToBounds = true
             button.setTitle(viewTitleArray[i - 1], for: .normal)
             button.titleLabel?.adjustsFontSizeToFitWidth = true
             button.addTarget(self, action: #selector(buttonAction(sender:)), for: UIControlEvents.touchUpInside)
-            button.tag = 1000 + i
             
+            // 添加长按手势
+            let longPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(userDefineLongPressAction(recognizer:)))
+            longPressGestureRecognizer.minimumPressDuration = 1.0
+            longPressGestureRecognizer.numberOfTouchesRequired = 1
+            button.addGestureRecognizer(longPressGestureRecognizer)
+
             self.addSubview(button)
         }
     }
     
+    // 按钮点击方法
     @objc func buttonAction(sender: UIButton) -> Void {
         if buttonActionCallback != nil {
             buttonActionCallback!(sender.tag - 1001)
+        }
+    }
+    
+    // 按钮长按手势
+    @objc func userDefineLongPressAction(recognizer: UILongPressGestureRecognizer) -> Void {
+        if buttonLongPressCallback != nil {
+            let userButton = recognizer.view as! UIButton
+            buttonLongPressCallback!(userButton.tag - 1001)
         }
     }
     

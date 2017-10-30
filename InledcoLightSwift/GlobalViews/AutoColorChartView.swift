@@ -53,47 +53,88 @@ class AutoColorChartView: UIView, ChartViewDelegate {
         self.addSubview(lineChart!)
     }
     
+    func hightValue(x: Double, index: Int) -> Void {
+        self.lineChart?.highlightValue(x: x, y: 0, dataSetIndex: index)
+    }
+    
     func updateGraph(channelNum: Int, colorArray: [UIColor]?, colorTitleArray: [String]?, timePointArray: [String]?, timePointValueDic: [Int: String]?) -> Void {
         let data = LineChartData()
         var value: ChartDataEntry?
         var line: LineChartDataSet?
+        // x坐标
+        var xAxis: Double = 0.0
+        // y坐标
+        var yAxis: Double?
+        var colorStr: String?
         for i in 0 ..< channelNum {
             lineChartEntry.removeAll()
             
+            // 添加0点的点
+            xAxis = (self.lineChart?.chartXMin)!
+            colorStr = timePointValueDic?[(timePointValueDic?.keys.count)! - 1]
+            yAxis = Double((colorStr! as NSString).substring(with: NSRange.init(location: i * 2, length: 2)).hexToInt16()) / 100.0
+            
+            value = ChartDataEntry(x: Double(xAxis), y: yAxis!)
+            
+            lineChartEntry.append(value!)
+            
             var timeIndex = 0
             for timeStr in timePointArray! {
-                // x坐标
-                let xAxis = timeStr.converTimeStrToMinute(timeStr: timeStr)
-                // y坐标
-                var yAxis: Double?
-                var colorStr: String?
-                if timeIndex == 0 || timeIndex == 3 {
-                    // 取夜晚值
-                    colorStr = timePointValueDic?[1]
-
+                xAxis = Double(timeStr.converTimeStrToMinute(timeStr: timeStr)!)
+                if timeIndex == 0 || timeIndex == (timePointArray?.count)! - 1 {
+                    // 取最后一个
+                    colorStr = timePointValueDic?[(timePointValueDic?.keys.count)! - 1]
                 } else {
-                    // 取白天值
-                    colorStr = timePointValueDic?[0]
+                    // 取对应值
+                    if timeIndex % 2 == 0 {
+                        colorStr = timePointValueDic?[timeIndex / 2 - 1]
+                    } else {
+                        colorStr = timePointValueDic?[(timeIndex - 1) / 2]
+                    }
                 }
                 
                 yAxis = Double((colorStr! as NSString).substring(with: NSRange.init(location: i * 2, length: 2)).hexToInt16()) / 100.0
                 
-                value = ChartDataEntry(x: Double(xAxis!), y: yAxis!)
+                value = ChartDataEntry(x: Double(xAxis), y: yAxis!)
                 
                 timeIndex = timeIndex + 1
                 
                 lineChartEntry.append(value!)
             }
         
+            // 添加24点的点
+            xAxis = (self.lineChart?.chartXMax)!
+            colorStr = timePointValueDic?[(timePointValueDic?.keys.count)! - 1]
+            yAxis = Double((colorStr! as NSString).substring(with: NSRange.init(location: i * 2, length: 2)).hexToInt16()) / 100.0
+            
+            value = ChartDataEntry(x: Double(xAxis), y: yAxis!)
+            
+            lineChartEntry.append(value!)
+            
             line = LineChartDataSet(values: lineChartEntry, label: colorTitleArray?[i])
             
+            line?.circleRadius = CGFloat(4.0)
             line?.colors.removeAll()
             line?.colors.append(colorArray![i])
             
             data.addDataSet(line!)
         }
         
+        // 增加一条线，用来实现预览功能
+        lineChartEntry.removeAll()
+        for i in 0 ..< Int((lineChart?.chartXMax)!) {
+            value = ChartDataEntry(x: Double(i), y: 0)
+            lineChartEntry.append(value!)
+        }
+        
+        line = LineChartDataSet(values: lineChartEntry, label: nil)
+        line?.circleRadius = 0.0
+        
+        data.addDataSet(line!)
+        
         lineChart?.data = data
+        
+        lineChart?.moveViewToX(100)
     }
     
     required init?(coder aDecoder: NSCoder) {
