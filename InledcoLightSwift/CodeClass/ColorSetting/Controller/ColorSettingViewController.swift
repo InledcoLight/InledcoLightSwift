@@ -12,6 +12,7 @@ import LGAlertView
 class ColorSettingViewController: BaseViewController {
 
     var parameterModel: DeviceParameterModel?
+    var editParameterModel: DeviceParameterModel?
     var manualAutoSwitchView: ManualAutoSwitchView?
     var manualModeView: UIView?
     var manualColorView: ManualCircleView?
@@ -25,6 +26,7 @@ class ColorSettingViewController: BaseViewController {
     var autoColorChartView: AutoColorChartView?
     var timeCountArray: [Int]! = [Int]()
     var timeCountIntervalArray: [Int]! = [Int]()
+    var previewButton: UIButton?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,19 +43,28 @@ class ColorSettingViewController: BaseViewController {
         setViews()
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        self.cancelPreview()
+    }
+    
     override func prepareData() {
         super.prepareData()
         deviceInfo = DeviceTypeData.getDeviceInfoWithTypeCode(deviceTypeCode: (parameterModel?.typeCode)!)
         self.blueToothManager.completeReceiveDataCallback = {
             (receivedDataStr, commandType) in
-            self.blueToothManager.parseDeviceDataFromReceiveStrToModel(receiveData: receivedDataStr!, parameterModel: self.parameterModel!)
-            // 更新界面
-            self.setManualAutoViews()
+            self.parameterModel?.parseOldDeviceDataFromReceiveStrToModel(receiveData: receivedDataStr!)
             
             // 提示保存当前设置成功
             if commandType == CommandType.SETTINGUSERDEFINED_COMMAND {
                 self.showMessageWithTitle(title: "保存成功", time: 1.5, isShow: true)
+            } else if commandType == CommandType.SETTINGAUTOMODE_COMMAND {
+                // 更新数据
+                self.parameterModel = self.editParameterModel
+                self.showMessageWithTitle(title: "设置自动模式成功", time: 1.5, isShow: true)
             }
+            
+            // 更新界面
+            self.setManualAutoViews()
         }
     }
     
@@ -81,10 +92,12 @@ class ColorSettingViewController: BaseViewController {
         manualAutoSwitchView?.center = CGPoint(x: SystemInfoTools.screenWidth / 2, y: (manualAutoSwitchView?.center.y)!)
         
         manualAutoSwitchView?.manualModeAction = {
+            self.cancelPreview()
             self.blueToothManager.sendManualModeCommand(uuid: (self.parameterModel?.uuid)!)
         }
         
         manualAutoSwitchView?.autoModeAction = {
+            self.cancelPreview()
             self.blueToothManager.sendAutoModeCommand(uuid: (self.parameterModel?.uuid)!)
         }
         
@@ -96,10 +109,12 @@ class ColorSettingViewController: BaseViewController {
     }
     
     @objc func findDeviceAction(sender: UIButton) -> Void {
+        self.cancelPreview()
         self.blueToothManager.sendFindDeviceCommand(uuid: (self.parameterModel?.uuid)!)
     }
     
     @objc func renameDeviceAction(sender: UIButton) -> Void {
+        self.cancelPreview()
         let renameDeviceAlert = LGAlertView.init(textFieldsAndTitle: self.languageManager.getTextForKey(key: "rename"), message: "", numberOfTextFields: 1, textFieldsSetupHandler: nil, buttonTitles: [self.languageManager.getTextForKey(key: "cancel"), self.languageManager.getTextForKey(key: "confirm")], cancelButtonTitle: "", destructiveButtonTitle: "")
         
         renameDeviceAlert?.actionHandler = {
@@ -144,7 +159,7 @@ class ColorSettingViewController: BaseViewController {
         if manualModeView == nil {
             // 创建手动模式视图
             manualModeView = UIView(frame: manualAutoViewFrame!)
-            manualModeView?.backgroundColor = UIColor.gray
+            manualModeView?.backgroundColor = UIColor.clear
             
             // 1.圆形调光视图
             let manualColorViewFrame = CGRect(x: 0, y: 16, width: SystemInfoTools.screenWidth - 50, height: SystemInfoTools.screenWidth - 50)
@@ -171,7 +186,7 @@ class ColorSettingViewController: BaseViewController {
             let userDefineViewFrame = CGRect(x: 0, y: (manualAutoViewFrame?.height)! - 70, width: SystemInfoTools.screenWidth, height: SystemInfoTools.screenHeight)
             let userDefineView = LayoutToolsView(viewNum: 3, viewWidth: 80, viewHeight: 50, viewInterval: 8, viewTitleArray: ["M1", "M2", "M3"], frame: userDefineViewFrame)
             userDefineView.buttonActionCallback = {
-                (index) in
+                (button, index) in
                 var commandStr = CommandHeader.COMMANDHEAD_FOUR.rawValue
                 let userColorStr = self.parameterModel?.userDefinedValueDic[index]
                 commandStr.append((userColorStr?.convertUserPercentToHexColorValue())!)
@@ -236,7 +251,7 @@ class ColorSettingViewController: BaseViewController {
     /// 开关方法
     /// - parameter sender: 触发点击的按钮
     ///
-    /// - returns:
+    /// - returns: Void
     @objc func powerAction(sender: UIButton) -> Void {
         sender.isSelected = !sender.isSelected
         if parameterModel?.powerState == DeviceState.POWER_ON {
@@ -257,7 +272,7 @@ class ColorSettingViewController: BaseViewController {
         if autoModeView == nil {
             // 创建自动模式视图
             autoModeView = UIView(frame: manualAutoViewFrame!)
-            autoModeView?.backgroundColor = UIColor.gray
+            autoModeView?.backgroundColor = UIColor.clear
             
             // 1.自动模式曲线图
             let autoColorChartViewFrame = CGRect(x: 0, y: 0, width: (autoModeView?.frame.size.width)!, height: (autoModeView?.frame.size.width)!)
@@ -269,13 +284,27 @@ class ColorSettingViewController: BaseViewController {
             let bottomViewFrame = CGRect(x: 0, y: (autoModeView?.frame.size.height)! - 70, width: SystemInfoTools.screenWidth, height: 70)
             let bottomView = LayoutToolsView(viewNum: 3, viewWidth: 70, viewHeight: 50, viewInterval: 30, viewTitleArray: [self.languageManager.getTextForKey(key: "preview"), self.languageManager.getTextForKey(key: "run"), self.languageManager.getTextForKey(key: "edit")], frame: bottomViewFrame)
             
+            // 添加观察者
+            previewButton = bottomView.viewWithTag(1001) as? UIButton
+            
             bottomView.buttonActionCallback = {
-                (buttonTag) -> Void in
-                    if (buttonTag == 0) {
+                (button, index) -> Void in
+                    if (index == 0) {
                         // 1.预览功能
-                        self.beginPreview()
-                    } else if (buttonTag == 1) {
+                        if button.titleLabel?.text == self.languageManager.getTextForKey(key: "preview") {
+                            button.setTitle(self.languageManager.getTextForKey(key: "stop"), for: .normal)
+                            self.beginPreview()
+                        } else {
+                            button.setTitle(self.languageManager.getTextForKey(key: "preview"), for: .normal)
+                            self.cancelPreview()
+                        }
+                        
+                    } else if (index == 1) {
+                        self.cancelPreview()
                         // 2.发送设置到设备
+                        if self.editParameterModel != nil {
+                            self.blueToothManager.sendCommandToDevice(uuid: (self.editParameterModel?.uuid)!, commandStr: (self.editParameterModel?.generateOldCommand())!, commandType: CommandType.SETTINGAUTOMODE_COMMAND, isXORCommand: true)
+                        }
                     } else {
                         // 3.跳转到编辑界面
                         let autoColorEditViewController = AutoColorEditViewController(nibName: "AutoColorEditViewController", bundle: Bundle.main)
@@ -283,6 +312,8 @@ class ColorSettingViewController: BaseViewController {
                         autoColorEditViewController.passParameterModelCallback = {
                             (deviceParameterModel) in
                             self.autoColorChartView?.updateGraph(channelNum: deviceParameterModel.channelNum!, colorArray: self.deviceInfo?.channelColorArray, colorTitleArray: self.deviceInfo?.channelColorTitleArray, timePointArray: deviceParameterModel.timePointArray, timePointValueDic: deviceParameterModel.timePointValueDic)
+                            
+                            self.editParameterModel = deviceParameterModel
                         }
                         
                         autoColorEditViewController.parameterModel = self.parameterModel
@@ -300,21 +331,22 @@ class ColorSettingViewController: BaseViewController {
     }
     
     /// 开始预览功能
-    /// - parameter one:
-    /// - parameter two:
     ///
     /// - returns: Void
     func beginPreview() -> Void {
         previewCount = 0
         
-        if timeCountArray.count == 0 {
-            var index = 0
-            for timeStr in (self.parameterModel?.timePointArray)! {
-                timeCountArray.append(timeStr.converTimeStrToMinute(timeStr: timeStr)!)
-                if index > 0 && index % 2 != 0 {
-                    timeCountIntervalArray.append(timeCountArray[index] - timeCountArray[index - 1])
-                }
-                index = index + 1
+        timeCountArray.removeAll()
+        timeCountIntervalArray.removeAll()
+        for index in 0 ..< (self.parameterModel?.timePointArray)!.count {
+            let timeStr = self.parameterModel?.timePointArray[index]
+            timeCountArray.append((timeStr?.converTimeStrToMinute(timeStr: timeStr)!)!)
+            
+            if index ==  ((self.parameterModel?.timePointArray)!.count - 1) {
+                timeCountIntervalArray.append(timeCountArray[index] - timeCountArray[index - 1])
+                timeCountIntervalArray.append(timeCountArray[0] + 1440 - timeCountArray[index])
+            } else if index > 0 {
+                timeCountIntervalArray.append(timeCountArray[index] - timeCountArray[index - 1])
             }
         }
 
@@ -322,23 +354,24 @@ class ColorSettingViewController: BaseViewController {
     }
     
     /// 取消预览功能
-    /// - parameter one:
-    /// - parameter two:
     ///
     /// - returns: Void
     func cancelPreview() -> Void {
         if quickPreviewTimer != nil {
             quickPreviewTimer?.invalidate()
             quickPreviewTimer = nil
+            
+            self.blueToothManager.sendCommandToDevice(uuid: (self.parameterModel?.uuid)!, commandStr: CommandHeader.COMMANDHEAD_TWELVE.rawValue, commandType: CommandType.UNKNOWN_COMMAND, isXORCommand: true)
         }
 
-        self.blueToothManager.sendCommandToDevice(uuid: (self.parameterModel?.uuid)!, commandStr: CommandHeader.COMMANDHEAD_TWELVE.rawValue, commandType: CommandType.UNKNOWN_COMMAND, isXORCommand: true)
+        // 设置按钮文本
+        previewButton?.setTitle(self.languageManager.getTextForKey(key: "preview"), for: .normal)
     }
     
     /// 快速预览发送命令方法
     /// - parameter timer: 定时器
     ///
-    /// - returns:
+    /// - returns: Void
     @objc func sendQuickPreviewCommand(timer: Timer) -> Void {
         var commandStr = String(CommandHeader.COMMANDHEAD_ELEVEN.rawValue)
         
@@ -346,7 +379,6 @@ class ColorSettingViewController: BaseViewController {
         
         // 根据 previewCount 计算发送的数值
         commandStr.append((calculateColorValue(previewCount: previewCount)))
-        print("commandStr = \(String(commandStr))")
         self.blueToothManager.sendCommandToDevice(uuid: (self.parameterModel?.uuid)!, commandStr: commandStr, commandType: CommandType.UNKNOWN_COMMAND, isXORCommand: true)
         
         if Double(previewCount) >= (autoColorChartView?.lineChart?.chartXMax)! {
@@ -359,57 +391,45 @@ class ColorSettingViewController: BaseViewController {
     /// 根据数值计算当前的颜色值
     /// - parameter previewCount: 当前点数
     ///
-    /// - returns:
+    /// - returns: 命令字符串
     func calculateColorValue(previewCount: Int!) -> String {
         var colorValueStr: String! = ""
         var previewColorValueStr: String! = ""
         var nextColorValueStr: String! = ""
         
+        var index = 0
+        var isInFirstLast = true
         for i in 0 ..< timeCountArray.count {
-            print("previewCount = \(previewCount)")
-            if previewCount < timeCountArray[0] || previewCount > timeCountArray[timeCountArray.count - 1] {
-                print("夜晚")
-                colorValueStr = self.parameterModel?.timePointValueDic[timeCountArray.count / 2 - 1]
-                let colorValueArray = colorValueStr.convertColorStrToDoubleValue()
-                colorValueStr = ""
-                for value in colorValueArray! {
-                    colorValueStr = colorValueStr.appendingFormat("%04x", Int(value / 100.0 * 1000.0))
-                }
-                
+            if ((previewCount >= 0 && previewCount <= timeCountArray[0]) || (previewCount >= timeCountArray[timeCountArray.count - 1] && previewCount <= 1440)) {
+                previewColorValueStr = self.parameterModel?.timePointValueDic[timeCountArray.count - 1]
+                nextColorValueStr = self.parameterModel?.timePointValueDic[0]
+                index = i
                 break
-            } else if i % 2 == 0 && previewCount > timeCountArray[i] && previewCount < timeCountArray[i + 1] {
-                print("变化")
-                if i == 0 || i == timeCountArray.count - 1 {
-                    previewColorValueStr = self.parameterModel?.timePointValueDic[timeCountArray.count / 2 - 1]
-                    nextColorValueStr = self.parameterModel?.timePointValueDic[0]
-                } else {
-                    previewColorValueStr = self.parameterModel?.timePointValueDic[i / 2 - 1]
-                    nextColorValueStr = self.parameterModel?.timePointValueDic[i / 2]
-                }
-                
-                // 计算值
-                var previewColorDoubleArray = previewColorValueStr.convertColorStrToDoubleValue()
-                var nextColorDoubleArray = nextColorValueStr.convertColorStrToDoubleValue()
-                for j in 0 ..< (self.parameterModel?.channelNum)! {
-                    let percent = Double((previewCount - timeCountArray[i])) / Double(timeCountIntervalArray[i / 2])
-                    let colorValue = previewColorDoubleArray![j] / 100.0 * 1000 - ((previewColorDoubleArray![j] - nextColorDoubleArray![j])) / 100.0 * 1000.0 * percent
-                    
-                    colorValueStr = colorValueStr.appendingFormat("%04x", Int(colorValue))
-                }
-                break
-            } else if i % 2 != 0 && previewCount > timeCountArray[i] && previewCount < timeCountArray[i + 1] {
-                print("不变化")
-                colorValueStr = self.parameterModel?.timePointValueDic[(i - 1) / 2]
-                let colorValueArray = colorValueStr.convertColorStrToDoubleValue()
-                colorValueStr = ""
-                for value in colorValueArray! {
-                    colorValueStr = colorValueStr.appendingFormat("%04x", Int(value / 100.0 * 1000.0))
-                }
+            } else if previewCount >= timeCountArray[i] && previewCount <= timeCountArray[i + 1] {
+                previewColorValueStr = self.parameterModel?.timePointValueDic[i]
+                nextColorValueStr = self.parameterModel?.timePointValueDic[i + 1]
+                index = i
+                isInFirstLast = false
                 break
             }
         }
         
-        print("colorValueStr = \(String(colorValueStr))")
+        // 计算值
+        var previewColorDoubleArray = previewColorValueStr.convertColorStrToDoubleValue()
+        var nextColorDoubleArray = nextColorValueStr.convertColorStrToDoubleValue()
+        for j in 0 ..< (self.parameterModel?.channelNum)! {
+            var percent = 0.0
+            if isInFirstLast == true {
+               percent = Double((previewCount - timeCountArray[index])) / Double(timeCountIntervalArray[index])
+            } else {
+                percent = Double((previewCount - timeCountArray[index])) / Double(timeCountIntervalArray[index])
+            }
+            
+            let colorValue = previewColorDoubleArray![j] / 100.0 * 1000 - ((previewColorDoubleArray![j] - nextColorDoubleArray![j])) / 100.0 * 1000.0 * percent
+            
+            colorValueStr = colorValueStr.appendingFormat("%04x", Int(colorValue))
+        }
+        
         return colorValueStr
     }
     

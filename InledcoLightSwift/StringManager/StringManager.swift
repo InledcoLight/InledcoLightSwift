@@ -137,7 +137,7 @@ extension String {
             index = index + 1
         }
         
-        return String.init(format: "%02x%02x", hourStr.hexToInt16(),minuteStr.hexToInt16())
+        return String.init(format: "%02x%02x", strtol(hourStr, nil, 10),strtol(minuteStr, nil, 10))
     }
     
     /// 转换16进制颜色值字符串为Double数组
@@ -177,92 +177,4 @@ extension String {
 
         return hexColorStr
     }
-    
-    /// 转换协议数据为所有时间点对应的数组
-    /// - parameter timePointArray: 时间点信息
-    /// - parameter timePointColorDic: 时间点对应的颜色值信息
-    ///
-    /// - returns: 时间点对应的double型颜色值
-    static func convertColorValue(timePointArray: [String]!, timePointColorDic: [Int: String]!) -> [Int: [Double]?]? {
-        var colorDic = [Int: [Double]!]()
-        
-        if timePointArray.count % 2 != 0 {
-            return nil
-        }
-        
-        var index = 0
-        for _ in 0 ..< timePointArray.count {
-            if index == 0 || index == (timePointArray.count - 1) {
-                colorDic[index] = timePointColorDic[timePointColorDic.count - 1]!.convertColorStrToDoubleValue()
-                index = index + 1
-            } else {
-                colorDic[index] = timePointColorDic[index - 1]?.convertColorStrToDoubleValue()
-                colorDic[index + 1] = timePointColorDic[(index - 1) / 2]?.convertColorStrToDoubleValue()
-                index = index + 2
-            }
-        }
-        
-        return colorDic
-    }
-    
-    /// 把改变的颜色值保存到模型中对应的颜色信息中
-    /// - parameter timePointCount: 时间点个数
-    /// - parameter timePointIndex: 时间点索引
-    /// - parameter colorIndex: 颜色值索引
-    /// - parameter colorValue: 要保存的颜色值
-    /// - parameter parameterModel: 要保存的模型值
-    ///
-    /// - returns: Void
-    static func saveColorValueToModel(timePointCount: Int!, timePointIndex: Int!, colorIndex: Int!, colorValue: Float!, parameterModel: DeviceParameterModel!) -> Void {
-        var colorStr = ""
-        var key = 0
-        // 1.获取时间点对应的颜色值
-        if timePointIndex == 0 || (timePointIndex == timePointCount - 1) {
-            key = parameterModel.timePointValueDic.keys.count - 1
-        } else {
-            if timePointIndex % 2 == 0 {
-                key = timePointIndex / 2 - 1
-            } else {
-                key = (timePointIndex - 1) / 2
-            }
-        }
-        colorStr = parameterModel.timePointValueDic[key]!
-        
-        // 2.根据颜色值索引把颜色值保存到模型中
-        var cIndex = 0
-        var newColorStr = ""
-        for c in colorStr {
-            if cIndex != 2 * colorIndex && cIndex != (2 * colorIndex + 1) {
-                newColorStr.append(c)
-            } else if cIndex == 2 * colorIndex {
-                newColorStr = newColorStr.appendingFormat("%02x", Int(colorValue / 1000.0 * 100.0))
-            }
-            
-            cIndex = cIndex + 1
-        }
-        
-        parameterModel.timePointValueDic[key] = newColorStr
-    }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

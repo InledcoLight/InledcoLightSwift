@@ -35,6 +35,9 @@ class SettingViewController: BaseViewController,UITableViewDelegate, UITableView
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        tableView.separatorStyle = .singleLine
+        tableView.backgroundColor = UIColor.clear
+        tableView.tableFooterView = UIView(frame: CGRect.zero)
     }
 
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -48,6 +51,8 @@ class SettingViewController: BaseViewController,UITableViewDelegate, UITableView
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell")
         
+        cell?.backgroundColor = UIColor.clear
+        cell?.contentView.backgroundColor = UIColor.clear
         cell?.accessoryType = .disclosureIndicator
         cell?.textLabel?.text = settingArray[indexPath.row]
         

@@ -21,39 +21,42 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GSE-BD-Akj">
-                        <rect key="frame" x="258" y="8" width="54" height="54"/>
+                        <rect key="frame" x="274.5" y="16" width="37.5" height="37.5"/>
                         <constraints>
-                            <constraint firstAttribute="width" secondItem="GSE-BD-Akj" secondAttribute="height" multiplier="1:1" id="m74-pf-krc"/>
+                            <constraint firstAttribute="width" secondItem="GSE-BD-Akj" secondAttribute="height" multiplier="1:1" id="HaY-gK-cit"/>
+                            <constraint firstAttribute="height" constant="37.5" id="gZd-XX-HfT"/>
                         </constraints>
                         <state key="normal" backgroundImage="unSelectDevice"/>
                         <connections>
                             <action selector="selectButtonAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="IvK-3q-EML"/>
                         </connections>
                     </button>
-                    <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="J21-bb-sb0">
-                        <rect key="frame" x="8" y="8" width="207" height="54"/>
+                    <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="time" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="J21-bb-sb0">
+                        <rect key="frame" x="8" y="8" width="259" height="54"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="259" id="90t-g4-RuX"/>
+                        </constraints>
                         <date key="date" timeIntervalSinceReferenceDate="530874449.54834801">
                             <!--2017-10-28 09:07:29 +0000-->
                         </date>
                         <connections>
-                            <action selector="timePointValueChanged:" destination="KGk-i7-Jjw" eventType="valueChanged" id="AYg-Oq-59A"/>
+                            <action selector="timePointValueChanged:" destination="KGk-i7-Jjw" eventType="valueChanged" id="kIU-By-QJI"/>
                         </connections>
                     </datePicker>
                 </subviews>
                 <constraints>
-                    <constraint firstAttribute="bottom" secondItem="J21-bb-sb0" secondAttribute="bottom" constant="7.5" id="GQb-3v-mw9"/>
-                    <constraint firstAttribute="bottom" secondItem="GSE-BD-Akj" secondAttribute="bottom" constant="8" id="KuT-5a-fGY"/>
-                    <constraint firstItem="GSE-BD-Akj" firstAttribute="leading" secondItem="J21-bb-sb0" secondAttribute="trailing" constant="43" id="LwM-In-Fnf"/>
-                    <constraint firstAttribute="trailing" secondItem="GSE-BD-Akj" secondAttribute="trailing" constant="8" id="NJT-u1-vja"/>
-                    <constraint firstItem="J21-bb-sb0" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="8" id="fUc-vx-pz9"/>
-                    <constraint firstItem="GSE-BD-Akj" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="ffM-3E-tIY"/>
-                    <constraint firstItem="J21-bb-sb0" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="w1u-C6-DHy"/>
+                    <constraint firstAttribute="bottom" secondItem="J21-bb-sb0" secondAttribute="bottom" constant="8" id="64w-wY-I4O"/>
+                    <constraint firstItem="GSE-BD-Akj" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="16" id="Lh1-w6-E6A"/>
+                    <constraint firstItem="J21-bb-sb0" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="8" id="SPS-qf-z40"/>
+                    <constraint firstAttribute="bottom" secondItem="GSE-BD-Akj" secondAttribute="bottom" constant="16" id="c1E-5I-kKW"/>
+                    <constraint firstItem="J21-bb-sb0" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="iiU-ux-fer"/>
+                    <constraint firstAttribute="trailing" secondItem="GSE-BD-Akj" secondAttribute="trailing" constant="8" id="pkT-jl-e7c"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
                 <outlet property="selectButton" destination="GSE-BD-Akj" id="MQU-x3-2W2"/>
-                <outlet property="timePointDatePicker" destination="J21-bb-sb0" id="4iX-pB-fAa"/>
+                <outlet property="timePointDatePicker" destination="J21-bb-sb0" id="3OK-CR-peQ"/>
             </connections>
             <point key="canvasLocation" x="-232" y="-120"/>
         </tableViewCell>

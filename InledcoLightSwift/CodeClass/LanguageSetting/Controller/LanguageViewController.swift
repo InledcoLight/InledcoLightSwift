@@ -45,6 +45,11 @@ class LanguageViewController: BaseViewController,UITableViewDelegate,UITableView
         self.tableView.delegate = self
         self.tableView.dataSource = self
         self.tableView.register(UINib.init(nibName: "LanguageTableViewCell", bundle: nil), forCellReuseIdentifier: "LanguageTableViewCell")
+        self.tableView.separatorStyle = .singleLine
+        self.tableView.backgroundColor = UIColor.clear
+        self.tableView.tableFooterView = UIView(frame: CGRect.zero)
+        self.tableView.backgroundColor = UIColor.clear
+        
     }
     
     @objc func cancelAction() -> Void {

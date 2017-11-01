@@ -10,6 +10,7 @@ import UIKit
 
 class TimePointTableViewCell: UITableViewCell {
     @IBOutlet weak var timePointDatePicker: UIDatePicker!
+    
     @IBOutlet weak var selectButton: UIButton!
     typealias PassButtonSelectedType = (Bool) -> Void
     var selectButtonSelectCallback: PassButtonSelectedType?
@@ -19,6 +20,9 @@ class TimePointTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        self.backgroundColor = UIColor.clear
+        self.contentView.backgroundColor = UIColor.clear
+        
         let locale = Locale.init(identifier: "NL")
         timePointDatePicker.datePickerMode = .time
         timePointDatePicker.locale = locale

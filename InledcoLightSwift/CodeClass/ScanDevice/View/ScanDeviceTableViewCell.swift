@@ -19,6 +19,8 @@ class ScanDeviceTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        self.backgroundColor = UIColor.clear
+        self.contentView.backgroundColor = UIColor.clear
         // Initialization code
         self.deviceSelectButton.setBackgroundImage(UIImage.init(named: "unSelectDevice"), for: .normal)
         self.deviceSelectButton.setBackgroundImage(UIImage.init(named: "selectDevice"), for: .selected)

@@ -18,6 +18,12 @@ class BaseViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        let backgroundImageView = UIImageView(image: UIImage.init(named: "background"))
+        
+        backgroundImageView.layer.zPosition = -100000
+        backgroundImageView.frame = UIScreen.main.bounds
+        
+        self.view.addSubview(backgroundImageView)
     }
 
     // 声明两个方法，控制器重写

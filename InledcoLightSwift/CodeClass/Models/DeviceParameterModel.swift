@@ -17,6 +17,10 @@ class DeviceParameterModel: NSObject {
     var commandHeader: String! = ""
     // 命令码
     var commandCode: String! = ""
+    // 寄存器地址标记
+    var registerAddr: String! = ""
+    // 命令数据字节数
+    var commandDataByteCount: Int! = 0
     // 通道数量
     var channelNum: Int?
     // 运行模式

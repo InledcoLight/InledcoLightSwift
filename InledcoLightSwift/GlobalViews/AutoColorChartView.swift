@@ -24,7 +24,7 @@ class AutoColorChartView: UIView, ChartViewDelegate {
     init(frame: CGRect, channelNum: Int, colorArray: [UIColor]?, colorTitleArray: [String]?, timePointArray: [String]?, timePointValueDic: [Int: String]?) {
         super.init(frame: frame)
         lineChart = LineChartView(frame: frame)
-        lineChart?.backgroundColor = UIColor.blue
+        lineChart?.backgroundColor = UIColor.clear
         lineChart?.delegate = self
         
         // 横坐标
@@ -57,7 +57,89 @@ class AutoColorChartView: UIView, ChartViewDelegate {
         self.lineChart?.highlightValue(x: x, y: 0, dataSetIndex: index)
     }
     
+    /// 更新自动模式曲线图，其中
+    /// - parameter one:
+    /// - parameter two:
+    ///
+    /// - returns:
     func updateGraph(channelNum: Int, colorArray: [UIColor]?, colorTitleArray: [String]?, timePointArray: [String]?, timePointValueDic: [Int: String]?) -> Void {
+        let data = LineChartData()
+        var value: ChartDataEntry?
+        var line: LineChartDataSet?
+        // x坐标
+        var xAxis: Double = 0.0
+        // y坐标
+        var yAxis: Double?
+        var colorStr: String?
+        for i in 0 ..< channelNum {
+            lineChartEntry.removeAll()
+            
+            // 添加0点的点
+            xAxis = (self.lineChart?.chartXMin)!
+            colorStr = timePointValueDic?[0]
+            yAxis = Double((colorStr! as NSString).substring(with: NSRange.init(location: i * 2, length: 2)).hexToInt16()) / 100.0
+            
+            let firstTimePoint = timePointArray![0]
+            let lastTimePoint = timePointArray![(timePointArray?.count)! - 1]
+            let dis = Double(firstTimePoint.converTimeStrToMinute(timeStr: firstTimePoint)!) / (Double(firstTimePoint.converTimeStrToMinute(timeStr: firstTimePoint)!) + (self.lineChart?.chartXMax)! - Double(lastTimePoint.converTimeStrToMinute(timeStr: lastTimePoint)!))
+            
+            yAxis = yAxis! * (1.0 - dis)
+            
+            value = ChartDataEntry(x: Double(xAxis), y: yAxis!)
+            
+            lineChartEntry.append(value!)
+            
+            for index in 0 ..< timePointArray!.count {
+                let timeStr = timePointArray![index]
+                xAxis = Double(timeStr.converTimeStrToMinute(timeStr: timeStr)!)
+                
+                colorStr = timePointValueDic?[index]
+                
+                yAxis = Double((colorStr! as NSString).substring(with: NSRange.init(location: i * 2, length: 2)).hexToInt16()) / 100.0
+                
+                value = ChartDataEntry(x: Double(xAxis), y: yAxis!)
+                
+                lineChartEntry.append(value!)
+            }
+            
+            // 添加24点的点
+            xAxis = (self.lineChart?.chartXMax)!
+            colorStr = timePointValueDic?[0]
+            yAxis = Double((colorStr! as NSString).substring(with: NSRange.init(location: i * 2, length: 2)).hexToInt16()) / 100.0
+            
+            yAxis = yAxis! * (1.0 - dis)
+            
+            value = ChartDataEntry(x: Double(xAxis), y: yAxis!)
+            
+            lineChartEntry.append(value!)
+            
+            line = LineChartDataSet(values: lineChartEntry, label: colorTitleArray?[i])
+            
+            line?.circleRadius = CGFloat(4.0)
+            line?.colors[0] = colorArray![i]
+            
+            data.addDataSet(line!)
+        }
+        
+        // 增加一条线，用来实现预览功能
+        lineChartEntry.removeAll()
+        for i in 0 ..< Int((lineChart?.chartXMax)!) {
+            value = ChartDataEntry(x: Double(i), y: 0)
+            lineChartEntry.append(value!)
+        }
+        
+        line = LineChartDataSet(values: lineChartEntry, label: nil)
+        line?.circleRadius = 0.0
+        line?.colors[0] = UIColor.clear
+        
+        data.addDataSet(line!)
+        
+        lineChart?.data = data
+        
+        lineChart?.moveViewToX(100)
+    }
+    
+    func updateOldGraph(channelNum: Int, colorArray: [UIColor]?, colorTitleArray: [String]?, timePointArray: [String]?, timePointValueDic: [Int: String]?) -> Void {
         let data = LineChartData()
         var value: ChartDataEntry?
         var line: LineChartDataSet?

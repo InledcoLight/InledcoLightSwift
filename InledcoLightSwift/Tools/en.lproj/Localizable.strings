@@ -31,6 +31,9 @@ timePoint24 = "Time Points-24H";
 preview = "Preview";
 run = "Run";
 edit = "Edit";
+timePoint = "Time Point";
+timePointMessage = "Select a time";
+stop = "Stop";
 
 
 

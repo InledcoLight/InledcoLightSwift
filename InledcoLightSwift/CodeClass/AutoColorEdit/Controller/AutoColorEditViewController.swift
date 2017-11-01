@@ -17,12 +17,12 @@ class AutoColorEditViewController: BaseViewController, UITableViewDelegate, UITa
     var deviceCodeInfo: DeviceCodeInfo?
     var bottomView: LayoutToolsView?
     var timePointSelectTableView: UITableView! = UITableView()
-    var timePointArray: [String]! = [String]()
     // 用来标记当前修改的是第几个时间段的颜色值
     var selectedTimePointIndex: Int? = 0
     var dateformatter: DateFormatter! = DateFormatter.init()
     typealias PassParameterType = (DeviceParameterModel) -> Void
     var passParameterModelCallback: PassParameterType?
+    var addTimePoint: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,7 +39,7 @@ class AutoColorEditViewController: BaseViewController, UITableViewDelegate, UITa
         
         timePointSelectTableView.delegate = self
         timePointSelectTableView.dataSource = self
-        timePointSelectTableView.backgroundColor = UIColor.gray
+        timePointSelectTableView.backgroundColor = UIColor.clear
         timePointSelectTableView.register(UINib.init(nibName: "TimePointTableViewCell", bundle: nil), forCellReuseIdentifier: "TimePointTableViewCell")
         
         parameterModel?.parameterModelCopy(parameterModel: editParameterModel)
@@ -55,16 +55,15 @@ class AutoColorEditViewController: BaseViewController, UITableViewDelegate, UITa
         
         // 1.滑动条调光界面
         let manualSliderViewFrame = CGRect(x: 0, y: 64, width: SystemInfoTools.screenWidth, height: 240.0)
-        let timeColorValue = String.convertColorValue(timePointArray: editParameterModel.timePointArray, timePointColorDic: editParameterModel.timePointValueDic)
+        let timeColorValue = self.editParameterModel.convertColorValue()
         
-        manualSliderView = ManualSliderView(frame: manualSliderViewFrame, colorArray: deviceCodeInfo?.channelColorArray, colorTitleArray: deviceCodeInfo?.channelColorTitleArray, colorPercentArray: timeColorValue![0]!)
+        manualSliderView = ManualSliderView(frame: manualSliderViewFrame, colorArray: deviceCodeInfo?.channelColorArray, colorTitleArray: deviceCodeInfo?.channelColorTitleArray, colorPercentArray: timeColorValue[self.selectedTimePointIndex!]!)
         
         manualSliderView?.passSliderValueCallback = {
             (index, colorValue) in
             // 根据时间点信息，把更改同步到模型中
             if self.selectedTimePointIndex != nil {
-                String.saveColorValueToModel(timePointCount: self.editParameterModel?.timePointArray.count, timePointIndex: self.selectedTimePointIndex, colorIndex: index, colorValue: colorValue, parameterModel: self.editParameterModel)
-                print(self.editParameterModel?.timePointValueDic[0] ?? "a")
+                self.editParameterModel.saveColorValueToModel(timePointIndex: self.selectedTimePointIndex, colorIndex: index, colorValue: colorValue)
             }
         }
         self.view.addSubview(manualSliderView!)
@@ -82,10 +81,65 @@ class AutoColorEditViewController: BaseViewController, UITableViewDelegate, UITa
         let bottomViewFrame = CGRect(x: 0, y: SystemInfoTools.screenHeight - 50, width: SystemInfoTools.screenWidth, height: 50)
         bottomView = LayoutToolsView(viewNum: 4, viewWidth: (SystemInfoTools.screenWidth - 3.0 * 8 - 2 * 16) / 4.0, viewHeight: 40, viewInterval: 8, viewTitleArray: [self.languageManager.getTextForKey(key: "add"), self.languageManager.getTextForKey(key: "delete"), self.languageManager.getTextForKey(key: "save"), self.languageManager.getTextForKey(key: "cancel")], frame: bottomViewFrame)
         
-        bottomView?.backgroundColor = UIColor.gray
+        bottomView?.backgroundColor = UIColor.clear
         bottomView?.buttonActionCallback = {
-            (index) in
+            (button, index) in
             if index == 0 {
+                let datePicker = UIDatePicker()
+                datePicker.date = Date()
+                datePicker.datePickerMode = .time
+                datePicker.locale = Locale.init(identifier: "NL")
+                
+                self.addTimePoint = self.dateformatter.string(from: datePicker.date).convertFormatTimeToHexTime()
+                
+                datePicker.addTarget(self, action: #selector(self.datePickerChanged(sender:)), for: .valueChanged)
+                let datePickerAlert = LGAlertView.init(viewAndTitle: self.languageManager.getTextForKey(key: "timePoint"), message: self.languageManager.getTextForKey(key: "timePointMessage"), style: LGAlertViewStyle.alert, view: datePicker, buttonTitles: [self.languageManager.getTextForKey(key: "Done")], cancelButtonTitle: self.languageManager.getTextForKey(key: "Cancel"), destructiveButtonTitle: "")
+                
+                datePickerAlert?.actionHandler = {
+                    (alertView, title, index) in
+                    if index == 0 {
+                        // 更新模型
+                        var index = 0
+                        for timeStr in self.editParameterModel.timePointArray {
+                            if timeStr.converTimeStrToMinute(timeStr: timeStr)! > (self.addTimePoint?.converTimeStrToMinute(timeStr: self.addTimePoint))! {
+                                break
+                            }
+                            
+                            index = index + 1
+                        }
+                        
+                        self.editParameterModel.timePointArray.insert(self.addTimePoint!, at: index)
+                        
+                        for i in (0 ..< self.editParameterModel.timePointValueDic.keys.count).reversed()   {
+                            if i > index {
+                                self.editParameterModel.timePointValueDic[i + 1] = self.editParameterModel.timePointValueDic[i]
+                            } else if i == index {
+                                self.editParameterModel.timePointValueDic[i + 1] = self.editParameterModel.timePointValueDic[i]
+                                self.editParameterModel.timePointValueDic[i] = ""
+                                for _ in 0 ..< self.editParameterModel.channelNum! * 2 {
+                                    self.editParameterModel.timePointValueDic[i]?.append("0")
+                                }
+                                
+                                break
+                            }
+                        }
+                        
+                        // 更新视图
+                        self.selectedTimePointIndex = index
+                        
+                        let timeColorValue = self.editParameterModel.timePointValueDic[index]?.convertColorStrToDoubleValue()
+                        
+                        self.manualSliderView?.updateManualSliderView(colorPercentArray: timeColorValue!)
+                        
+                        self.timePointSelectTableView.reloadData()
+                    }
+                }
+                
+                datePickerAlert?.cancelHandler = {
+                    (alertView) in
+                }
+                
+                datePickerAlert?.show(animated: true, completionHandler: nil)
                 // 1.增加按钮方法
             } else if index == 1 {
                 // 2.删除按钮方法
@@ -116,6 +170,10 @@ class AutoColorEditViewController: BaseViewController, UITableViewDelegate, UITa
         self.view.addSubview(bottomView!)
     }
     
+    @objc func datePickerChanged(sender: UIDatePicker) -> Void {
+        self.addTimePoint = dateformatter.string(from: sender.date).convertFormatTimeToHexTime()
+    }
+    
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
@@ -130,24 +188,25 @@ class AutoColorEditViewController: BaseViewController, UITableViewDelegate, UITa
         cell.timePointDatePicker.date = dateformatter.date(from: self.editParameterModel.timePointArray[indexPath.row].convertHexTimeToFormatTime())!;
         
         cell.timePointDatePicker.isEnabled = self.selectedTimePointIndex == indexPath.row ? true : false
+        
         cell.selectButton.isSelected = self.selectedTimePointIndex == indexPath.row ? true : false
-        cell.backgroundColor = UIColor.gray
         
         cell.datePickerValueChangedCallback = {
             (date) in
             let dateStr = self.dateformatter.string(from: date)
-            self.editParameterModel.timePointArray[self.selectedTimePointIndex!] = dateStr.convertFormatTimeToHexTime()
+            
+            self.editParameterModel.timePointArray[indexPath.row] = dateStr.convertFormatTimeToHexTime()
         }
-        
+
         cell.selectButtonSelectCallback = {
             (selected) in
             if selected == true {
                 self.selectedTimePointIndex = indexPath.row
                 
                 // 更新滑动条
-                let timeColorValue = String.convertColorValue(timePointArray: self.editParameterModel.timePointArray, timePointColorDic: self.editParameterModel.timePointValueDic)
+                let timeColorValue = self.editParameterModel.timePointValueDic[indexPath.row]?.convertColorStrToDoubleValue()
                 
-                self.manualSliderView?.updateManualSliderView(colorPercentArray: timeColorValue![indexPath.row]!)
+                self.manualSliderView?.updateManualSliderView(colorPercentArray: timeColorValue!)
             } else {
                 self.selectedTimePointIndex = nil
             }

@@ -24,7 +24,7 @@ class ManualSliderView: UIView {
     */
     init(frame: CGRect, colorArray: [UIColor]!, colorTitleArray: [String]!, colorPercentArray: [Double]!) {
         super.init(frame: frame)
-        self.backgroundColor = UIColor.gray
+        self.backgroundColor = UIColor.clear
         
         for i in 0 ..< colorArray.count {
             let colorHeight = frame.size.height / CGFloat(colorArray.count)
@@ -66,9 +66,9 @@ class ManualSliderView: UIView {
         }
     }
     
-    func updateManualSliderView(colorPercentArray: [Double]!) -> Void {
+    func updateManualSliderView(colorPercentArray: [Double]) -> Void {
         for i in 0 ..< colorPercentArray.count {
-            colorSliderArray![i].value = Float(colorPercentArray![i] * 10)
+            colorSliderArray![i].value = Float(colorPercentArray[i] * 10)
             colorColorPercentLabelArray![i].text = String.init(format: "%.0f%%", colorPercentArray[i])
         }
     }

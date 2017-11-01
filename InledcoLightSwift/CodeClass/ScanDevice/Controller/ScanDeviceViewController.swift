@@ -70,6 +70,8 @@ class ScanDeviceViewController: BaseViewController,BLEManagerDelegate,UITableVie
         self.tableView.delegate = self
         self.tableView.dataSource = self
         self.tableView.separatorStyle = .singleLine
+        self.tableView.backgroundColor = UIColor.clear
+        self.tableView.tableFooterView = UIView(frame: CGRect.zero)
         self.tableView.register(UINib.init(nibName: "ScanDeviceTableViewCell", bundle: nil), forCellReuseIdentifier: "ScanDeviceTableViewCell")
     }
     

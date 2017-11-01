@@ -9,9 +9,10 @@
 import UIKit
 
 class LayoutToolsView: UIView {
-    typealias PassButtonTagType = (Int) -> Void
-    var buttonActionCallback: PassButtonTagType?
-    var buttonLongPressCallback: PassButtonTagType?
+    typealias LongPressTagType = (Int) -> Void
+    typealias PassButtonType = (UIButton, Int) -> Void
+    var buttonActionCallback: PassButtonType?
+    var buttonLongPressCallback: LongPressTagType?
     
     init(viewNum: Int!, viewWidth: CGFloat!, viewHeight: CGFloat!, viewInterval: CGFloat!, viewTitleArray: [String]!, frame: CGRect) {
         super.init(frame: frame)
@@ -25,6 +26,7 @@ class LayoutToolsView: UIView {
             button.layer.cornerRadius = 5
             button.layer.masksToBounds = true
             button.setTitle(viewTitleArray[i - 1], for: .normal)
+            button.titleLabel?.textAlignment = .center
             button.titleLabel?.adjustsFontSizeToFitWidth = true
             button.addTarget(self, action: #selector(buttonAction(sender:)), for: UIControlEvents.touchUpInside)
             
@@ -41,7 +43,7 @@ class LayoutToolsView: UIView {
     // 按钮点击方法
     @objc func buttonAction(sender: UIButton) -> Void {
         if buttonActionCallback != nil {
-            buttonActionCallback!(sender.tag - 1001)
+            buttonActionCallback!(sender, sender.tag - 1001)
         }
     }
     

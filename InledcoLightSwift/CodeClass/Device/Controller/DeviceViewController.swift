@@ -52,10 +52,19 @@ class DeviceViewController: BaseViewController,UITableViewDelegate,UITableViewDa
             let parameterModel: DeviceParameterModel = DeviceParameterModel()
             parameterModel.channelNum = deviceCodeInfo.channelNum
             
-            self.blueToothManager.parseDeviceDataFromReceiveStrToModel(receiveData: receiveDataStr!, parameterModel: parameterModel)
-            
             parameterModel.typeCode = deviceCodeInfo.deviceTypeCode
             parameterModel.uuid = self.selectDeviceModel?.uuidString
+            
+            // 这里可以根据设备编码解析调用不同的解析方法
+            switch parameterModel.typeCode! {
+                // 这里列出兼容旧设备
+            case DeviceTypeData.DeviceTypeCode.LIGHT_CODE_STRIP_III:
+                parameterModel.parseOldDeviceDataFromReceiveStrToModel(receiveData: receiveDataStr!)
+            default:
+                // 默认使用新设备解析数据
+                parameterModel.parseDeviceDataFromReceiveStrToModel(receiveData: receiveDataStr!)
+            }
+            
             
             self.connectAlertController?.dismiss(animated: true, completionHandler: nil)
             // 解析设备数据，跳转界面
@@ -96,7 +105,7 @@ class DeviceViewController: BaseViewController,UITableViewDelegate,UITableViewDa
         
         
         // 3.操作弹出视图
-         alertController = UIAlertController(title: languageManager.getTextForKey(key: "operation"), message: nil, preferredStyle: .actionSheet)
+         alertController = UIAlertController(title: self.selectDeviceModel?.name, message: nil, preferredStyle: .actionSheet)
         // 删除操作
         let deleteAction: UIAlertAction = UIAlertAction(title: languageManager.getTextForKey(key: "delete"), style: .destructive) { (alertAction) in
         }
@@ -111,7 +120,7 @@ class DeviceViewController: BaseViewController,UITableViewDelegate,UITableViewDa
         
         // 取消操作
         let cancalAction: UIAlertAction = UIAlertAction(title: languageManager.getTextForKey(key: "cancel"), style: .cancel) { (alertAction) in
-            print("取消")
+            
         }
         
         alertController.addAction(deleteAction)
@@ -158,6 +167,9 @@ class DeviceViewController: BaseViewController,UITableViewDelegate,UITableViewDa
         self.automaticallyAdjustsScrollViewInsets = false
         self.deviceTableView.delegate = self
         self.deviceTableView.dataSource = self
+        self.deviceTableView.backgroundColor = UIColor.clear
+        self.deviceTableView.separatorStyle = .singleLine;
+        self.deviceTableView.tableFooterView = UIView(frame: CGRect.zero)
         self.deviceTableView.register(UINib.init(nibName: "DeviceTableViewCell", bundle: nil), forCellReuseIdentifier: "DeviceTableViewCell")
     }
     

@@ -38,7 +38,7 @@ class ManualAutoSwitchView: UIView {
         super.init(frame: frame)
         self.frame = frame
         
-        self.backgroundColor = UIColor.green
+        self.backgroundColor = UIColor.clear
         let radius = frame.size.height / CGFloat(2)
         
         self.layer.cornerRadius = radius
