@@ -8,13 +8,7 @@
 
 import UIKit
 
-class DeviceTypeData {
-    // 所有类型编码
-    enum DeviceTypeCode: String {
-        case LIGHT_CODE_RGBW = "0105"
-        case LIGHT_CODE_STRIP_III = "0111"
-    }
-    
+class DeviceTypeData {    
     // 颜色值数组
     static let fourColorArray: [UIColor]! = [UIColor.red,UIColor.green,UIColor.blue,UIColor.white]
     static let fourColorTitleArray: [String]! = ["Red","Green","Blue","White"]
@@ -27,13 +21,6 @@ class DeviceTypeData {
         let deviceCodeInfo: DeviceCodeInfo = DeviceCodeInfo()
         
         switch deviceTypeCode {
-        case .LIGHT_CODE_RGBW:
-            deviceCodeInfo.deviceTypeCode = deviceTypeCode
-            deviceCodeInfo.deviceName = "RGBW Strip II"
-            deviceCodeInfo.pictureName = "led"
-            deviceCodeInfo.channelNum = 4
-            deviceCodeInfo.channelColorArray = fourColorArray
-            deviceCodeInfo.channelColorTitleArray = fourColorTitleArray
         case .LIGHT_CODE_STRIP_III:
             deviceCodeInfo.deviceTypeCode = deviceTypeCode
             deviceCodeInfo.deviceName = "HAGEN Strip III"
@@ -41,6 +28,14 @@ class DeviceTypeData {
             deviceCodeInfo.channelNum = 4
             deviceCodeInfo.channelColorArray = fourColorArray
             deviceCodeInfo.channelColorTitleArray = fourColorTitleArray
+        default:
+            deviceCodeInfo.deviceTypeCode = deviceTypeCode
+            deviceCodeInfo.deviceName = "NEW DEVICE"
+            deviceCodeInfo.pictureName = "led"
+            deviceCodeInfo.channelNum = 4
+            deviceCodeInfo.channelColorArray = fourColorArray
+            deviceCodeInfo.channelColorTitleArray = fourColorTitleArray
+            break
         }
         
         return deviceCodeInfo

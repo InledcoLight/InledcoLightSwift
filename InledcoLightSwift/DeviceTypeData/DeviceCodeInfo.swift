@@ -9,7 +9,7 @@
 import UIKit
 
 class DeviceCodeInfo: NSObject {
-    var deviceTypeCode: DeviceTypeData.DeviceTypeCode?
+    var deviceTypeCode: DeviceTypeCode?
     var deviceName: String?
     var pictureName: String?
     var channelNum: Int?

@@ -51,6 +51,7 @@ class SettingViewController: BaseViewController,UITableViewDelegate, UITableView
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell")
         
+        cell?.selectionStyle = .none
         cell?.backgroundColor = UIColor.clear
         cell?.contentView.backgroundColor = UIColor.clear
         cell?.accessoryType = .disclosureIndicator

@@ -63,7 +63,21 @@ class AutoColorEditViewController: BaseViewController, UITableViewDelegate, UITa
             (index, colorValue) in
             // 根据时间点信息，把更改同步到模型中
             if self.selectedTimePointIndex != nil {
-                self.editParameterModel.saveColorValueToModel(timePointIndex: self.selectedTimePointIndex, colorIndex: index, colorValue: colorValue)
+                switch (self.editParameterModel.typeCode)! {
+                case .LIGHT_CODE_STRIP_III, .ONECHANNEL_LIGHT, .TWOCHANNEL_LIGHT, .THREECHANNEL_LIGHT, .FOURCHANNEL_LIGHT, .FIVECHANNEL_LIGHT, .SIXCHANNEL_LIGHT:
+                    if self.selectedTimePointIndex == 0 || (self.selectedTimePointIndex == (self.editParameterModel.timePointNum) - 1) {
+                        self.editParameterModel.saveColorValueToModel(timePointIndex: 0, colorIndex: index, colorValue: colorValue)
+                        self.editParameterModel.saveColorValueToModel(timePointIndex: (self.editParameterModel.timePointNum!) - 1, colorIndex: index, colorValue: colorValue)
+                    } else if self.selectedTimePointIndex! % 2 != 0 {
+                        self.editParameterModel.saveColorValueToModel(timePointIndex: self.selectedTimePointIndex, colorIndex: index, colorValue: colorValue)
+                        self.editParameterModel.saveColorValueToModel(timePointIndex: self.selectedTimePointIndex! + 1, colorIndex: index, colorValue: colorValue)
+                    } else {
+                        self.editParameterModel.saveColorValueToModel(timePointIndex: self.selectedTimePointIndex, colorIndex: index, colorValue: colorValue)
+                        self.editParameterModel.saveColorValueToModel(timePointIndex: self.selectedTimePointIndex! - 1, colorIndex: index, colorValue: colorValue)
+                    }
+                default:
+                    self.editParameterModel.saveColorValueToModel(timePointIndex: self.selectedTimePointIndex, colorIndex: index, colorValue: colorValue)
+                }
             }
         }
         self.view.addSubview(manualSliderView!)
@@ -195,7 +209,12 @@ class AutoColorEditViewController: BaseViewController, UITableViewDelegate, UITa
             (date) in
             let dateStr = self.dateformatter.string(from: date)
             
-            self.editParameterModel.timePointArray[indexPath.row] = dateStr.convertFormatTimeToHexTime()
+            switch (self.editParameterModel.typeCode)! {
+            case .LIGHT_CODE_STRIP_III, .ONECHANNEL_LIGHT, .TWOCHANNEL_LIGHT, .THREECHANNEL_LIGHT, .FOURCHANNEL_LIGHT, .FIVECHANNEL_LIGHT, .SIXCHANNEL_LIGHT:
+                self.editParameterModel.timePointArray[indexPath.row] = dateStr.convertFormatTimeToHexTime()
+            default:
+                break
+            }
         }
 
         cell.selectButtonSelectCallback = {

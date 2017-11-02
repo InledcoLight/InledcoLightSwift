@@ -18,6 +18,7 @@ class LanguageTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        self.selectionStyle = .none
         self.backgroundColor = UIColor.clear
         self.contentView.backgroundColor = UIColor.clear
         self.languageSelectButton.setBackgroundImage(UIImage.init(named: "languageUnSelect"), for: .normal)

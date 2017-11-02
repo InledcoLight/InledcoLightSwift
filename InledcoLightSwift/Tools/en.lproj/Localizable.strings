@@ -34,6 +34,8 @@ edit = "Edit";
 timePoint = "Time Point";
 timePointMessage = "Select a time";
 stop = "Stop";
+saveUserDefinedSuccessful = "Save Successful";
+runSuccessful = "Run Successful";
 
 
 

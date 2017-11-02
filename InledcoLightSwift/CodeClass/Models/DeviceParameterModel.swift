@@ -10,7 +10,7 @@ import UIKit
 
 class DeviceParameterModel: NSObject {
     // 设备类型编码
-    var typeCode: DeviceTypeData.DeviceTypeCode?
+    var typeCode: DeviceTypeCode?
     // UUID
     var uuid: String?
     // 命令帧头
@@ -31,7 +31,7 @@ class DeviceParameterModel: NSObject {
     var dynamicMode: String?
     // 自动模式数据
     // 时间点个数
-    var timePointNum: Int?
+    var timePointNum: Int! = 4
     // 时间点数组
     var timePointArray: [String]! = [String]()
     // 自动模式时间点对应值

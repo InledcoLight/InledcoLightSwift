@@ -56,11 +56,12 @@ class ColorSettingViewController: BaseViewController {
             
             // 提示保存当前设置成功
             if commandType == CommandType.SETTINGUSERDEFINED_COMMAND {
-                self.showMessageWithTitle(title: "保存成功", time: 1.5, isShow: true)
+                // 用户自定义数据成功
+                self.showMessageWithTitle(title: self.languageManager.getTextForKey(key: "saveUserDefinedSuccessful"), time: 1.5, isShow: true)
             } else if commandType == CommandType.SETTINGAUTOMODE_COMMAND {
-                // 更新数据
+                // 更新数据：发送自动模式数据成功
                 self.parameterModel = self.editParameterModel
-                self.showMessageWithTitle(title: "设置自动模式成功", time: 1.5, isShow: true)
+                self.showMessageWithTitle(title: self.languageManager.getTextForKey(key: "runSuccessful"), time: 1.5, isShow: true)
             }
             
             // 更新界面
@@ -93,6 +94,7 @@ class ColorSettingViewController: BaseViewController {
         
         manualAutoSwitchView?.manualModeAction = {
             self.cancelPreview()
+            self.editParameterModel = nil
             self.blueToothManager.sendManualModeCommand(uuid: (self.parameterModel?.uuid)!)
         }
         
@@ -166,7 +168,8 @@ class ColorSettingViewController: BaseViewController {
             manualColorView = ManualCircleView(frame: manualColorViewFrame, channelNum: (parameterModel?.channelNum)!, colorArray: deviceInfo?.channelColorArray, colorPercentArray: manualPercentArray, colorTitleArray: deviceInfo?.channelColorTitleArray)
             manualColorView?.passColorValueCallback = {
                 (colorIndex, colorValue) in
-                    var commandStr = CommandHeader.COMMANDHEAD_FOUR.rawValue
+                    var commandStr = ""
+
                     for i in 0 ..< (self.parameterModel?.channelNum)! {
                         if i == colorIndex {
                             commandStr = commandStr.appendingFormat("%04x", colorValue)
@@ -174,6 +177,18 @@ class ColorSettingViewController: BaseViewController {
                             commandStr.append("FFFF")
                         }
                     }
+                
+                var commandHeader = CommandHeader.COMMANDHEAD_FOUR.rawValue
+                switch (self.parameterModel?.typeCode)! {
+                case .LIGHT_CODE_STRIP_III, .ONECHANNEL_LIGHT, .TWOCHANNEL_LIGHT, .THREECHANNEL_LIGHT, .FOURCHANNEL_LIGHT, .FIVECHANNEL_LIGHT, .SIXCHANNEL_LIGHT:
+                    break
+                default:
+                    commandHeader.append(String.init(format: "%02x", (self.parameterModel?.channelNum)!))
+                    break
+                }
+                
+                commandStr = commandHeader + commandStr
+                
                 self.blueToothManager.sendCommandToDevice(uuid: (self.parameterModel?.uuid)!, commandStr: commandStr, commandType: CommandType.UNKNOWN_COMMAND, isXORCommand: true)
                 
                 // 更新模型数据
@@ -303,7 +318,14 @@ class ColorSettingViewController: BaseViewController {
                         self.cancelPreview()
                         // 2.发送设置到设备
                         if self.editParameterModel != nil {
-                            self.blueToothManager.sendCommandToDevice(uuid: (self.editParameterModel?.uuid)!, commandStr: (self.editParameterModel?.generateOldCommand())!, commandType: CommandType.SETTINGAUTOMODE_COMMAND, isXORCommand: true)
+                            let commandStr = (self.editParameterModel?.generateOldSetAutoCommand())!
+                            self.blueToothManager.sendCommandToDevice(uuid: (self.editParameterModel?.uuid)!, commandStr: commandStr, commandType: CommandType.SETTINGAUTOMODE_COMMAND, isXORCommand: true)
+                            switch (self.deviceInfo?.deviceTypeCode)! {
+                            case .LIGHT_CODE_STRIP_III, .ONECHANNEL_LIGHT, .TWOCHANNEL_LIGHT, .THREECHANNEL_LIGHT, .FOURCHANNEL_LIGHT, .FIVECHANNEL_LIGHT, .SIXCHANNEL_LIGHT:
+                                break
+                            default:
+                                self.blueToothManager.sendCommandToDevice(uuid: (self.editParameterModel?.uuid)!, commandStr: (self.editParameterModel?.generateSetAutoCommand())!, commandType: CommandType.SETTINGAUTOMODE_COMMAND, isXORCommand: true)
+                            }
                         }
                     } else {
                         // 3.跳转到编辑界面
@@ -316,8 +338,12 @@ class ColorSettingViewController: BaseViewController {
                             self.editParameterModel = deviceParameterModel
                         }
                         
-                        autoColorEditViewController.parameterModel = self.parameterModel
-                        self.navigationController?.pushViewController(autoColorEditViewController, animated: true)
+                        if self.editParameterModel == nil {
+                            autoColorEditViewController.parameterModel = self.parameterModel
+                        } else {
+                            autoColorEditViewController.parameterModel = self.editParameterModel
+                        }
+                    self.navigationController?.pushViewController(autoColorEditViewController, animated: true)
                     }
             }
             

@@ -19,6 +19,7 @@ class DeviceViewController: BaseViewController,UITableViewDelegate,UITableViewDa
     private var connectFailedAlertController: LGAlertView?
     private var deviceDataSourceArray: NSMutableArray = []
     private var selectDeviceModel: DeviceModel?
+    private var deviceCodeInfo: DeviceCodeInfo?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,26 +46,29 @@ class DeviceViewController: BaseViewController,UITableViewDelegate,UITableViewDa
         // 1.连接成功回调
         self.blueToothManager.completeReceiveDataCallback = {
             (receiveDataStr, commandType) in
-            // 获取当前数据动态信息
-            let deviceCodeInfo = DeviceTypeData.getDeviceInfoWithTypeCode(deviceTypeCode: DeviceTypeData.DeviceTypeCode(rawValue: (self.selectDeviceModel?.typeCode)!)!)
             
             // 解析数据
             let parameterModel: DeviceParameterModel = DeviceParameterModel()
-            parameterModel.channelNum = deviceCodeInfo.channelNum
+            parameterModel.channelNum = self.deviceCodeInfo?.channelNum
             
-            parameterModel.typeCode = deviceCodeInfo.deviceTypeCode
+            parameterModel.typeCode = self.deviceCodeInfo?.deviceTypeCode
             parameterModel.uuid = self.selectDeviceModel?.uuidString
             
             // 这里可以根据设备编码解析调用不同的解析方法
             switch parameterModel.typeCode! {
                 // 这里列出兼容旧设备
-            case DeviceTypeData.DeviceTypeCode.LIGHT_CODE_STRIP_III:
-                parameterModel.parseOldDeviceDataFromReceiveStrToModel(receiveData: receiveDataStr!)
-            default:
-                // 默认使用新设备解析数据
-                parameterModel.parseDeviceDataFromReceiveStrToModel(receiveData: receiveDataStr!)
+                case DeviceTypeCode.LIGHT_CODE_STRIP_III, .ONECHANNEL_LIGHT, .TWOCHANNEL_LIGHT, .THREECHANNEL_LIGHT, .FOURCHANNEL_LIGHT, .FIVECHANNEL_LIGHT, .SIXCHANNEL_LIGHT:
+                    parameterModel.parseOldDeviceDataFromReceiveStrToModel(receiveData: receiveDataStr!)
+                default:
+                    // 默认使用新设备解析数据
+                    parameterModel.parseDeviceDataFromReceiveStrToModel(receiveData: receiveDataStr!)
             }
             
+            // 2.同步时间回调
+            self.blueToothManager.writeDataCallback = {
+                (receiveDataStr, commandType) in
+                self.blueToothManager.sendReadDeviceDataCommand(uuid: (self.selectDeviceModel?.uuidString)!)
+            }
             
             self.connectAlertController?.dismiss(animated: true, completionHandler: nil)
             // 解析设备数据，跳转界面
@@ -110,7 +114,7 @@ class DeviceViewController: BaseViewController,UITableViewDelegate,UITableViewDa
         let deleteAction: UIAlertAction = UIAlertAction(title: languageManager.getTextForKey(key: "delete"), style: .destructive) { (alertAction) in
         }
         
-        // 重命名操作
+        // 连接设备操作
         let connectAction: UIAlertAction = UIAlertAction(title: languageManager.getTextForKey(key: "connect"), style: .default) { (alertAction) in
             if self.selectDeviceModel != nil {
                 self.connectAlertController?.show(animated: true, completionHandler: nil)
@@ -198,6 +202,10 @@ class DeviceViewController: BaseViewController,UITableViewDelegate,UITableViewDa
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.selectDeviceModel = self.deviceDataSourceArray.object(at: indexPath.row) as? DeviceModel
+        // 获取当前数据动态信息
+        self.deviceCodeInfo = DeviceTypeData.getDeviceInfoWithTypeCode(deviceTypeCode: DeviceTypeCode(rawValue: (self.selectDeviceModel?.typeCode)!)!)
+        self.blueToothManager.currentDeviceTypeCode = self.deviceCodeInfo?.deviceTypeCode
+        
         self.present(alertController, animated: true, completion: nil)
     }
     

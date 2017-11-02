@@ -70,22 +70,28 @@ class AutoColorChartView: UIView, ChartViewDelegate {
         var xAxis: Double = 0.0
         // y坐标
         var yAxis: Double?
+        var yFisrtAxis: Double?
+        var yLastAxis: Double?
         var colorStr: String?
+        var firstColorStr: String?
+        var lastColorStr: String?
         for i in 0 ..< channelNum {
             lineChartEntry.removeAll()
             
             // 添加0点的点
             xAxis = (self.lineChart?.chartXMin)!
-            colorStr = timePointValueDic?[0]
-            yAxis = Double((colorStr! as NSString).substring(with: NSRange.init(location: i * 2, length: 2)).hexToInt16()) / 100.0
+            firstColorStr = timePointValueDic?[0]
+            lastColorStr = timePointValueDic?[timePointValueDic!.keys.count - 1]
+            yFisrtAxis = Double((firstColorStr! as NSString).substring(with: NSRange.init(location: i * 2, length: 2)).hexToInt16()) / 100.0
+            yLastAxis = Double((lastColorStr! as NSString).substring(with: NSRange.init(location: i * 2, length: 2)).hexToInt16()) / 100.0
             
             let firstTimePoint = timePointArray![0]
             let lastTimePoint = timePointArray![(timePointArray?.count)! - 1]
-            let dis = Double(firstTimePoint.converTimeStrToMinute(timeStr: firstTimePoint)!) / (Double(firstTimePoint.converTimeStrToMinute(timeStr: firstTimePoint)!) + (self.lineChart?.chartXMax)! - Double(lastTimePoint.converTimeStrToMinute(timeStr: lastTimePoint)!))
+            let dis = Double(firstTimePoint.converTimeStrToMinute(timeStr: firstTimePoint)!) / (Double(firstTimePoint.converTimeStrToMinute(timeStr: firstTimePoint)!) + (self.lineChart?.chartXMax)! - Double(lastTimePoint.converTimeStrToMinute(timeStr: lastTimePoint)!)) * (yFisrtAxis! - yLastAxis!)
             
-            yAxis = yAxis! * (1.0 - dis)
+            yFisrtAxis = yFisrtAxis! - dis
             
-            value = ChartDataEntry(x: Double(xAxis), y: yAxis!)
+            value = ChartDataEntry(x: Double(xAxis), y: yFisrtAxis!)
             
             lineChartEntry.append(value!)
             
@@ -104,12 +110,8 @@ class AutoColorChartView: UIView, ChartViewDelegate {
             
             // 添加24点的点
             xAxis = (self.lineChart?.chartXMax)!
-            colorStr = timePointValueDic?[0]
-            yAxis = Double((colorStr! as NSString).substring(with: NSRange.init(location: i * 2, length: 2)).hexToInt16()) / 100.0
             
-            yAxis = yAxis! * (1.0 - dis)
-            
-            value = ChartDataEntry(x: Double(xAxis), y: yAxis!)
+            value = ChartDataEntry(x: Double(xAxis), y: yFisrtAxis!)
             
             lineChartEntry.append(value!)
             

@@ -130,6 +130,28 @@ extension DeviceParameterModel {
         }
     }
     
+    /// 根据模型生成设置自动模式命令
+    ///
+    /// - returns: 设置自动模式的命令
+    func generateSetAutoCommand() -> String {
+        var commandHeaderStr: String! = CommandHeader.COMMANDHEAD_READ_ONE.rawValue
+        var commandStr: String! = "23"
+        
+        for timePointIndex in 0 ..< self.timePointNum! {
+            // 拼接时间点
+            commandStr.append(self.timePointArray[timePointIndex])
+            commandStr.append(self.timePointArray[timePointIndex + 1])
+            
+            // 拼接时间点对应的颜色值
+            commandStr.append(self.timePointValueDic[timePointIndex]!)
+        }
+        
+        // 拼接数据个数
+        commandHeaderStr.appendingFormat("%02x", self.timePointNum! * (self.timePointNum! + self.channelNum!))
+        
+        return commandHeaderStr + commandStr
+    }
+    
     /// 把改变的颜色值保存到模型中对应的颜色信息中
     /// - parameter timeSlotIndex: 时间段索引
     /// - parameter colorIndex: 颜色值索引

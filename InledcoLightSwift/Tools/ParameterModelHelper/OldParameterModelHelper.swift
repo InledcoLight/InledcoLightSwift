@@ -143,18 +143,19 @@ extension DeviceParameterModel {
     /// 根据模型生成设置自动模式命令
     ///
     /// - returns: 设置自动模式的命令
-    func generateOldCommand() -> String {
+    func generateOldSetAutoCommand() -> String {
         var commandStr: String! = CommandHeader.COMMANDHEAD_SEVEN.rawValue
         
-        for index in 0 ..< self.timePointValueDic.keys.count {
+        for index in 0 ..< self.timePointValueDic.keys.count / 2 {
             // 1.拼接时间点
-            if index % 2 == 0 {
-                commandStr.append(self.timePointArray[index])
-                commandStr.append(self.timePointArray[index + 1])
-            }
-
+            commandStr.append(self.timePointArray[2 * index])
+            commandStr.append(self.timePointArray[2 * index + 1])
             // 2.拼接时间点对应的颜色值
-            commandStr.append(self.timePointValueDic[index]!)
+            if index == 0 {
+                commandStr.append(self.timePointValueDic[1]!)
+            } else {
+                commandStr.append(self.timePointValueDic[2 * index + 1]!)
+            }
         }
         
         return commandStr
