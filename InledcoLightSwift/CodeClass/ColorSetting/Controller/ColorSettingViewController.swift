@@ -27,6 +27,7 @@ class ColorSettingViewController: BaseViewController {
     var timeCountArray: [Int]! = [Int]()
     var timeCountIntervalArray: [Int]! = [Int]()
     var previewButton: UIButton?
+    var devcieName: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -71,6 +72,7 @@ class ColorSettingViewController: BaseViewController {
     
     override func setViews() {
         super.setViews()
+        self.title = self.devcieName!
         // 1.查找和重命名
         let findButton = UIButton(frame: CGRect(x: 0, y: 2, width: 40, height: 40))
         findButton.setImage(UIImage.init(named: "findDevice"), for: .normal)
@@ -119,17 +121,24 @@ class ColorSettingViewController: BaseViewController {
         self.cancelPreview()
         let renameDeviceAlert = LGAlertView.init(textFieldsAndTitle: self.languageManager.getTextForKey(key: "rename"), message: "", numberOfTextFields: 1, textFieldsSetupHandler: nil, buttonTitles: [self.languageManager.getTextForKey(key: "cancel"), self.languageManager.getTextForKey(key: "confirm")], cancelButtonTitle: "", destructiveButtonTitle: "")
         
+        let nameTextField = renameDeviceAlert?.textFieldsArray[0] as! UITextField
+        nameTextField.text = self.devcieName!
+        
         renameDeviceAlert?.actionHandler = {
             (alertView, title, index) in
             switch index {
             case 0:
                 return
             case 1:
+                let textField = alertView?.textFieldsArray[0] as! UITextField
                 // 1.同步到数据库
+                DeviceDataCoreManager.setDataWithFromTableWithCol(tableName: DeviceDataCoreManager.deviceTableName, colConditionName: DeviceDataCoreManager.deviceTableUuidName, colConditionVal: (self.parameterModel?.uuid)!, colName: DeviceDataCoreManager.deviceTableNameName, newColVal: textField.text!)
                 
                 // 2.同步到设备
-                let textField = alertView?.textFieldsArray[0] as! UITextField
                 self.blueToothManager.setDeviceName(uuid: (self.parameterModel?.uuid)!, name: textField.text)
+                
+                // 3.更改标题
+                self.title = textField.text
                 return
             default:
                 return

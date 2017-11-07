@@ -17,7 +17,8 @@ class DeviceViewController: BaseViewController,UITableViewDelegate,UITableViewDa
     private var alertController: UIAlertController!
     private var connectAlertController: LGAlertView?
     private var connectFailedAlertController: LGAlertView?
-    private var deviceDataSourceArray: NSMutableArray = []
+    // private var deviceDataSourceArray: NSMutableArray = []
+    private var deviceDataSourceDic: [String: Array<DeviceModel>] = [String: Array<DeviceModel>]();
     private var selectDeviceModel: DeviceModel?
     private var deviceCodeInfo: DeviceCodeInfo?
     
@@ -74,6 +75,7 @@ class DeviceViewController: BaseViewController,UITableViewDelegate,UITableViewDa
             // 解析设备数据，跳转界面
             let colorSettingViewController = ColorSettingViewController(nibName: "ColorSettingViewController", bundle: Bundle.main)
             
+            colorSettingViewController.devcieName = self.selectDeviceModel?.name
             colorSettingViewController.parameterModel = parameterModel
             colorSettingViewController.hidesBottomBarWhenPushed = true
         
@@ -112,6 +114,21 @@ class DeviceViewController: BaseViewController,UITableViewDelegate,UITableViewDa
          alertController = UIAlertController(title: self.selectDeviceModel?.name, message: nil, preferredStyle: .actionSheet)
         // 删除操作
         let deleteAction: UIAlertAction = UIAlertAction(title: languageManager.getTextForKey(key: "delete"), style: .destructive) { (alertAction) in
+            let deleteAlertController = UIAlertController(title: self.languageManager.getTextForKey(key: "delete"), message: self.languageManager.getTextForKey(key: "confirmDelete") + String((self.selectDeviceModel?.name)!).trimmingCharacters(in: [" "]) + " ?", preferredStyle: .alert)
+            
+            let deleteCancelAction = UIAlertAction(title: self.languageManager.getTextForKey(key: "cancel"), style: .cancel, handler: nil)
+            
+            let deleteConfirmAction = UIAlertAction(title: self.languageManager.getTextForKey(key: "confirm"), style: .default, handler: { (action) in
+                // 从数据库中删除设备
+                DeviceDataCoreManager.deleteData(tableName: DeviceDataCoreManager.deviceTableName, uuidStr: (self.selectDeviceModel?.uuidString)!)
+                
+                self.queryDeviceDataFromDatabase()
+            })
+            
+            deleteAlertController.addAction(deleteCancelAction)
+            deleteAlertController.addAction(deleteConfirmAction)
+            
+            self.present(deleteAlertController, animated: true, completion: nil)
         }
         
         // 连接设备操作
@@ -138,28 +155,30 @@ class DeviceViewController: BaseViewController,UITableViewDelegate,UITableViewDa
         prepareBluetoothData()
         createAlertController()
         
-        self.deviceDataSourceArray.removeAllObjects()
+        queryDeviceDataFromDatabase()
+    }
+    
+    func queryDeviceDataFromDatabase() {
+        self.deviceDataSourceDic.removeAll()
         
-        // 从数据库中读取数据
-        let fetch = NSFetchRequest<NSFetchRequestResult>(entityName: "BleDevice")
-        let deviceMOC = DeviceDataCoreManager.getDataCoreContext()
-        do {
-            // 使用这个获取到的数据局不能直接当做数据源，这些事内存中的数据
-            let dataArray = try deviceMOC.fetch(fetch)
-            for dev in dataArray {
-                
-                let deviceInfo = dev as! BleDevice
+        // 1.获取分组数据
+        let groupDataArray = DeviceDataCoreManager.getDataWithFromTableWithCol(tableName: "BleGroup", colName: nil, colVal: nil)
+        for group in groupDataArray {
+            let groupInfo = group as! BleGroup
+            
+            var deviceArray: [DeviceModel] = [DeviceModel]()
+            for device in groupInfo.group_device! {
+                let deviceInfo = device as! BleDevice
                 let deviceModel = DeviceModel()
-                
+
                 deviceModel.name = deviceInfo.name
                 deviceModel.typeCode = deviceInfo.typeCode
                 deviceModel.uuidString = deviceInfo.uuid
                 
-                self.deviceDataSourceArray.add(deviceModel)
+                deviceArray.append(deviceModel)
             }
             
-        }catch{
-            print("读取数据库出错\(error)")
+            self.deviceDataSourceDic[groupInfo.name!] = deviceArray
         }
         
         self.deviceTableView.reloadData()
@@ -168,6 +187,7 @@ class DeviceViewController: BaseViewController,UITableViewDelegate,UITableViewDa
     override func setViews() {
         super.setViews()
         
+        self.title = self.languageManager.getTextForKey(key: "home")
         self.automaticallyAdjustsScrollViewInsets = false
         self.deviceTableView.delegate = self
         self.deviceTableView.dataSource = self
@@ -178,20 +198,31 @@ class DeviceViewController: BaseViewController,UITableViewDelegate,UITableViewDa
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return  1
+        return  deviceDataSourceDic.count
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return deviceDataSourceArray.count
+        let key = deviceDataSourceDic.keys.reversed()[section]
+        return (self.deviceDataSourceDic[key]?.count)!
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return deviceDataSourceDic.keys.reversed()[section]
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        view.tintColor = UIColor.clear
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "DeviceTableViewCell", for: indexPath) as! DeviceTableViewCell
         
-        let deviceModel = deviceDataSourceArray[indexPath.row] as! DeviceModel
+        let deviceModel = getDeviceModelFromDatasource(section: indexPath.section, row: indexPath.row)
+        
+        let deviceInfo = DeviceTypeData.getDeviceInfoWithTypeCode(deviceTypeCode: DeviceTypeCode(rawValue: deviceModel.typeCode!)!)
         
         cell.lightNameLabel.text = deviceModel.name
-        cell.lightDetailLabel.text = deviceModel.typeCode
+        cell.lightDetailLabel.text = deviceInfo.deviceName
         
         return cell
     }
@@ -201,12 +232,20 @@ class DeviceViewController: BaseViewController,UITableViewDelegate,UITableViewDa
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        self.selectDeviceModel = self.deviceDataSourceArray.object(at: indexPath.row) as? DeviceModel
+        self.selectDeviceModel = getDeviceModelFromDatasource(section: indexPath.section, row: indexPath.row)
         // 获取当前数据动态信息
         self.deviceCodeInfo = DeviceTypeData.getDeviceInfoWithTypeCode(deviceTypeCode: DeviceTypeCode(rawValue: (self.selectDeviceModel?.typeCode)!)!)
         self.blueToothManager.currentDeviceTypeCode = self.deviceCodeInfo?.deviceTypeCode
+        alertController.title = self.selectDeviceModel?.name
         
         self.present(alertController, animated: true, completion: nil)
+    }
+    
+    func getDeviceModelFromDatasource(section: Int, row: Int) -> DeviceModel {
+        let key = deviceDataSourceDic.keys.reversed()[section]
+        let deviceModel = deviceDataSourceDic[key]?[row]
+        
+        return deviceModel!
     }
     
     // 扫描跳转方法

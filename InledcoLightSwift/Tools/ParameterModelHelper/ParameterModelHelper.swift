@@ -147,7 +147,7 @@ extension DeviceParameterModel {
         }
         
         // 拼接数据个数
-        commandHeaderStr.appendingFormat("%02x", self.timePointNum! * (self.timePointNum! + self.channelNum!))
+        commandHeaderStr = commandHeaderStr.appendingFormat("%02x", self.timePointNum! * (self.timePointNum! + self.channelNum!))
         
         return commandHeaderStr + commandStr
     }

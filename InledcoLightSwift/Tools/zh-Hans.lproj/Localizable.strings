@@ -5,7 +5,8 @@
   Created by huang zhengguo on 2017/10/12.
   Copyright © 2017年 huang zhengguo. All rights reserved.
 */
-homeTitle = "我的鱼缸";
+homeTitle = "My Tank";
+home = "主页";
 scanTitle = "扫描设备";
 settingTitle = "设置";
 settingLanguage = "语言";
@@ -15,4 +16,28 @@ fr = "法语";
 zh-Hans = "中文";
 done = "完成";
 cancel = "取消";
+operation = "操作";
+delete = "删除";
+rename = "重命名";
+connect = "连接";
+connecting = "正在连接";
+connectFailed = "连接失败!";
+manualMode = "手动";
+autoMode = "自动";
+add = "添加";
+save = "保存";
+giveUpSave = "放弃保存?";
+confirm = "确认";
+timePoint24 = "24小时";
+preview = "预览";
+run = "运行";
+edit = "编辑";
+timePoint = "时间点";
+timePointMessage = "选择时间点";
+stop = "停止";
+saveUserDefinedSuccessful = "保存成功！";
+runSuccessful = "运行成功！";
+defaultBrand = "Inledco";
+defaultGroup = "默认";
+confirmDelete = "确认删除 ";
 

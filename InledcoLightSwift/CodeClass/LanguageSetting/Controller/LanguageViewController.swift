@@ -63,7 +63,7 @@ class LanguageViewController: BaseViewController,UITableViewDelegate,UITableView
     override func prepareData() {
         super.prepareData()
         
-        languageTitleArray = [.auto, .english, .french, .chinese]
+        languageTitleArray = [.auto, .english, .chinese]
         // 读取用户当前设置
         selectLanguage = languageManager.getCurrentLanguageFlag()
         

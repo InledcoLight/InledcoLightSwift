@@ -229,11 +229,49 @@ macAddrss = \(deviceInfo.macAddrss)\r\n UUIDString = \(deviceInfo.uuidString)\r\
                 continue
             }
             
+            // 1.先判断数据库中是否有品牌
+            let brands = DeviceDataCoreManager.getDataWithFromTableWithCol(tableName: "BleBrand", colName: "name", colVal: "Inledco")
+            var defaultBrand: BleBrand?
+            var defaultGroup: BleGroup?
+            if brands.count == 0 {
+                // 1.创建品牌
+                defaultBrand = (NSEntityDescription.insertNewObject(forEntityName: "BleBrand", into: context) as! BleBrand)
+                
+                defaultBrand?.name = "Inledco"
+                
+                // 2.新建默认分组
+                defaultGroup = (NSEntityDescription.insertNewObject(forEntityName: "BleGroup", into: context) as! BleGroup)
+                
+                defaultGroup?.name = "defaultGroup"
+                
+                defaultBrand?.addToBrand_group(defaultGroup!)
+            } else {
+                // 1.获取品牌
+                defaultBrand = (brands[0] as! BleBrand)
+                
+                // 2.获取分组
+                let groupSet = defaultBrand?.brand_group?.filtered(using: NSPredicate(format:"name == %@",self.languageManager.getTextForKey(key: "defaultGroup"))) as! Set<BleGroup>
+                
+                defaultGroup = groupSet.first(where: {$0.name == "defaultGroup"})
+            }
+            
+            // 3.添加设备
             let saveDevice = NSEntityDescription.insertNewObject(forEntityName: "BleDevice", into: context) as! BleDevice
             saveDevice.name = deviceModel.name
             saveDevice.typeCode = deviceModel.typeCode
             saveDevice.uuid = deviceModel.uuidString
             saveDevice.macAddress = deviceModel.macAddress
+            
+            defaultGroup?.addToGroup_device(saveDevice)
+            
+            /*
+            let saveDevice = NSEntityDescription.insertNewObject(forEntityName: "BleDevice", into: context) as! BleDevice
+
+            saveDevice.name = deviceModel.name
+            saveDevice.typeCode = deviceModel.typeCode
+            saveDevice.uuid = deviceModel.uuidString
+            saveDevice.macAddress = deviceModel.macAddress
+             */
             
             do {
                 try context.save()
