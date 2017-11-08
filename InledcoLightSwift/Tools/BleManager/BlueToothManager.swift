@@ -295,7 +295,7 @@ class BlueToothManager: NSObject, BLEManagerDelegate {
     private func sendSafeCommand(uuid: String, commandStr: String, commandType: CommandType, commandInterval: TimeInterval) -> Void {
         while Date().timeIntervalSince1970 * 1000 - self.lastCommandSendTime < commandInterval {
             // 如果时间间隔小于一定毫秒，则停止执行，直到两次发送时间间隔大于一定毫秒
-            print("间隔小于时间间隔！")
+            // print("间隔小于时间间隔！")
         }
         
         self.currentCommandType = commandType

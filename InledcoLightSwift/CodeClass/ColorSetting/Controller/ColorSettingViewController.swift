@@ -50,6 +50,7 @@ class ColorSettingViewController: BaseViewController {
     
     override func prepareData() {
         super.prepareData()
+        
         deviceInfo = DeviceTypeData.getDeviceInfoWithTypeCode(deviceTypeCode: (parameterModel?.typeCode)!)
         self.blueToothManager.completeReceiveDataCallback = {
             (receivedDataStr, commandType) in
@@ -371,13 +372,19 @@ class ColorSettingViewController: BaseViewController {
     func beginPreview() -> Void {
         previewCount = 0
         
+        if self.editParameterModel == nil {
+            self.editParameterModel = DeviceParameterModel()
+            
+            parameterModel?.parameterModelCopy(parameterModel: self.editParameterModel!)
+        }
+        
         timeCountArray.removeAll()
         timeCountIntervalArray.removeAll()
-        for index in 0 ..< (self.parameterModel?.timePointArray)!.count {
-            let timeStr = self.parameterModel?.timePointArray[index]
+        for index in 0 ..< (self.editParameterModel?.timePointArray)!.count {
+            let timeStr = self.editParameterModel?.timePointArray[index]
             timeCountArray.append((timeStr?.converTimeStrToMinute(timeStr: timeStr)!)!)
             
-            if index ==  ((self.parameterModel?.timePointArray)!.count - 1) {
+            if index ==  ((self.editParameterModel?.timePointArray)!.count - 1) {
                 timeCountIntervalArray.append(timeCountArray[index] - timeCountArray[index - 1])
                 timeCountIntervalArray.append(timeCountArray[0] + 1440 - timeCountArray[index])
             } else if index > 0 {
@@ -433,33 +440,73 @@ class ColorSettingViewController: BaseViewController {
         var nextColorValueStr: String! = ""
         
         var index = 0
-        var isInFirstLast = true
+        var isInFirst = true
+        var isInLast = true
         for i in 0 ..< timeCountArray.count {
-            if ((previewCount >= 0 && previewCount <= timeCountArray[0]) || (previewCount >= timeCountArray[timeCountArray.count - 1] && previewCount <= 1440)) {
-                previewColorValueStr = self.parameterModel?.timePointValueDic[timeCountArray.count - 1]
-                nextColorValueStr = self.parameterModel?.timePointValueDic[0]
-                index = i
-                break
-            } else if previewCount >= timeCountArray[i] && previewCount <= timeCountArray[i + 1] {
-                previewColorValueStr = self.parameterModel?.timePointValueDic[i]
-                nextColorValueStr = self.parameterModel?.timePointValueDic[i + 1]
-                index = i
-                isInFirstLast = false
+            if previewCount <= timeCountArray[i] {
+                if i == 0 {
+                    previewColorValueStr = self.editParameterModel?.timePointValueDic[timeCountArray.count - 1]
+                    nextColorValueStr = self.editParameterModel?.timePointValueDic[0]
+                    index = i
+                    isInFirst = true
+                    isInLast = false
+                    break
+                } else if i <= (timeCountArray.count - 1) {
+                    previewColorValueStr = self.editParameterModel?.timePointValueDic[i - 1]
+                    nextColorValueStr = self.editParameterModel?.timePointValueDic[i]
+                    index = i - 1
+                    isInFirst = false
+                    isInLast = false
+                    break
+                }
+            } else if previewCount >= timeCountArray[timeCountArray.count - 1] && previewCount <= 1440 {
+                previewColorValueStr = self.editParameterModel?.timePointValueDic[timeCountArray.count - 1]
+                nextColorValueStr = self.editParameterModel?.timePointValueDic[0]
+                index = timeCountArray.count - 1
+                isInFirst = false
+                isInLast = true
                 break
             }
+            
+            /*
+            if ((previewCount >= 0 && previewCount <= timeCountArray[i])) {
+                previewColorValueStr = self.editParameterModel?.timePointValueDic[timeCountArray.count - 1]
+                nextColorValueStr = self.editParameterModel?.timePointValueDic[0]
+                index = i
+                isInFirst = true
+                isInLast = false
+                break
+            } else if ((previewCount >= timeCountArray[timeCountArray.count - 1] && previewCount <= 1440)){
+                previewColorValueStr = self.editParameterModel?.timePointValueDic[timeCountArray.count - 1]
+                nextColorValueStr = self.editParameterModel?.timePointValueDic[0]
+                index = i
+                isInFirst = false
+                isInLast = true
+                break
+            } else if previewCount >= timeCountArray[i] && previewCount <= timeCountArray[i + 1] {
+                previewColorValueStr = self.editParameterModel?.timePointValueDic[i]
+                nextColorValueStr = self.editParameterModel?.timePointValueDic[i + 1]
+                index = i
+                isInFirst = false
+                isInLast = false
+                break
+            }*/
         }
         
         // 计算值
         var previewColorDoubleArray = previewColorValueStr.convertColorStrToDoubleValue()
         var nextColorDoubleArray = nextColorValueStr.convertColorStrToDoubleValue()
-        for j in 0 ..< (self.parameterModel?.channelNum)! {
+        for j in 0 ..< (self.editParameterModel?.channelNum)! {
             var percent = 0.0
-            if isInFirstLast == true {
-               percent = Double((previewCount - timeCountArray[index])) / Double(timeCountIntervalArray[index])
+            if isInFirst == true {
+                percent = 1.0 + Double((previewCount - timeCountArray[index])) / Double(timeCountIntervalArray[timeCountIntervalArray.count - 1])
+            } else if isInLast == true {
+                percent = Double((previewCount - timeCountArray[index])) / Double(timeCountIntervalArray[timeCountIntervalArray.count - 1])
             } else {
                 percent = Double((previewCount - timeCountArray[index])) / Double(timeCountIntervalArray[index])
             }
             
+            // print("index = \(index),percent = \(percent)")
             let colorValue = previewColorDoubleArray![j] / 100.0 * 1000 - ((previewColorDoubleArray![j] - nextColorDoubleArray![j])) / 100.0 * 1000.0 * percent
             
             colorValueStr = colorValueStr.appendingFormat("%04x", Int(colorValue))

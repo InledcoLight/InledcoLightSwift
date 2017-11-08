@@ -99,6 +99,7 @@ class AutoColorEditViewController: BaseViewController, UITableViewDelegate, UITa
         bottomView?.buttonActionCallback = {
             (button, index) in
             if index == 0 {
+                // 1.增加按钮方法
                 let datePicker = UIDatePicker()
                 datePicker.date = Date()
                 datePicker.datePickerMode = .time
@@ -123,15 +124,16 @@ class AutoColorEditViewController: BaseViewController, UITableViewDelegate, UITa
                         }
                         
                         self.editParameterModel.timePointArray.insert(self.addTimePoint!, at: index)
+                        self.editParameterModel.timePointNum = self.editParameterModel.timePointNum + 1
                         
                         for i in (0 ..< self.editParameterModel.timePointValueDic.keys.count).reversed()   {
                             if i > index {
                                 self.editParameterModel.timePointValueDic[i + 1] = self.editParameterModel.timePointValueDic[i]
-                            } else if i == index {
-                                self.editParameterModel.timePointValueDic[i + 1] = self.editParameterModel.timePointValueDic[i]
-                                self.editParameterModel.timePointValueDic[i] = ""
+                            } else if i <= index {
+                                // self.editParameterModel.timePointValueDic[i + 1] = self.editParameterModel.timePointValueDic[i]
+                                self.editParameterModel.timePointValueDic[index] = ""
                                 for _ in 0 ..< self.editParameterModel.channelNum! * 2 {
-                                    self.editParameterModel.timePointValueDic[i]?.append("0")
+                                    self.editParameterModel.timePointValueDic[index]?.append("0")
                                 }
                                 
                                 break
@@ -139,13 +141,7 @@ class AutoColorEditViewController: BaseViewController, UITableViewDelegate, UITa
                         }
                         
                         // 更新视图
-                        self.selectedTimePointIndex = index
-                        
-                        let timeColorValue = self.editParameterModel.timePointValueDic[index]?.convertColorStrToDoubleValue()
-                        
-                        self.manualSliderView?.updateManualSliderView(colorPercentArray: timeColorValue!)
-                        
-                        self.timePointSelectTableView.reloadData()
+                        self.updateSliderColor(index: index)
                     }
                 }
                 
@@ -154,9 +150,31 @@ class AutoColorEditViewController: BaseViewController, UITableViewDelegate, UITa
                 }
                 
                 datePickerAlert?.show(animated: true, completionHandler: nil)
-                // 1.增加按钮方法
             } else if index == 1 {
                 // 2.删除按钮方法
+                let deleteAlertController = UIAlertController(title: self.languageManager.getTextForKey(key: "delete"), message: self.languageManager.getTextForKey(key: "delete") + " " +  self.editParameterModel.timePointArray[self.selectedTimePointIndex!].convertHexTimeToFormatTime() + "?", preferredStyle: .alert)
+                
+                let confirmAction = UIAlertAction(title: self.languageManager.getTextForKey(key: "confirm"), style: .default, handler: { (action) in
+                    self.editParameterModel.timePointNum = self.editParameterModel.timePointNum - 1
+                    self.editParameterModel.timePointArray.remove(at: self.selectedTimePointIndex!)
+                    for i in (0 ..< self.editParameterModel.timePointValueDic.keys.count - 2).reversed() {
+                        if i > self.selectedTimePointIndex! {
+                            self.editParameterModel.timePointValueDic[i] = self.editParameterModel.timePointValueDic[i + 1]
+                        }
+                    }
+                    
+                    self.editParameterModel.timePointValueDic.removeValue(forKey: self.editParameterModel.timePointValueDic.keys.count - 1)
+                    
+                    self.updateSliderColor(index: 0)
+                })
+                
+                let cancelAction = UIAlertAction(title: self.languageManager.getTextForKey(key: "cancel"), style: .cancel, handler: { (action) in
+                    
+                })
+                deleteAlertController.addAction(confirmAction)
+                deleteAlertController.addAction(cancelAction)
+                
+                self.present(deleteAlertController, animated: true, completion: nil)
             } else if index == 2 {
                 // 3.保存按钮方法: 需要把更改后的设置发送到自动模式界面
                 if self.passParameterModelCallback != nil {
@@ -188,6 +206,16 @@ class AutoColorEditViewController: BaseViewController, UITableViewDelegate, UITa
         self.addTimePoint = dateformatter.string(from: sender.date).convertFormatTimeToHexTime()
     }
     
+    func updateSliderColor(index: Int) -> Void {
+        self.selectedTimePointIndex = index
+        
+        let timeColorValue = self.editParameterModel.timePointValueDic[index]?.convertColorStrToDoubleValue()
+        
+        self.manualSliderView?.updateManualSliderView(colorPercentArray: timeColorValue!)
+        
+        self.timePointSelectTableView.reloadData()
+    }
+    
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
@@ -199,7 +227,7 @@ class AutoColorEditViewController: BaseViewController, UITableViewDelegate, UITa
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: TimePointTableViewCell = tableView.dequeueReusableCell(withIdentifier: "TimePointTableViewCell", for: indexPath) as! TimePointTableViewCell
         
-        cell.timePointDatePicker.date = dateformatter.date(from: self.editParameterModel.timePointArray[indexPath.row].convertHexTimeToFormatTime())!;
+        cell.timePointDatePicker.date = dateformatter.date(from: self.editParameterModel.timePointArray[indexPath.row].convertHexTimeToFormatTime())!
         
         cell.timePointDatePicker.isEnabled = self.selectedTimePointIndex == indexPath.row ? true : false
         
