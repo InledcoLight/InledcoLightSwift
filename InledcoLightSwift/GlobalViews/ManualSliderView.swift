@@ -33,6 +33,7 @@ class ManualSliderView: UIView {
             let colorTitleLabel = UILabel(frame: CGRect(x: 0, y: CGFloat(i) * colorHeight, width: colorTitleLabelWidth, height: colorHeight))
             
             colorTitleLabel.tag = 1000 + i
+            colorTitleLabel.font = UIFont.boldSystemFont(ofSize: 10)
             colorTitleLabel.text = colorTitleArray[i]
             
             let colorPercentLabel = UILabel(frame: CGRect(x: SystemInfoTools.screenWidth - CGFloat(colorPercentTitleWidth), y: CGFloat(i) * colorHeight, width: colorPercentTitleWidth, height: colorHeight))

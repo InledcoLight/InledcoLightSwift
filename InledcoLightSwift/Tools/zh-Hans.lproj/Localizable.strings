@@ -40,4 +40,6 @@ runSuccessful = "运行成功！";
 defaultBrand = "Inledco";
 defaultGroup = "默认";
 confirmDelete = "确认删除 ";
+bluetoothError = "蓝牙错误";
+blueErrorMessage = "请打开蓝牙！";
 

@@ -47,7 +47,8 @@ class ManualCircleView: UIView {
             progressView?.endThumbTintColor = colorArray[i]
             progressView?.endThumbStrokeColor = UIColor.gray
             progressView?.trackFillColor = colorArray[i]
-            progressView?.trackColor = colorArray[i]
+            progressView?.trackColor = colorArray[i].withAlphaComponent(0.5)
+            progressView?.diskColor = UIColor.clear
             progressView?.layer.cornerRadius = (progressView?.frame.size.width)! / 2.0;
             progressView?.clipsToBounds = true
             progressView?.layer.masksToBounds = true

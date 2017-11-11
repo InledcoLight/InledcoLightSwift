@@ -134,8 +134,9 @@ class DeviceViewController: BaseViewController,UITableViewDelegate,UITableViewDa
         // 连接设备操作
         let connectAction: UIAlertAction = UIAlertAction(title: languageManager.getTextForKey(key: "connect"), style: .default) { (alertAction) in
             if self.selectDeviceModel != nil {
-                self.connectAlertController?.show(animated: true, completionHandler: nil)
-                self.blueToothManager.connectDeviceWithUuid(uuid: self.selectDeviceModel?.uuidString)
+                if self.blueToothManager.connectDeviceWithUuid(uuid: self.selectDeviceModel?.uuidString) {
+                    self.connectAlertController?.show(animated: true, completionHandler: nil)
+                }
             }
         }
         
@@ -167,7 +168,8 @@ class DeviceViewController: BaseViewController,UITableViewDelegate,UITableViewDa
             let groupInfo = group as! BleGroup
             
             var deviceArray: [DeviceModel] = [DeviceModel]()
-            for device in groupInfo.group_device! {
+            let deviceDataArray = DeviceDataCoreManager.getDataWithFromTableWithCol(tableName: "BleDevice", colName: nil, colVal: nil)
+            for device in deviceDataArray {
                 let deviceInfo = device as! BleDevice
                 let deviceModel = DeviceModel()
 
@@ -218,8 +220,11 @@ class DeviceViewController: BaseViewController,UITableViewDelegate,UITableViewDa
         let cell = tableView.dequeueReusableCell(withIdentifier: "DeviceTableViewCell", for: indexPath) as! DeviceTableViewCell
         
         let deviceModel = getDeviceModelFromDatasource(section: indexPath.section, row: indexPath.row)
+        if deviceModel.name == nil {
+            deviceModel.name = "Default"
+        }
         
-        let deviceInfo = DeviceTypeData.getDeviceInfoWithTypeCode(deviceTypeCode: DeviceTypeCode(rawValue: deviceModel.typeCode!)!)
+        let deviceInfo = DeviceTypeData.getDeviceInfoWithTypeCode(deviceTypeCode: DeviceTypeCode(rawValue: deviceModel.typeCode!) == nil ? DeviceTypeCode.NEW_DEVICE_LIGHT : DeviceTypeCode(rawValue: deviceModel.typeCode!)!)
         
         cell.lightNameLabel.text = deviceModel.name
         cell.lightDetailLabel.text = deviceInfo.deviceName
@@ -234,7 +239,9 @@ class DeviceViewController: BaseViewController,UITableViewDelegate,UITableViewDa
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.selectDeviceModel = getDeviceModelFromDatasource(section: indexPath.section, row: indexPath.row)
         // 获取当前数据动态信息
-        self.deviceCodeInfo = DeviceTypeData.getDeviceInfoWithTypeCode(deviceTypeCode: DeviceTypeCode(rawValue: (self.selectDeviceModel?.typeCode)!)!)
+        
+        self.deviceCodeInfo = DeviceTypeData.getDeviceInfoWithTypeCode(deviceTypeCode: DeviceTypeCode(rawValue: (self.selectDeviceModel?.typeCode!)!) == nil ? DeviceTypeCode.NEW_DEVICE_LIGHT : DeviceTypeCode(rawValue: (self.selectDeviceModel?.typeCode!)!)!)
+        //self.deviceCodeInfo = DeviceTypeData.getDeviceInfoWithTypeCode(deviceTypeCode: DeviceTypeCode(rawValue: (self.selectDeviceModel?.typeCode)!) == nil ? DeviceTypeCode.NEW_DEVICE_LIGHT : DeviceTypeCode(rawValue: (self.selectDeviceModel?.typeCode!)!)!)
         self.blueToothManager.currentDeviceTypeCode = self.deviceCodeInfo?.deviceTypeCode
         alertController.title = self.selectDeviceModel?.name
         

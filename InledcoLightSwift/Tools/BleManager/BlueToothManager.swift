@@ -8,6 +8,7 @@
 //
 
 import UIKit
+import LGAlertView
 
 // 设备开关状态
 enum DeviceState {
@@ -75,6 +76,7 @@ class BlueToothManager: NSObject, BLEManagerDelegate {
     var connectFailedCallback: oneStrParameterType?
     var currentDeviceTypeCode: DeviceTypeCode?
     var writeDataCallback: oneStrParameterType?
+    let languageManager: LanguageManager! = LanguageManager.shareInstance()
     
     static func sharedBluetoothManager() -> BlueToothManager {
         if bluetoothManager == nil {
@@ -97,9 +99,20 @@ class BlueToothManager: NSObject, BLEManagerDelegate {
     /// - parameter uuid: 设备标识
     ///
     /// - returns: Void
-    func connectDeviceWithUuid(uuid: String!) -> Void {
-        self.connectCount = 0
-        self.connectTimer = Timer.scheduledTimer(timeInterval: reconnectInterval, target: self, selector: #selector(sendConnectCommandToDevice(timer:)), userInfo: uuid, repeats: true)
+    func connectDeviceWithUuid(uuid: String!) -> Bool {
+        if self.bleManager.centralManager.state != .poweredOn {
+            // 提示打开蓝牙
+            let bluetoothAlert = LGAlertView.init(title: self.languageManager.getTextForKey(key: "bluetoothError"), message: self.languageManager.getTextForKey(key: "blueErrorMessage"), style: .alert, buttonTitles: nil, cancelButtonTitle: self.languageManager.getTextForKey(key: "confirm"), destructiveButtonTitle: nil, delegate: nil)
+            
+            bluetoothAlert?.show(animated: true, completionHandler: nil)
+            
+            return false
+        } else {
+            self.connectCount = 0
+            self.connectTimer = Timer.scheduledTimer(timeInterval: reconnectInterval, target: self, selector: #selector(sendConnectCommandToDevice(timer:)), userInfo: uuid, repeats: true)
+            
+            return true
+        }
     }
     
     /// 断开设备

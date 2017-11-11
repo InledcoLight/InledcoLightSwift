@@ -40,6 +40,8 @@ runSuccessful = "Run Successful!";
 defaultBrand = "Inledco";
 defaultGroup = "Default Group";
 confirmDelete = "Confirm delete ";
+bluetoothError = "BlueTooth Error";
+blueErrorMessage = "Please open the bluetooth!";
 
 
 
