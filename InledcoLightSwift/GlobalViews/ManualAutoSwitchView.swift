@@ -41,6 +41,8 @@ class ManualAutoSwitchView: UIView {
         self.backgroundColor = UIColor.clear
         let radius = frame.size.height / CGFloat(2)
         
+        self.layer.borderColor = UIColor.white.cgColor
+        self.layer.borderWidth = 1
         self.layer.cornerRadius = radius
         self.layer.masksToBounds = true
         
@@ -88,13 +90,21 @@ class ManualAutoSwitchView: UIView {
         if index == 0 {
             manualButton?.frame = manualBigFrame!
             manualButton?.layer.cornerRadius = (manualButton?.frame.size.height)! / 2.0
+            manualButton?.backgroundColor = UIColor.white
+            manualButton?.setTitleColor(UIColor.blue, for: .normal)
             autoButton?.frame = autoSmallFrame!
             autoButton?.layer.cornerRadius = (autoButton?.frame.size.height)! / 2.0
+            autoButton?.backgroundColor = UIColor.blue
+            autoButton?.setTitleColor(UIColor.white, for: .normal)
         } else {
             manualButton?.frame = manualSmallFrame!
             manualButton?.layer.cornerRadius = (manualButton?.frame.size.height)! / 2.0
+            manualButton?.backgroundColor = UIColor.blue
+            manualButton?.setTitleColor(UIColor.white, for: .normal)
             autoButton?.frame = autoBigFrame!
             autoButton?.layer.cornerRadius = (autoButton?.frame.size.height)! / 2.0
+            autoButton?.backgroundColor = UIColor.white
+            autoButton?.setTitleColor(UIColor.blue, for: .normal)
         }
     }
     

@@ -22,6 +22,7 @@ class ManualCircleView: UIView {
     typealias circleSliderPassValueType = (Int, Int) -> Void
     var passColorValueCallback: circleSliderPassValueType?
     var progressViewArray: [CircularSlider]! = [CircularSlider]()
+    let percentLabel: UILabel! = UILabel()
     
     init(frame: CGRect, channelNum: Int!, colorArray: [UIColor]!, colorPercentArray: [Int]!, colorTitleArray: [String]!) {
         super.init(frame: frame)
@@ -45,10 +46,12 @@ class ManualCircleView: UIView {
             progressView?.backgroundColor = UIColor.clear
             progressView?.endThumbTintColor = colorArray[i]
             progressView?.endThumbStrokeColor = UIColor.gray
+            progressView?.trackFillColor = colorArray[i]
             progressView?.trackColor = colorArray[i]
-            progressView?.layer.cornerRadius = (progressView?.frame.size.width)! / 2;
+            progressView?.layer.cornerRadius = (progressView?.frame.size.width)! / 2.0;
             progressView?.clipsToBounds = true
             progressView?.layer.masksToBounds = true
+            progressView?.numberOfRounds = 1
             
             if progressViewCenter != nil {
                 progressView?.center = progressViewCenter!
@@ -64,12 +67,24 @@ class ManualCircleView: UIView {
             progressViewCenter = progressView?.center
         }
         
+        let percentLabelWidth = centerCircleWidth
+        percentLabel.layer.zPosition = 1000
+        percentLabel.backgroundColor = UIColor.gray
+        percentLabel.frame = CGRect(x: 0.0, y: 0.0, width: Double(percentLabelWidth), height: Double(percentLabelWidth))
+        percentLabel.textColor = UIColor.white
+        percentLabel.textAlignment = .center
+        percentLabel.layer.cornerRadius = percentLabel.frame.size.width / 2.0
+        percentLabel.layer.masksToBounds = true
+        percentLabel.center = progressViewCenter!
+        
+        self.addSubview(percentLabel)
+        
         updateManualCircleView(colorPercentArray: colorPercentArray)
     }
     
     override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
         for progressView in self.progressViewArray {
-            if touchPointInsideCircle(center: progressView.center, radius: progressView.layer.cornerRadius + progressView.lineWidth / 2.0, point: point) && touchPointOutsideCircle(center: progressView.center, radius: progressView.layer.cornerRadius - progressView.lineWidth / 2.0, point: point) {
+            if touchPointInsideCircle(center: progressView.center, radius: progressView.layer.cornerRadius, point: point) && touchPointOutsideCircle(center: progressView.center, radius: progressView.layer.cornerRadius - progressView.lineWidth, point: point) {
                 return progressView
             }
         }
@@ -93,6 +108,7 @@ class ManualCircleView: UIView {
     @objc func colorValueChanged(view: UIView) -> Void {
         let progressView: CircularSlider! = view as! CircularSlider;
     
+        percentLabel.text = String(format: "%.0f%%", progressView.endPointValue / 10.0)
         if passColorValueCallback != nil {
             passColorValueCallback!(progressView.tag - 1000, Int(progressView.endPointValue))
         }

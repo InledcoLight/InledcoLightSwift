@@ -40,6 +40,8 @@ class AutoColorEditViewController: BaseViewController, UITableViewDelegate, UITa
         timePointSelectTableView.delegate = self
         timePointSelectTableView.dataSource = self
         timePointSelectTableView.backgroundColor = UIColor.clear
+        timePointSelectTableView.separatorStyle = .none
+        timePointSelectTableView.tableFooterView = UIView(frame: CGRect.zero)
         timePointSelectTableView.register(UINib.init(nibName: "TimePointTableViewCell", bundle: nil), forCellReuseIdentifier: "TimePointTableViewCell")
         
         parameterModel?.parameterModelCopy(parameterModel: editParameterModel)
@@ -265,7 +267,7 @@ class AutoColorEditViewController: BaseViewController, UITableViewDelegate, UITa
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 80.0
+        return 60.0
     }
     
     override func didReceiveMemoryWarning() {

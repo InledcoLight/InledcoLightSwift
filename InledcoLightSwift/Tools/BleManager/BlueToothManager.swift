@@ -299,7 +299,7 @@ class BlueToothManager: NSObject, BLEManagerDelegate {
         }
         
         self.currentCommandType = commandType
-        print("发送命令:\(commandStr)")
+        // print("发送命令:\(commandStr)")
         let device: CBPeripheral = self.bleManager.getDeviceByUUID(uuid)
         self.bleManager.sendData(toDevice1: commandStr, device: device)
         
