@@ -162,17 +162,24 @@ class DeviceViewController: BaseViewController,UITableViewDelegate,UITableViewDa
     func queryDeviceDataFromDatabase() {
         self.deviceDataSourceDic.removeAll()
         
-        // 1.获取分组数据
-        let groupDataArray = DeviceDataCoreManager.getDataWithFromTableWithCol(tableName: "BleGroup", colName: nil, colVal: nil)
-        for group in groupDataArray {
-            let groupInfo = group as! BleGroup
-            
+        // 1.获取品牌数据
+        let brands = DeviceDataCoreManager.getDataWithFromTableWithCol(tableName: DeviceDataCoreManager.brandTableName, colName: DeviceDataCoreManager.brandTableBrandName, colVal: DeviceDataCoreManager.defaultBrandName)
+        if brands.count == 0 {
+            // 没有数据，直接返回
+            return
+        }
+        
+        // 2.获取分组数据
+        let brand = brands.first as! BleBrand
+        let groups = brand.brand_group
+        for g in groups! {
+            // 3.构建数据源
+            let group = g as! BleGroup
             var deviceArray: [DeviceModel] = [DeviceModel]()
-            let deviceDataArray = DeviceDataCoreManager.getDataWithFromTableWithCol(tableName: "BleDevice", colName: nil, colVal: nil)
-            for device in deviceDataArray {
-                let deviceInfo = device as! BleDevice
+            for d in group.group_device! {
+                let deviceInfo = d as! BleDevice
                 let deviceModel = DeviceModel()
-
+                
                 deviceModel.name = deviceInfo.name
                 deviceModel.typeCode = deviceInfo.typeCode
                 deviceModel.uuidString = deviceInfo.uuid
@@ -180,7 +187,7 @@ class DeviceViewController: BaseViewController,UITableViewDelegate,UITableViewDa
                 deviceArray.append(deviceModel)
             }
             
-            self.deviceDataSourceDic[groupInfo.name!] = deviceArray
+            self.deviceDataSourceDic[group.name!] = deviceArray
         }
         
         self.deviceTableView.reloadData()
@@ -241,7 +248,6 @@ class DeviceViewController: BaseViewController,UITableViewDelegate,UITableViewDa
         // 获取当前数据动态信息
         
         self.deviceCodeInfo = DeviceTypeData.getDeviceInfoWithTypeCode(deviceTypeCode: DeviceTypeCode(rawValue: (self.selectDeviceModel?.typeCode!)!) == nil ? DeviceTypeCode.NEW_DEVICE_LIGHT : DeviceTypeCode(rawValue: (self.selectDeviceModel?.typeCode!)!)!)
-        //self.deviceCodeInfo = DeviceTypeData.getDeviceInfoWithTypeCode(deviceTypeCode: DeviceTypeCode(rawValue: (self.selectDeviceModel?.typeCode)!) == nil ? DeviceTypeCode.NEW_DEVICE_LIGHT : DeviceTypeCode(rawValue: (self.selectDeviceModel?.typeCode!)!)!)
         self.blueToothManager.currentDeviceTypeCode = self.deviceCodeInfo?.deviceTypeCode
         alertController.title = self.selectDeviceModel?.name
         

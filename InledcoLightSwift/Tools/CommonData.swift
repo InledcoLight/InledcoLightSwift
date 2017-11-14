@@ -6,11 +6,6 @@
 //  Copyright © 2017年 huang zhengguo. All rights reserved.
 //
 
-// 公共数据
-public class CommomData {
-    let defaultGroupName = "Default Group"
-}
-
 // 通知类型
 enum InledcoNotification: String {
     case CANCELPREVIEW_NOTIFICATION = "Cancel Preview"

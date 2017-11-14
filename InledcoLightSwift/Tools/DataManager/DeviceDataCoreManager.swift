@@ -10,12 +10,29 @@ import UIKit
 import CoreData
 
 class DeviceDataCoreManager {
+    // 品牌 分组 设备名称的默认名称
+    static let defaultBrandName = "Inledco"
+    static let defaultGroupName = "Default Group"
+    static let defaultDeviceName = "Default Device"
+    
+    // 品牌表及列名定义
+    static let brandTableName: String! = "BleBrand"
+    static let brandTableBrandId: String! = "id"
+    static let brandTableBrandName: String! = "name"
+    
+    // 分组表及列名定义
+    static let groupTableName: String! = "BleGroup"
+    static let groupTableGroupName: String! = "name"
+    
+    // 设备表名及列名定义
     static let deviceTableName: String! = "BleDevice"
     static let deviceTableUuidName: String! = "uuid"
     static let deviceTableNameName: String! = "name"
+    
+    // 数据库对象管理上下文
     static var context: NSManagedObjectContext?
     
-    // 类方法func前面添加class
+    ///  类方法func前面添加class
     /// 获取数据管理上下文
     ///
     /// - returns: 数据管理上下文
@@ -77,6 +94,14 @@ class DeviceDataCoreManager {
         return []
     }
     
+    /// 根据条件设置数据库数据
+    /// - parameter tableName: 表名
+    /// - parameter colConditionName: 条件列名称
+    /// - parameter colConditionVal: 条件列值
+    /// - parameter colName: 设置列名称
+    /// - parameter newColVal: 设置列值
+    ///
+    /// - returns: Void
     class func setDataWithFromTableWithCol(tableName: String, colConditionName: String, colConditionVal: String, colName: String, newColVal: String) -> Void {
         let dataCoreContext = getDataCoreContext()
         let fetch = NSFetchRequest<NSFetchRequestResult>(entityName: tableName)
@@ -99,10 +124,15 @@ class DeviceDataCoreManager {
         }
     }
     
+    /// 根据uuid删除设备
+    /// - parameter tableName: 表名
+    /// - parameter uuidStr: uuid的值
+    ///
+    /// - returns: Void
     class func deleteData(tableName: String, uuidStr: String) -> Void {
         let dataCoreContext = getDataCoreContext()
         let fetch = NSFetchRequest<NSFetchRequestResult>(entityName: tableName)
-        fetch.predicate = NSPredicate(format: "uuid == %@", uuidStr)
+        fetch.predicate = NSPredicate(format: "\(deviceTableUuidName) == %@", uuidStr)
         
         do {
             let results = try dataCoreContext.fetch(fetch)

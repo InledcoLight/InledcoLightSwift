@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreData
+import LGAlertView
 
 class ScanDeviceViewController: BaseViewController,BLEManagerDelegate,UITableViewDelegate,UITableViewDataSource {
 
@@ -52,6 +53,15 @@ class ScanDeviceViewController: BaseViewController,BLEManagerDelegate,UITableVie
     
     override func prepareData() {
         super.prepareData()
+        
+        // 检测手机蓝牙的状态
+        if self.bleManager.centralManager.state != .poweredOn {
+            let bluetoothAlert = LGAlertView.init(title: self.languageManager.getTextForKey(key: "bluetoothError"), message: self.languageManager.getTextForKey(key: "blueErrorMessage"), style: .alert, buttonTitles: nil, cancelButtonTitle: self.languageManager.getTextForKey(key: "confirm"), destructiveButtonTitle: nil, delegate: nil)
+            
+            bluetoothAlert?.show(animated: true, completionHandler: nil)
+            
+            return
+        }
         
         self.connectTimer = Timer.scheduledTimer(timeInterval: TimeInterval(self.scanInterval), target: self, selector: #selector(connectToDevice), userInfo: nil, repeats: false)
         self.scanTimer = Timer.scheduledTimer(timeInterval: TimeInterval(self.scanInterval), target: self, selector: #selector(scanDevice), userInfo: nil, repeats: true)
@@ -230,48 +240,37 @@ macAddrss = \(deviceInfo.macAddrss)\r\n UUIDString = \(deviceInfo.uuidString)\r\
             }
             
             // 1.先判断数据库中是否有品牌
-            let brands = DeviceDataCoreManager.getDataWithFromTableWithCol(tableName: "BleBrand", colName: "name", colVal: "Inledco")
+            let brands = DeviceDataCoreManager.getDataWithFromTableWithCol(tableName: DeviceDataCoreManager.brandTableName, colName: DeviceDataCoreManager.brandTableBrandName, colVal: DeviceDataCoreManager.defaultBrandName)
             var defaultBrand: BleBrand?
             var defaultGroup: BleGroup?
             if brands.count == 0 {
                 // 1.创建品牌
-                defaultBrand = (NSEntityDescription.insertNewObject(forEntityName: "BleBrand", into: context) as! BleBrand)
+                defaultBrand = (NSEntityDescription.insertNewObject(forEntityName: DeviceDataCoreManager.brandTableName, into: context) as! BleBrand)
                 
-                defaultBrand?.name = "Inledco"
+                defaultBrand?.name = DeviceDataCoreManager.defaultBrandName
                 
                 // 2.新建默认分组
-                defaultGroup = (NSEntityDescription.insertNewObject(forEntityName: "BleGroup", into: context) as! BleGroup)
+                defaultGroup = (NSEntityDescription.insertNewObject(forEntityName: DeviceDataCoreManager.groupTableName, into: context) as! BleGroup)
                 
-                defaultGroup?.name = "defaultGroup"
+                defaultGroup?.name = DeviceDataCoreManager.defaultGroupName
                 
                 defaultBrand?.addToBrand_group(defaultGroup!)
             } else {
                 // 1.获取品牌
                 defaultBrand = (brands[0] as! BleBrand)
                 
-                // 2.获取分组
-                let groupSet = defaultBrand?.brand_group?.filtered(using: NSPredicate(format:"name == %@",self.languageManager.getTextForKey(key: "defaultGroup"))) as! Set<BleGroup>
-                
-                defaultGroup = groupSet.first(where: {$0.name == "defaultGroup"})
+                // 2.获取第一个分组作为默认分组
+                defaultGroup = defaultBrand?.brand_group?.first(where: {($0 as! BleGroup).name == DeviceDataCoreManager.defaultGroupName}) as? BleGroup
             }
             
             // 3.添加设备
-            let saveDevice = NSEntityDescription.insertNewObject(forEntityName: "BleDevice", into: context) as! BleDevice
+            let saveDevice = NSEntityDescription.insertNewObject(forEntityName: DeviceDataCoreManager.deviceTableName, into: context) as! BleDevice
             saveDevice.name = deviceModel.name
             saveDevice.typeCode = deviceModel.typeCode
             saveDevice.uuid = deviceModel.uuidString
             saveDevice.macAddress = deviceModel.macAddress
             
             defaultGroup?.addToGroup_device(saveDevice)
-            
-            /*
-            let saveDevice = NSEntityDescription.insertNewObject(forEntityName: "BleDevice", into: context) as! BleDevice
-
-            saveDevice.name = deviceModel.name
-            saveDevice.typeCode = deviceModel.typeCode
-            saveDevice.uuid = deviceModel.uuidString
-            saveDevice.macAddress = deviceModel.macAddress
-             */
             
             do {
                 try context.save()
