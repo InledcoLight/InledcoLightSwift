@@ -32,7 +32,7 @@ class DeviceDataCoreManager {
     // 数据库对象管理上下文
     static var context: NSManagedObjectContext?
     
-    ///  类方法func前面添加class
+    /// 类方法func前面添加class
     /// 获取数据管理上下文
     ///
     /// - returns: 数据管理上下文

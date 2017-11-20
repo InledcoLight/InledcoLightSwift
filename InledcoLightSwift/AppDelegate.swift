@@ -17,6 +17,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
+        // 启动动画
+        let imageView = UIImageView.init(frame: (self.window?.bounds)!)
+        
+        imageView.image = UIImage.init(named: "launch1")
+        
+        self.window?.addSubview(imageView)
+        self.window?.bringSubview(toFront: imageView)
+        
+        // 重置tab栏，防止tab栏语言出现问题
         LanguageManager.shareInstance().resetRootViewController()
         return true
     }

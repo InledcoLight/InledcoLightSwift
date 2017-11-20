@@ -17,7 +17,6 @@ class DeviceViewController: BaseViewController,UITableViewDelegate,UITableViewDa
     private var alertController: UIAlertController!
     private var connectAlertController: LGAlertView?
     private var connectFailedAlertController: LGAlertView?
-    // private var deviceDataSourceArray: NSMutableArray = []
     private var deviceDataSourceDic: [String: Array<DeviceModel>] = [String: Array<DeviceModel>]();
     private var selectDeviceModel: DeviceModel?
     private var deviceCodeInfo: DeviceCodeInfo?
@@ -42,7 +41,7 @@ class DeviceViewController: BaseViewController,UITableViewDelegate,UITableViewDa
     
     /// 蓝牙初始化
     ///
-    /// - returns:
+    /// - returns: Void
     func prepareBluetoothData() -> Void {
         // 1.连接成功回调
         self.blueToothManager.completeReceiveDataCallback = {
@@ -108,7 +107,6 @@ class DeviceViewController: BaseViewController,UITableViewDelegate,UITableViewDa
         
         // 2.连接失败提示视图
         connectFailedAlertController = LGAlertView.init(title: languageManager.getTextForKey(key: "connectFailed"), message: nil, style: .alert, buttonTitles: nil, cancelButtonTitle: nil, destructiveButtonTitle: nil)
-        
         
         // 3.操作弹出视图
          alertController = UIAlertController(title: self.selectDeviceModel?.name, message: nil, preferredStyle: .actionSheet)
