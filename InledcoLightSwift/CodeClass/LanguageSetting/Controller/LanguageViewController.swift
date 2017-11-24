@@ -72,10 +72,10 @@ class LanguageViewController: BaseViewController,UITableViewDelegate,UITableView
             currentSelectLanguageIndex = 0
         case .english?:
             currentSelectLanguageIndex = 1
-        case .french?:
-            currentSelectLanguageIndex = 2
+        // case .french?:
+            // currentSelectLanguageIndex = 2
         case .chinese?:
-            currentSelectLanguageIndex = 3
+            currentSelectLanguageIndex = 2
         default:
             currentSelectLanguageIndex = 0
         }

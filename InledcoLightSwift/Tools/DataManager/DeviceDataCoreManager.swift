@@ -132,7 +132,7 @@ class DeviceDataCoreManager {
     class func deleteData(tableName: String, uuidStr: String) -> Void {
         let dataCoreContext = getDataCoreContext()
         let fetch = NSFetchRequest<NSFetchRequestResult>(entityName: tableName)
-        fetch.predicate = NSPredicate(format: "\(deviceTableUuidName) == %@", uuidStr)
+        fetch.predicate = NSPredicate(format: "uuid == %@", uuidStr)
         
         do {
             let results = try dataCoreContext.fetch(fetch)

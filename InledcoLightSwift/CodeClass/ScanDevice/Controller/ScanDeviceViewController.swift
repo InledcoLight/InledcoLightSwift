@@ -14,9 +14,9 @@ class ScanDeviceViewController: BaseViewController,BLEManagerDelegate,UITableVie
 
     @IBOutlet weak var tableView: UITableView!
     private var isScan: Bool! = false
-    private let scanInterval = 3
+    private let scanInterval = 5  // 扫描时间
+    private var scanAndConnectInterval = 10
     private var connectIndex = 0
-    private var scanItemTitle = "扫描"
     // 1.第一个定时器用来启用什么时候开始连接那些没有类型编码的设备
     private var connectTimer: Timer?  // 不能在这使用类中的方法直接初始化定时器，因为这时定时器方法还未初始化
     // 2.用来设置扫描按钮的文本信息
@@ -40,19 +40,25 @@ class ScanDeviceViewController: BaseViewController,BLEManagerDelegate,UITableVie
     @objc func scanDevice() -> Void {
         if !isScan {
             isScan = true
-            self.scanBarButtonItem?.title = "停止"
+            self.scanBarButtonItem?.title = self.languageManager.getTextForKey(key: "scan")
             self.bleManager.scanDeviceTime(self.scanInterval)
-            self.scanTimer?.fireDate = Date(timeIntervalSinceNow: TimeInterval(self.scanInterval))
+            self.scanTimer?.fireDate = Date(timeIntervalSinceNow: TimeInterval(self.scanInterval + scanAndConnectInterval))
+            self.connectTimer?.fireDate = Date(timeIntervalSinceNow: TimeInterval(self.scanInterval))
         } else {
             isScan = false
-            self.scanBarButtonItem?.title = "扫描"
+            self.scanBarButtonItem?.title = self.languageManager.getTextForKey(key: "stop")
             self.bleManager.manualStopScanDevice()
+            // 设置为超长时间，则不会执行
             self.scanTimer?.fireDate = Date(timeIntervalSinceNow: 100000000000000.0)
+            self.connectTimer?.fireDate = Date(timeIntervalSinceNow: 100000000000000.0)
         }
     }
     
     override func prepareData() {
         super.prepareData()
+        
+        // 蓝牙代理
+        self.bleManager.delegate = self
         
         // 检测手机蓝牙的状态
         if self.bleManager.centralManager.state != .poweredOn {
@@ -63,10 +69,15 @@ class ScanDeviceViewController: BaseViewController,BLEManagerDelegate,UITableVie
             return
         }
         
-        self.connectTimer = Timer.scheduledTimer(timeInterval: TimeInterval(self.scanInterval), target: self, selector: #selector(connectToDevice), userInfo: nil, repeats: false)
-        self.scanTimer = Timer.scheduledTimer(timeInterval: TimeInterval(self.scanInterval), target: self, selector: #selector(scanDevice), userInfo: nil, repeats: true)
-
-        self.bleManager.delegate = self
+        // 初始化扫描定时器和连接定时器
+        // 注意：
+        // 由于一些蓝牙模块需要连接后才能获取到设备的类型所以对这部分蓝牙设备，需要做特殊处理
+        // 1.正常的蓝牙模块：在扫描后直接获取类型信息
+        // 2.不正常的蓝牙模块：需要连接后获取设备类型信息
+        // 两个定时器直接有一个间隔：这个时间间隔用来连接不正常的蓝牙模块
+        // 首先是开始执行连接设备，此时取消扫描设备，然后开始连接设备
+        self.scanTimer = Timer.scheduledTimer(timeInterval: TimeInterval(self.scanInterval + scanAndConnectInterval), target: self, selector: #selector(scanDevice), userInfo: nil, repeats: true)
+        self.connectTimer = Timer.scheduledTimer(timeInterval: TimeInterval(self.scanInterval), target: self, selector: #selector(connectToDevice), userInfo: nil, repeats: true)
     }
     
     override func setViews() {
@@ -151,7 +162,7 @@ class ScanDeviceViewController: BaseViewController,BLEManagerDelegate,UITableVie
         if !self.isScan {
             return
         }
-        
+
         // 连接那些没有广播数据的设备
         print("开始连接设备,一共有\(self.deviceNeedConnectDataSourceArray.count)个设备")
         self.bleManager.manualStopScanDevice()
@@ -167,8 +178,7 @@ class ScanDeviceViewController: BaseViewController,BLEManagerDelegate,UITableVie
         if !self.isScan {
             return
         }
-        
-        print("连接设备成功")
+
         // 读取广播数据
         self.bleManager.readDeviceAdvertData(device)
     }
@@ -193,6 +203,7 @@ class ScanDeviceViewController: BaseViewController,BLEManagerDelegate,UITableVie
         if self.deviceNeedConnectDataSourceArray.count > self.connectIndex{
             let deviceModel: DeviceModel = self.deviceNeedConnectDataSourceArray.object(at: self.connectIndex) as! DeviceModel
             
+            print("连接设备\(String(describing: deviceModel.name))")
             self.bleManager.connect(toDevice: self.bleManager.getDeviceByUUID(deviceModel.uuidString))
         }
     }
@@ -202,7 +213,7 @@ class ScanDeviceViewController: BaseViewController,BLEManagerDelegate,UITableVie
             return
         }
         
-        deviceModel.name = deviceModel.name! + "不完整设备"
+        deviceModel.name = deviceModel.name!
         deviceModel.typeCode = (dataString as NSString).substring(to: 4)
         
         self.deviceDataSourceArray.add(deviceModel)

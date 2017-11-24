@@ -34,6 +34,7 @@ run = "Run";
 edit = "Edit";
 timePoint = "Time Point";
 timePointMessage = "Select a time";
+scan = "Scan";
 stop = "Stop";
 saveUserDefinedSuccessful = "Save Successful!";
 runSuccessful = "Run Successful!";

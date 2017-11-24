@@ -329,9 +329,10 @@ class ColorSettingViewController: BaseViewController {
                         // 2.发送设置到设备
                         if self.editParameterModel != nil {
                             let commandStr = (self.editParameterModel?.generateOldSetAutoCommand())!
-                            self.blueToothManager.sendCommandToDevice(uuid: (self.editParameterModel?.uuid)!, commandStr: commandStr, commandType: CommandType.SETTINGAUTOMODE_COMMAND, isXORCommand: true)
+
                             switch (self.deviceInfo?.deviceTypeCode)! {
                             case .LIGHT_CODE_STRIP_III, .ONECHANNEL_LIGHT, .TWOCHANNEL_LIGHT, .THREECHANNEL_LIGHT, .FOURCHANNEL_LIGHT, .FIVECHANNEL_LIGHT, .SIXCHANNEL_LIGHT:
+                                self.blueToothManager.sendCommandToDevice(uuid: (self.editParameterModel?.uuid)!, commandStr: commandStr, commandType: CommandType.SETTINGAUTOMODE_COMMAND, isXORCommand: true)
                                 break
                             default:
                                 self.blueToothManager.sendCommandToDevice(uuid: (self.editParameterModel?.uuid)!, commandStr: (self.editParameterModel?.generateSetAutoCommand())!, commandType: CommandType.SETTINGAUTOMODE_COMMAND, isXORCommand: true)

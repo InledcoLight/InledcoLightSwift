@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -25,10 +25,10 @@
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </tableView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LOs-qW-umC">
-                    <rect key="frame" x="162" y="567" width="50" height="50"/>
+                    <rect key="frame" x="162" y="567" width="70" height="70"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="50" id="i19-Wt-i2U"/>
-                        <constraint firstAttribute="height" constant="50" id="zZw-VF-vb7"/>
+                        <constraint firstAttribute="width" constant="70" id="i19-Wt-i2U"/>
+                        <constraint firstAttribute="height" constant="70" id="zZw-VF-vb7"/>
                     </constraints>
                     <state key="normal" image="saveScanDevice"/>
                     <connections>
@@ -39,11 +39,11 @@
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="RHS-YM-nEC" secondAttribute="trailing" id="GNX-Mr-d3J"/>
-                <constraint firstAttribute="bottom" secondItem="LOs-qW-umC" secondAttribute="bottom" constant="50" id="Ivw-hK-n7b"/>
+                <constraint firstAttribute="bottom" secondItem="LOs-qW-umC" secondAttribute="bottom" constant="30" id="Ivw-hK-n7b"/>
                 <constraint firstItem="RHS-YM-nEC" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="mON-sS-8D9"/>
                 <constraint firstAttribute="bottom" secondItem="RHS-YM-nEC" secondAttribute="bottom" id="oOw-Il-zy4"/>
                 <constraint firstItem="RHS-YM-nEC" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="qtf-c3-5da"/>
-                <constraint firstItem="LOs-qW-umC" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="x9m-ci-2qg"/>
+                <constraint firstItem="LOs-qW-umC" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" constant="9.5" id="x9m-ci-2qg"/>
             </constraints>
             <point key="canvasLocation" x="-1140" y="-317"/>
         </view>

@@ -142,8 +142,9 @@ class LanguageManager {
         let tabViewController = appDelegate.window?.rootViewController as! UITabBarController
         // 获取各个导航控制器
         let homeNav = mainStoryboard.instantiateViewController(withIdentifier: "homeNav")
+        homeNav.title = getTextForKey(key: "home")
         let settingNav = mainStoryboard.instantiateViewController(withIdentifier: "settingNav")
-        
+        settingNav.title = getTextForKey(key: "settingTitle")
         tabViewController.viewControllers = [homeNav, settingNav]
     }
 }
