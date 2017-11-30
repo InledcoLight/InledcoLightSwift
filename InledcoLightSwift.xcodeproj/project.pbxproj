@@ -43,8 +43,9 @@
 		8F9F8B571FA34D0C006E562D /* ManualSliderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F9F8B561FA34D0C006E562D /* ManualSliderView.swift */; };
 		8FA1C1AA1FA47FC200DBD42B /* TimePointTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FA1C1A81FA47FC200DBD42B /* TimePointTableViewCell.swift */; };
 		8FA1C1AB1FA47FC200DBD42B /* TimePointTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8FA1C1A91FA47FC200DBD42B /* TimePointTableViewCell.xib */; };
-		8FB2F2CB1FA85C1400CE2E98 /* TimeSlotTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FB2F2C91FA85C1400CE2E98 /* TimeSlotTableViewCell.swift */; };
-		8FB2F2CC1FA85C1400CE2E98 /* TimeSlotTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8FB2F2CA1FA85C1400CE2E98 /* TimeSlotTableViewCell.xib */; };
+		8FB649171FCF91E400AA0617 /* launch1.png in Resources */ = {isa = PBXBuildFile; fileRef = 8FB649141FCF91E300AA0617 /* launch1.png */; };
+		8FB649181FCF91E400AA0617 /* launch2.png in Resources */ = {isa = PBXBuildFile; fileRef = 8FB649151FCF91E300AA0617 /* launch2.png */; };
+		8FB649191FCF91E400AA0617 /* launch3.png in Resources */ = {isa = PBXBuildFile; fileRef = 8FB649161FCF91E300AA0617 /* launch3.png */; };
 		8FB994C21F8CB643008C6ACF /* DeviceDataCoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FB994C11F8CB643008C6ACF /* DeviceDataCoreManager.swift */; };
 		8FB994EA1F8CC14E008C6ACF /* BleDevice+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FB994E41F8CC14E008C6ACF /* BleDevice+CoreDataClass.swift */; };
 		8FB994EB1F8CC14E008C6ACF /* BleDevice+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FB994E51F8CC14E008C6ACF /* BleDevice+CoreDataProperties.swift */; };
@@ -127,8 +128,9 @@
 		8F9F8B561FA34D0C006E562D /* ManualSliderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManualSliderView.swift; sourceTree = "<group>"; };
 		8FA1C1A81FA47FC200DBD42B /* TimePointTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimePointTableViewCell.swift; sourceTree = "<group>"; };
 		8FA1C1A91FA47FC200DBD42B /* TimePointTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TimePointTableViewCell.xib; sourceTree = "<group>"; };
-		8FB2F2C91FA85C1400CE2E98 /* TimeSlotTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeSlotTableViewCell.swift; sourceTree = "<group>"; };
-		8FB2F2CA1FA85C1400CE2E98 /* TimeSlotTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TimeSlotTableViewCell.xib; sourceTree = "<group>"; };
+		8FB649141FCF91E300AA0617 /* launch1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = launch1.png; sourceTree = "<group>"; };
+		8FB649151FCF91E300AA0617 /* launch2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = launch2.png; sourceTree = "<group>"; };
+		8FB649161FCF91E300AA0617 /* launch3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = launch3.png; sourceTree = "<group>"; };
 		8FB994C11F8CB643008C6ACF /* DeviceDataCoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceDataCoreManager.swift; sourceTree = "<group>"; };
 		8FB994E41F8CC14E008C6ACF /* BleDevice+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BleDevice+CoreDataClass.swift"; sourceTree = "<group>"; };
 		8FB994E51F8CC14E008C6ACF /* BleDevice+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BleDevice+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -499,8 +501,6 @@
 			children = (
 				8FA1C1A81FA47FC200DBD42B /* TimePointTableViewCell.swift */,
 				8FA1C1A91FA47FC200DBD42B /* TimePointTableViewCell.xib */,
-				8FB2F2C91FA85C1400CE2E98 /* TimeSlotTableViewCell.swift */,
-				8FB2F2CA1FA85C1400CE2E98 /* TimeSlotTableViewCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -566,6 +566,9 @@
 		8FE41AD61F7F6BCD00825501 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				8FB649141FCF91E300AA0617 /* launch1.png */,
+				8FB649151FCF91E300AA0617 /* launch2.png */,
+				8FB649161FCF91E300AA0617 /* launch3.png */,
 			);
 			path = Images;
 			sourceTree = "<group>";
@@ -787,6 +790,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8FB649171FCF91E400AA0617 /* launch1.png in Resources */,
 				8FE76F1F1F2EB09100FC9634 /* LaunchScreen.storyboard in Resources */,
 				8F6C77341F8DDF3100E0A22D /* DeviceTableViewCell.xib in Resources */,
 				8F8C8B3E1F6CD3C5006F0461 /* ScanDeviceViewController.xib in Resources */,
@@ -798,7 +802,8 @@
 				8FE76F1C1F2EB09100FC9634 /* Assets.xcassets in Resources */,
 				8F9F8B551FA34767006E562D /* AutoColorEditViewController.xib in Resources */,
 				8F9952F61F9082C000155C82 /* LanguageViewController.xib in Resources */,
-				8FB2F2CC1FA85C1400CE2E98 /* TimeSlotTableViewCell.xib in Resources */,
+				8FB649191FCF91E400AA0617 /* launch3.png in Resources */,
+				8FB649181FCF91E400AA0617 /* launch2.png in Resources */,
 				8FE76F1A1F2EB09100FC9634 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -982,7 +987,6 @@
 				8F74C8A51F91F01900032C06 /* StringManager.swift in Sources */,
 				8F66B5FD1F7DE8550086E350 /* DeviceModel.swift in Sources */,
 				8F9F8B541FA34767006E562D /* AutoColorEditViewController.swift in Sources */,
-				8FB2F2CB1FA85C1400CE2E98 /* TimeSlotTableViewCell.swift in Sources */,
 				8F9D90761F8F481300AAC57F /* LanguageManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

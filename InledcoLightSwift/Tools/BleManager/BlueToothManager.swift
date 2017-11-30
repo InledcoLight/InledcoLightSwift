@@ -59,12 +59,11 @@ enum CommandType {
 }
 
 class BlueToothManager: NSObject, BLEManagerDelegate {
-
     private static var bluetoothManager: BlueToothManager?;
     private let bleManager: BLEManager! = BLEManager<AnyObject, AnyObject>.default()
     private let reconnectInterval: TimeInterval! = 2
     private let maxConnectCount: Int! = 3
-    private var connectCount: Int! = 0
+    private var connectTimeCount: Int! = 0
     private var connectTimer: Timer?
     private var isReceiveDataAll: Bool! = false
     private var lastCommandSendTime: TimeInterval! = 0.0
@@ -84,7 +83,7 @@ class BlueToothManager: NSObject, BLEManagerDelegate {
         }
         
         bluetoothManager?.bleManager.delegate = bluetoothManager
-        bluetoothManager?.connectCount = 0
+        bluetoothManager?.connectTimeCount = 0
         bluetoothManager?.isReceiveDataAll = false
         bluetoothManager?.lastCommandSendTime = 0
         
@@ -98,7 +97,7 @@ class BlueToothManager: NSObject, BLEManagerDelegate {
     /// 连接设备
     /// - parameter uuid: 设备标识
     ///
-    /// - returns: Void
+    /// - returns: 是否开始连接设备
     func connectDeviceWithUuid(uuid: String!) -> Bool {
         if self.bleManager.centralManager.state != .poweredOn {
             // 提示打开蓝牙
@@ -108,8 +107,16 @@ class BlueToothManager: NSObject, BLEManagerDelegate {
             
             return false
         } else {
-            self.connectCount = 0
-            self.connectTimer = Timer.scheduledTimer(timeInterval: reconnectInterval, target: self, selector: #selector(sendConnectCommandToDevice(timer:)), userInfo: uuid, repeats: true)
+            self.connectTimeCount = 0
+            self.connectTimer = Timer.scheduledTimer(timeInterval: reconnectInterval, target: self, selector: #selector(connectTimeCount(timer:)), userInfo: uuid, repeats: true)
+            
+            // 连接设备如果不在这个数组里面，则会连接失败
+            let device: CBPeripheral = self.bleManager.getDeviceByUUID(uuid)
+            if !self.bleManager.dev_DICARRAY.contains(device) {
+                self.bleManager.dev_DICARRAY.add(device)
+            }
+            
+            self.bleManager.connect(toDevice: device)
             
             return true
         }
@@ -120,6 +127,9 @@ class BlueToothManager: NSObject, BLEManagerDelegate {
     ///
     /// - returns: Void
     func disConnectDevice(uuid: String!) -> Void {
+        self.connectTimeCount = 0
+        self.connectTimer?.invalidate()
+        self.connectTimer = nil
         self.bleManager.disconnectDevice(self.bleManager.getDeviceByUUID(uuid))
     }
     
@@ -127,30 +137,26 @@ class BlueToothManager: NSObject, BLEManagerDelegate {
     /// - parameter timer: 调用该方法的定时器
     ///
     /// - returns: 空
-    @objc private func sendConnectCommandToDevice(timer: Timer) -> Void {
-        self.connectCount = self.connectCount + 1
-        
-        if self.connectCount >= self.maxConnectCount {
+    @objc private func connectTimeCount(timer: Timer) -> Void {
+        print("第\(self.connectTimeCount)次连接！")
+        // 连接设备
+        self.connectTimeCount = self.connectTimeCount + 1
+
+        if self.connectTimeCount >= self.maxConnectCount {
+            let uuid = timer.userInfo as! String
+            
             self.connectTimer?.invalidate()
             self.connectTimer = nil
+
+            self.disConnectDevice(uuid: uuid)
             
             // 调用连接超时回调
             if connectFailedCallback != nil {
                 self.connectFailedCallback!(nil, CommandType.UNKNOWN_COMMAND)
             }
-            
+
             return
         }
-        
-        // 连接设备
-        let uuid = timer.userInfo as! String
-        let device: CBPeripheral = self.bleManager.getDeviceByUUID(uuid)
-        
-        if !self.bleManager.dev_DICARRAY.contains(device) {
-            self.bleManager.dev_DICARRAY.add(device)
-        }
-        
-        self.bleManager.connect(toDevice: device)
     }
     
     /// 发送同步时间命令
@@ -322,7 +328,7 @@ class BlueToothManager: NSObject, BLEManagerDelegate {
     // 蓝牙回调
     func connectDeviceSuccess(_ device: CBPeripheral!, error: Error!) {
         print("连接成功:\(String(describing: device.name))")
-        self.connectCount = 0
+        self.connectTimeCount = 0
         if self.connectTimer != nil {
             self.connectTimer?.invalidate()
             self.connectTimer = nil

@@ -85,7 +85,7 @@ class DeviceViewController: BaseViewController,UITableViewDelegate,UITableViewDa
         self.blueToothManager.connectFailedCallback = {
             (receiveDataStr, commandType) in
             Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(self.connectFailed(timer:)), userInfo: nil, repeats: false)
-            
+
             self.connectAlertController?.dismiss(animated: true, completionHandler: nil)
             self.connectFailedAlertController?.show(animated: true, completionHandler: nil)
         }
@@ -95,21 +95,15 @@ class DeviceViewController: BaseViewController,UITableViewDelegate,UITableViewDa
         self.connectFailedAlertController?.dismiss(animated: true, completionHandler: nil)
     }
     
+    /// 创建设备操作列表
+    ///
+    /// - returns: 空
     func createAlertController() {
-        // 1.连接提示视图
-        connectAlertController = LGAlertView.init(activityIndicatorAndTitle: languageManager.getTextForKey(key: "connecting"), message: "", style: .alert, buttonTitles: nil, cancelButtonTitle: languageManager.getTextForKey(key: "cancel"), destructiveButtonTitle: nil)
-        
-        connectAlertController?.cancelHandler = {
-            (alertView) in
-            // 取消连接设备
-            
-        }
-        
-        // 2.连接失败提示视图
+        // 1.连接失败提示视图
         connectFailedAlertController = LGAlertView.init(title: languageManager.getTextForKey(key: "connectFailed"), message: nil, style: .alert, buttonTitles: nil, cancelButtonTitle: nil, destructiveButtonTitle: nil)
         
-        // 3.操作弹出视图
-         alertController = UIAlertController(title: self.selectDeviceModel?.name, message: nil, preferredStyle: .actionSheet)
+        // 2.操作弹出视图
+        alertController = UIAlertController(title: self.selectDeviceModel?.name, message: nil, preferredStyle: .actionSheet)
         // 删除操作
         let deleteAction: UIAlertAction = UIAlertAction(title: languageManager.getTextForKey(key: "delete"), style: .destructive) { (alertAction) in
             let deleteAlertController = UIAlertController(title: self.languageManager.getTextForKey(key: "delete"), message: self.languageManager.getTextForKey(key: "confirmDelete") + String((self.selectDeviceModel?.name)!).trimmingCharacters(in: [" "]) + " ?", preferredStyle: .alert)
@@ -133,6 +127,15 @@ class DeviceViewController: BaseViewController,UITableViewDelegate,UITableViewDa
         let connectAction: UIAlertAction = UIAlertAction(title: languageManager.getTextForKey(key: "connect"), style: .default) { (alertAction) in
             if self.selectDeviceModel != nil {
                 if self.blueToothManager.connectDeviceWithUuid(uuid: self.selectDeviceModel?.uuidString) {
+                    // 这里需要重新创建连接提示视图
+                    self.connectAlertController = LGAlertView.init(activityIndicatorAndTitle: self.languageManager.getTextForKey(key: "connecting"), message: "", style: .alert, buttonTitles: nil, cancelButtonTitle: self.languageManager.getTextForKey(key: "cancel"), destructiveButtonTitle: nil)
+                    
+                    self.connectAlertController?.cancelHandler = {
+                        (alertView) in
+                        // 取消连接设备，也就是直接断开设备既可
+                        self.blueToothManager.disConnectDevice(uuid: self.selectDeviceModel?.uuidString)
+                    }
+                    
                     self.connectAlertController?.show(animated: true, completionHandler: nil)
                 }
             }
@@ -167,7 +170,7 @@ class DeviceViewController: BaseViewController,UITableViewDelegate,UITableViewDa
             return
         }
         
-        // 2.获取分组数据
+        // 2.获取分组数据：需要实现分组和设备按照名称进行排序
         let brand = brands.first as! BleBrand
         let groups = brand.brand_group
         for g in groups! {

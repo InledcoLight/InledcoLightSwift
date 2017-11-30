@@ -27,7 +27,7 @@ class BaseViewController: UIViewController {
     }
 
     // 声明两个方法，控制器重写
-    func prepareData(){
+    func prepareData() {
         // 不能写任何代码，供子类重写使用
     }
     

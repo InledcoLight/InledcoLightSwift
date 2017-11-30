@@ -84,7 +84,7 @@ class ScanDeviceViewController: BaseViewController,BLEManagerDelegate,UITableVie
         super.setViews()
         
         self.title = languageManager.getTextForKey(key: "scanTitle")
-        scanBarButtonItem = UIBarButtonItem.init(title: "Scan", style: UIBarButtonItemStyle.plain, target: self, action: #selector(scanBarButtonItemClickAction(barButtonItem:)))
+        scanBarButtonItem = UIBarButtonItem.init(title: languageManager.getTextForKey(key: "scan"), style: UIBarButtonItemStyle.plain, target: self, action: #selector(scanBarButtonItemClickAction(barButtonItem:)))
         
         self.navigationItem.rightBarButtonItem = scanBarButtonItem
         

@@ -198,6 +198,7 @@ class ColorSettingViewController: BaseViewController {
                 }
                 
                 commandStr = commandHeader + commandStr
+                // print("colorIndex = \(colorIndex), commandStr = \(commandStr)")
                 
                 self.blueToothManager.sendCommandToDevice(uuid: (self.parameterModel?.uuid)!, commandStr: commandStr, commandType: CommandType.UNKNOWN_COMMAND, isXORCommand: true)
                 
@@ -266,8 +267,9 @@ class ColorSettingViewController: BaseViewController {
     /// - returns:
     func getManualColorPercentArray(parameterModel: DeviceParameterModel!) -> [Int] {
         var manualPercentArray = [Int]()
-        for key in (parameterModel?.manualModeValueDic.keys)! {
-            manualPercentArray.append((parameterModel?.manualModeValueDic[key]?.hexaToDecimal)!)
+        
+        for i in 0 ..< (parameterModel?.manualModeValueDic.keys.count)! {
+            manualPercentArray.append((parameterModel?.manualModeValueDic[i]?.hexaToDecimal)!)
         }
         
         return manualPercentArray

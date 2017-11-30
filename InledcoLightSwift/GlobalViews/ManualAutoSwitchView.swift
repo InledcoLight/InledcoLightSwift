@@ -86,6 +86,10 @@ class ManualAutoSwitchView: UIView {
         }
     }
 
+    /// 更新手动自动切换按钮
+    /// - parameter index: 更新的按钮索引
+    ///
+    /// - returns: 空
     func updateManualAutoSwitchView(index: Int) -> Void {
         if index == 0 {
             manualButton?.frame = manualBigFrame!

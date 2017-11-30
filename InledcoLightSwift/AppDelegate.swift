@@ -12,21 +12,34 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
+    var launchImageView: UIImageView?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
-        // 启动动画
-        let imageView = UIImageView.init(frame: (self.window?.bounds)!)
+        // 实现启动动画，多张图片变换
+        self.window?.makeKeyAndVisible()
+        launchImageView = UIImageView.init(frame: (self.window?.bounds)!)
         
-        imageView.image = UIImage.init(named: "launch1")
+        launchImageView?.animationImages = [UIImage.init(named: "launch1.png")!, UIImage.init(named: "launch2.png")!, UIImage.init(named: "launch3.png")!, UIImage.init(named: "launch3.png")!, UIImage.init(named: "launch3.png")!] // 最后的图片多放几张可以让图片
+        launchImageView?.animationDuration = 2.0  // 隐藏视图时，延迟时间和持续时间之和应该和这个持续时间相等
+        launchImageView?.animationRepeatCount = 1
         
-        self.window?.addSubview(imageView)
-        self.window?.bringSubview(toFront: imageView)
+        UIView.animate(withDuration: 1.0, delay: 1.0, options: .curveLinear, animations: {
+            self.launchImageView?.stopAnimating()
+            self.launchImageView?.alpha = 0.0
+        }) { (finished) in
+            self.launchImageView?.removeFromSuperview()
+        }
+        
+        launchImageView?.startAnimating()
+        
+        self.window?.addSubview(launchImageView!)
+        self.window?.bringSubview(toFront: launchImageView!)
         
         // 重置tab栏，防止tab栏语言出现问题
         LanguageManager.shareInstance().resetRootViewController()
+        
         return true
     }
 
