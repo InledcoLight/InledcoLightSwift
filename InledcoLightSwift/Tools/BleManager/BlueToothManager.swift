@@ -365,6 +365,7 @@ class BlueToothManager: NSObject, BLEManagerDelegate {
         case .LIGHT_CODE_STRIP_III, .ONECHANNEL_LIGHT, .TWOCHANNEL_LIGHT, .THREECHANNEL_LIGHT, .FOURCHANNEL_LIGHT, .FIVECHANNEL_LIGHT, .SIXCHANNEL_LIGHT:
             // 旧协议
             self.processOldProtocolReceiveData()
+            
             break
         default:
             self.processProtocolReceiveData()
@@ -414,6 +415,15 @@ class BlueToothManager: NSObject, BLEManagerDelegate {
     ///
     /// - returns: Void
     func processOldProtocolReceiveData() -> Void {
+        // 数据接收完整性检验
+        // 1.数据长度检验
+        // 2.数据校验码检验
+        if self.currentDeviceTypeCode != nil {
+            if !verifyReceiveDataLength(receiveDataStr: self.receivedData, deviceTypeCode: self.currentDeviceTypeCode!.rawValue) {
+                return
+            }
+        }
+        
         if self.receivedData.calculateXor() == "00" {
             self.isReceiveDataAll = true
             
@@ -437,6 +447,29 @@ class BlueToothManager: NSObject, BLEManagerDelegate {
             
             self.receivedData = ""
         }
+    }
+    
+    /// 验证接收到的数据长度是否完整
+    /// - parameter receiveDataStr: 接收到的数据字符串
+    /// - parameter deviceTypeCode: 设备类型编码
+    ///
+    /// - returns: True:数据完整，False:数据不完整
+    func verifyReceiveDataLength(receiveDataStr: String, deviceTypeCode: String) -> Bool {
+        var dataLength = 0
+        let deviceCodeInfo = DeviceTypeData.getDeviceInfoWithTypeCode(deviceTypeCode: DeviceTypeCode(rawValue: deviceTypeCode)!)
+        let runModeStr: String = (receivedData as NSString).substring(with: NSRange.init(location: 4, length: 2))
+        if runModeStr == "00" {
+            dataLength = (5 + deviceCodeInfo.channelNum! * 2 + deviceCodeInfo.channelNum! * 4) * 2
+        } else {
+            dataLength = (11 + deviceCodeInfo.channelNum! * 2) * 2
+        }
+        
+        print("receiveDataStr.count = \(receiveDataStr.count),dataLength + 2 = \(dataLength + 2)")
+        if receiveDataStr.count == (dataLength + 2) {
+            return true
+        }
+        
+        return false
     }
 }
 

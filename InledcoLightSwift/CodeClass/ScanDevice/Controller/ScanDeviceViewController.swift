@@ -13,8 +13,9 @@ import LGAlertView
 class ScanDeviceViewController: BaseViewController,BLEManagerDelegate,UITableViewDelegate,UITableViewDataSource {
 
     @IBOutlet weak var tableView: UITableView!
+    private var scanActivity: UIActivityIndicatorView?
     private var isScan: Bool! = false
-    private let scanInterval = 5  // 扫描时间
+    private let scanInterval = 3  // 扫描时间
     private var scanAndConnectInterval = 10
     private var connectIndex = 0
     // 1.第一个定时器用来启用什么时候开始连接那些没有类型编码的设备
@@ -37,16 +38,26 @@ class ScanDeviceViewController: BaseViewController,BLEManagerDelegate,UITableVie
         scanDevice()
     }
 
+    override func viewWillDisappear(_ animated: Bool) {
+        releaseTimer();
+        self.isScan = false
+    }
+    
     @objc func scanDevice() -> Void {
         if !isScan {
             isScan = true
-            self.scanBarButtonItem?.title = self.languageManager.getTextForKey(key: "scan")
+            prepareTimer()
+            self.scanActivity?.startAnimating()
+            self.scanBarButtonItem?.title = self.languageManager.getTextForKey(key: "stop")
+            self.deviceDataSourceArray.removeAllObjects()
+            self.deviceNeedConnectDataSourceArray.removeAllObjects()
+            self.tableView.reloadData()
+            // 开始扫描
             self.bleManager.scanDeviceTime(self.scanInterval)
-            self.scanTimer?.fireDate = Date(timeIntervalSinceNow: TimeInterval(self.scanInterval + scanAndConnectInterval))
-            self.connectTimer?.fireDate = Date(timeIntervalSinceNow: TimeInterval(self.scanInterval))
         } else {
             isScan = false
-            self.scanBarButtonItem?.title = self.languageManager.getTextForKey(key: "stop")
+            self.scanActivity?.stopAnimating()
+            self.scanBarButtonItem?.title = self.languageManager.getTextForKey(key: "scan")
             self.bleManager.manualStopScanDevice()
             // 设置为超长时间，则不会执行
             self.scanTimer?.fireDate = Date(timeIntervalSinceNow: 100000000000000.0)
@@ -69,6 +80,10 @@ class ScanDeviceViewController: BaseViewController,BLEManagerDelegate,UITableVie
             return
         }
         
+        // prepareTimer()
+    }
+    
+    func prepareTimer() -> Void {
         // 初始化扫描定时器和连接定时器
         // 注意：
         // 由于一些蓝牙模块需要连接后才能获取到设备的类型所以对这部分蓝牙设备，需要做特殊处理
@@ -76,17 +91,34 @@ class ScanDeviceViewController: BaseViewController,BLEManagerDelegate,UITableVie
         // 2.不正常的蓝牙模块：需要连接后获取设备类型信息
         // 两个定时器直接有一个间隔：这个时间间隔用来连接不正常的蓝牙模块
         // 首先是开始执行连接设备，此时取消扫描设备，然后开始连接设备
-        self.scanTimer = Timer.scheduledTimer(timeInterval: TimeInterval(self.scanInterval + scanAndConnectInterval), target: self, selector: #selector(scanDevice), userInfo: nil, repeats: true)
-        self.connectTimer = Timer.scheduledTimer(timeInterval: TimeInterval(self.scanInterval), target: self, selector: #selector(connectToDevice), userInfo: nil, repeats: true)
+        releaseTimer();
+        self.scanTimer = Timer.scheduledTimer(timeInterval: TimeInterval(self.scanInterval + scanAndConnectInterval), target: self, selector: #selector(scanDevice), userInfo: nil, repeats: false)
+        self.connectTimer = Timer.scheduledTimer(timeInterval: TimeInterval(self.scanInterval + 1), target: self, selector: #selector(connectToDevice), userInfo: nil, repeats: false)
+    }
+    
+    func releaseTimer() -> Void {
+        if self.scanTimer != nil {
+            self.scanTimer?.invalidate()
+            self.scanTimer = nil
+        }
+        
+        if self.connectTimer != nil {
+            self.connectTimer?.invalidate()
+            self.connectTimer = nil
+        }
     }
     
     override func setViews() {
         super.setViews()
         
         self.title = languageManager.getTextForKey(key: "scanTitle")
+        
+        scanActivity = UIActivityIndicatorView.init(activityIndicatorStyle: .gray)
         scanBarButtonItem = UIBarButtonItem.init(title: languageManager.getTextForKey(key: "scan"), style: UIBarButtonItemStyle.plain, target: self, action: #selector(scanBarButtonItemClickAction(barButtonItem:)))
         
-        self.navigationItem.rightBarButtonItem = scanBarButtonItem
+        let scanActivityItem = UIBarButtonItem.init(customView: scanActivity!)
+        
+        self.navigationItem.rightBarButtonItems = [scanBarButtonItem!, scanActivityItem]
         
         self.tableView.delegate = self
         self.tableView.dataSource = self
@@ -133,14 +165,13 @@ class ScanDeviceViewController: BaseViewController,BLEManagerDelegate,UITableVie
             if isSuccess {
                 // print("添加完整设备")
                 self.deviceDataSourceArray.add(scanDeviceModel)
+                
+                self.tableView.reloadData()
             }else{
-                // print("添加不完整设备")
                 // 需要连接设备获取类型编码的设备
                 self.deviceNeedConnectDataSourceArray.add(scanDeviceModel)
             }
         }
-        
-        self.tableView.reloadData()
     }
     
     func getDeviceTypeCode(deviceInfo: DeviceInfo!, deviceModel: DeviceModel!) -> Bool {
@@ -154,7 +185,7 @@ class ScanDeviceViewController: BaseViewController,BLEManagerDelegate,UITableVie
             return false
         }
         deviceModel.typeCode = deviceTypeCode.substring(to: 4)
-        print("deviceModel.typeCode = \(String(describing: deviceModel.typeCode))")
+        
         return true
     }
     
@@ -163,31 +194,46 @@ class ScanDeviceViewController: BaseViewController,BLEManagerDelegate,UITableVie
             return
         }
 
+        // print("需要连接的设备*****************")
+//        for device in self.deviceNeedConnectDataSourceArray {
+//            let deviceModel: DeviceModel = device as! DeviceModel
+//            print("设备\(String(describing: deviceModel.deviceName)),\(String(describing: deviceModel.uuidString))")
+//        }
+        // print("需要连接的设备*****************")
+        
         // 连接那些没有广播数据的设备
-        print("开始连接设备,一共有\(self.deviceNeedConnectDataSourceArray.count)个设备")
+        // 1.手动停止扫描
         self.bleManager.manualStopScanDevice()
         self.connectIndex = 0
         if self.deviceNeedConnectDataSourceArray.count > self.connectIndex {
             let deviceModel: DeviceModel = self.deviceNeedConnectDataSourceArray.object(at: self.connectIndex) as! DeviceModel
-            print("开始连接\(String(describing: deviceModel.name))")
+            // 2.开始连接设备
+            // print("开始连接\(String(describing: deviceModel.deviceName)),\(String(describing: deviceModel.uuidString))")
             self.bleManager.connect(toDevice: self.bleManager.getDeviceByUUID(deviceModel.uuidString))
         }
     }
     
     func connectDeviceSuccess(_ device: CBPeripheral!, error: Error!) {
+        //print("连接成功，前！")
         if !self.isScan {
             return
         }
-
+        //print("连接成功，后！")
         // 读取广播数据
         self.bleManager.readDeviceAdvertData(device)
     }
     
     func receiveDeviceAdvertData(_ dataStr: String!, device: CBPeripheral!) {
+        //print("接收到广播数据，前！")
         if !self.isScan {
             return
         }
-        
+        //print("接收到广播数据，后！")
+        if (self.connectIndex >= self.deviceNeedConnectDataSourceArray.count){
+            
+            //print("接收到广播数据，索引大于数组长度！")
+            return;
+        }
         let deviceModel: DeviceModel = self.deviceNeedConnectDataSourceArray.object(at: self.connectIndex) as! DeviceModel
         
         // 解析广播数据
@@ -198,12 +244,12 @@ class ScanDeviceViewController: BaseViewController,BLEManagerDelegate,UITableVie
     
     func didDisconnectDevice(_ device: CBPeripheral!, error: Error!) {
         // 断开设备成功，连接下一个设备
-        print("设备断开成功")
+        //print("设备断开成功")
         self.connectIndex = self.connectIndex + 1
         if self.deviceNeedConnectDataSourceArray.count > self.connectIndex{
             let deviceModel: DeviceModel = self.deviceNeedConnectDataSourceArray.object(at: self.connectIndex) as! DeviceModel
             
-            print("连接设备\(String(describing: deviceModel.name))")
+            // print("连接设备\(String(describing: deviceModel.name))")
             self.bleManager.connect(toDevice: self.bleManager.getDeviceByUUID(deviceModel.uuidString))
         }
     }
@@ -218,18 +264,6 @@ class ScanDeviceViewController: BaseViewController,BLEManagerDelegate,UITableVie
         
         self.deviceDataSourceArray.add(deviceModel)
         self.tableView.reloadData()
-    }
-    
-    func printDeviceInfo(deviceInfo: DeviceInfo) -> Void {
-        print(deviceInfo.cb)
-        print(deviceInfo.advertisementDic.keys)
-
-        print("""
-
-macAddrss = \(deviceInfo.macAddrss)\r\n UUIDString = \(deviceInfo.uuidString)\r\n localName = \(deviceInfo.localName)\r\n name = \(deviceInfo.name) \r\n RSSI = \(deviceInfo.rssi) \r\n
-
-""")
-
     }
     
     // 保存设备
@@ -285,9 +319,9 @@ macAddrss = \(deviceInfo.macAddrss)\r\n UUIDString = \(deviceInfo.uuidString)\r\
             
             do {
                 try context.save()
-                print("保存成功!")
+                //print("保存成功!")
             }catch{
-                print("保存出错，\(error)")
+                //print("保存出错，\(error)")
             }
         }
     }
@@ -333,7 +367,17 @@ macAddrss = \(deviceInfo.macAddrss)\r\n UUIDString = \(deviceInfo.uuidString)\r\
         // Dispose of any resources that can be recreated.
     }
     
-
+    func printDeviceInfo(deviceInfo: DeviceInfo) -> Void {
+        print(deviceInfo.cb)
+        print(deviceInfo.advertisementDic.keys)
+        
+        print("""
+            
+            macAddrss = \(deviceInfo.macAddrss)\r\n UUIDString = \(deviceInfo.uuidString)\r\n localName = \(deviceInfo.localName)\r\n name = \(deviceInfo.name) \r\n RSSI = \(deviceInfo.rssi) \r\n
+            
+            """)
+        
+    }
     /*
     // MARK: - Navigation
 

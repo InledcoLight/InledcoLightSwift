@@ -30,6 +30,8 @@ class DeviceViewController: BaseViewController,UITableViewDelegate,UITableViewDa
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        self.blueToothManager = BlueToothManager.sharedBluetoothManager()
+        
         // 断开蓝牙
         if self.selectDeviceModel != nil && self.selectDeviceModel?.uuidString != nil {
             self.blueToothManager.disConnectDevice(uuid: self.selectDeviceModel?.uuidString)
@@ -128,7 +130,7 @@ class DeviceViewController: BaseViewController,UITableViewDelegate,UITableViewDa
             if self.selectDeviceModel != nil {
                 if self.blueToothManager.connectDeviceWithUuid(uuid: self.selectDeviceModel?.uuidString) {
                     // 这里需要重新创建连接提示视图
-                    self.connectAlertController = LGAlertView.init(activityIndicatorAndTitle: self.languageManager.getTextForKey(key: "connecting"), message: "", style: .alert, buttonTitles: nil, cancelButtonTitle: self.languageManager.getTextForKey(key: "cancel"), destructiveButtonTitle: nil)
+                    self.connectAlertController = LGAlertView.init(activityIndicatorAndTitle: self.languageManager.getTextForKey(key: "connecting") + " " + (self.selectDeviceModel?.name)!, message: "", style: .alert, buttonTitles: nil, cancelButtonTitle: self.languageManager.getTextForKey(key: "cancel"), destructiveButtonTitle: nil)
                     
                     self.connectAlertController?.cancelHandler = {
                         (alertView) in

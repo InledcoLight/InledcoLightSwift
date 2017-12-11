@@ -35,6 +35,7 @@ edit = "编辑";
 timePoint = "时间点";
 timePointMessage = "选择时间点";
 stop = "停止";
+scan = "扫描";
 saveUserDefinedSuccessful = "保存成功！";
 runSuccessful = "运行成功！";
 defaultBrand = "Inledco";

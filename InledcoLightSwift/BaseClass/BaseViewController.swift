@@ -11,7 +11,7 @@ import UIKit
 class BaseViewController: UIViewController {
 
     // 声明为不会为空
-    let blueToothManager: BlueToothManager! = BlueToothManager.sharedBluetoothManager()
+    var blueToothManager: BlueToothManager! = BlueToothManager.sharedBluetoothManager()
     let languageManager: LanguageManager! = LanguageManager.shareInstance()
     
     override func viewDidLoad() {
