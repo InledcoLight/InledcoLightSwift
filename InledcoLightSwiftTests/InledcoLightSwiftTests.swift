@@ -21,9 +21,24 @@ class InledcoLightSwiftTests: XCTestCase {
         super.tearDown()
     }
     
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+    func testStringManager() {
+        
+    }
+    
+    func testBlueToothManager() {
+        print("开始测试蓝牙工具!")
+        let bluetoothManager = BlueToothManager.sharedBluetoothManager()
+        
+        XCTAssert(bluetoothManager.calculateReceiveDataLength(channelNum: 3, runModeStr: "00") == 48)
+        XCTAssert(bluetoothManager.calculateReceiveDataLength(channelNum: 4, runModeStr: "00") == 60)
+        XCTAssert(bluetoothManager.calculateReceiveDataLength(channelNum: 5, runModeStr: "00") == 72)
+        XCTAssert(bluetoothManager.calculateReceiveDataLength(channelNum: 6, runModeStr: "00") == 84)
+        
+        XCTAssert(bluetoothManager.calculateReceiveDataLength(channelNum: 3, runModeStr: "01") == 36)
+        XCTAssert(bluetoothManager.calculateReceiveDataLength(channelNum: 4, runModeStr: "01") == 40)
+        XCTAssert(bluetoothManager.calculateReceiveDataLength(channelNum: 5, runModeStr: "01") == 44)
+        XCTAssert(bluetoothManager.calculateReceiveDataLength(channelNum: 6, runModeStr: "01") == 48)
+        print("结束测试蓝牙工具!")
     }
     
     func testPerformanceExample() {

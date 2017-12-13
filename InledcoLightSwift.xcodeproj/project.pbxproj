@@ -582,13 +582,6 @@
 			path = InledcoLightSwift/DeviceData;
 			sourceTree = SOURCE_ROOT;
 		};
-		8FE41ADE1F7F8A1A00825501 /* DataController */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = DataController;
-			sourceTree = "<group>";
-		};
 		8FE76F081F2EB09000FC9634 = {
 			isa = PBXGroup;
 			children = (
@@ -659,7 +652,6 @@
 				8F74C8A01F91AA7B00032C06 /* BleManager */,
 				8F9D90721F8F46BA00AAC57F /* LanguageManager */,
 				8FC2A3B41F8B5FCB00BEAE90 /* DataManager */,
-				8FE41ADE1F7F8A1A00825501 /* DataController */,
 				8FC6D6771F7D085E00C2B64B /* BleSdk */,
 				8F9D90701F8F45CC00AAC57F /* Localizable.strings */,
 				8F435C9C1FA9AF4B00A45E4C /* CommonData.swift */,
@@ -749,7 +741,7 @@
 					};
 					8FE76F241F2EB09100FC9634 = {
 						CreatedOnToolsVersion = 8.3.2;
-						DevelopmentTeam = TP2XCH35TP;
+						DevelopmentTeam = VS9QL3ZC89;
 						LastSwiftMigration = 0900;
 						ProvisioningStyle = Automatic;
 						TestTargetID = 8FE76F101F2EB09000FC9634;
@@ -1208,7 +1200,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				DEVELOPMENT_TEAM = TP2XCH35TP;
+				DEVELOPMENT_TEAM = VS9QL3ZC89;
 				INFOPLIST_FILE = InledcoLightSwiftTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ledinpro.InledcoLightSwiftTests;
@@ -1225,7 +1217,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				DEVELOPMENT_TEAM = TP2XCH35TP;
+				DEVELOPMENT_TEAM = VS9QL3ZC89;
 				INFOPLIST_FILE = InledcoLightSwiftTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ledinpro.InledcoLightSwiftTests;

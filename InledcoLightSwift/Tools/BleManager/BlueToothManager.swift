@@ -458,18 +458,28 @@ class BlueToothManager: NSObject, BLEManagerDelegate {
         var dataLength = 0
         let deviceCodeInfo = DeviceTypeData.getDeviceInfoWithTypeCode(deviceTypeCode: DeviceTypeCode(rawValue: deviceTypeCode)!)
         let runModeStr: String = (receivedData as NSString).substring(with: NSRange.init(location: 4, length: 2))
-        if runModeStr == "00" {
-            dataLength = (5 + deviceCodeInfo.channelNum! * 2 + deviceCodeInfo.channelNum! * 4) * 2
-        } else {
-            dataLength = (11 + deviceCodeInfo.channelNum! * 2) * 2
-        }
         
-        print("receiveDataStr.count = \(receiveDataStr.count),dataLength + 2 = \(dataLength + 2)")
-        if receiveDataStr.count == (dataLength + 2) {
+        dataLength = calculateReceiveDataLength(channelNum: deviceCodeInfo.channelNum!, runModeStr: runModeStr)
+        
+        print("receiveDataStr.count = \(receiveDataStr.count),dataLength = \(dataLength)")
+        if receiveDataStr.count == dataLength {
             return true
         }
         
         return false
+    }
+    
+    /// 根据通道数量及运行模式计算数据长度
+    /// - parameter channelNum: 通道数量
+    /// - parameter runModeStr: 运行模式
+    ///
+    /// - returns:
+    func calculateReceiveDataLength(channelNum: Int, runModeStr: String) -> Int {
+        if runModeStr == "00" {
+            return (5 + channelNum * 2 + channelNum * 4) * 2 + 2
+        } else {
+            return (11 + channelNum * 2) * 2 + 2
+        }
     }
 }
 

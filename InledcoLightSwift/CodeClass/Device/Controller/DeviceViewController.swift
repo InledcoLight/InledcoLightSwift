@@ -249,7 +249,6 @@ class DeviceViewController: BaseViewController,UITableViewDelegate,UITableViewDa
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.selectDeviceModel = getDeviceModelFromDatasource(section: indexPath.section, row: indexPath.row)
         // 获取当前数据动态信息
-        
         self.deviceCodeInfo = DeviceTypeData.getDeviceInfoWithTypeCode(deviceTypeCode: DeviceTypeCode(rawValue: (self.selectDeviceModel?.typeCode!)!) == nil ? DeviceTypeCode.NEW_DEVICE_LIGHT : DeviceTypeCode(rawValue: (self.selectDeviceModel?.typeCode!)!)!)
         self.blueToothManager.currentDeviceTypeCode = self.deviceCodeInfo?.deviceTypeCode
         alertController.title = self.selectDeviceModel?.name
