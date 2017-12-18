@@ -190,6 +190,7 @@ class DeviceViewController: BaseViewController,UITableViewDelegate,UITableViewDa
                 deviceArray.append(deviceModel)
             }
             
+            SortManager<DeviceModel>.bubbleSort(models: &deviceArray, compareAction: DeviceModel.sortByName)
             self.deviceDataSourceDic[group.name!] = deviceArray
         }
         

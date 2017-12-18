@@ -470,30 +470,6 @@ class ColorSettingViewController: BaseViewController {
                 isInLast = true
                 break
             }
-            
-            /*
-            if ((previewCount >= 0 && previewCount <= timeCountArray[i])) {
-                previewColorValueStr = self.editParameterModel?.timePointValueDic[timeCountArray.count - 1]
-                nextColorValueStr = self.editParameterModel?.timePointValueDic[0]
-                index = i
-                isInFirst = true
-                isInLast = false
-                break
-            } else if ((previewCount >= timeCountArray[timeCountArray.count - 1] && previewCount <= 1440)){
-                previewColorValueStr = self.editParameterModel?.timePointValueDic[timeCountArray.count - 1]
-                nextColorValueStr = self.editParameterModel?.timePointValueDic[0]
-                index = i
-                isInFirst = false
-                isInLast = true
-                break
-            } else if previewCount >= timeCountArray[i] && previewCount <= timeCountArray[i + 1] {
-                previewColorValueStr = self.editParameterModel?.timePointValueDic[i]
-                nextColorValueStr = self.editParameterModel?.timePointValueDic[i + 1]
-                index = i
-                isInFirst = false
-                isInLast = false
-                break
-            }*/
         }
         
         // 计算值
@@ -509,7 +485,6 @@ class ColorSettingViewController: BaseViewController {
                 percent = Double((previewCount - timeCountArray[index])) / Double(timeCountIntervalArray[index])
             }
             
-            // print("index = \(index),percent = \(percent)")
             let colorValue = previewColorDoubleArray![j] / 100.0 * 1000 - ((previewColorDoubleArray![j] - nextColorDoubleArray![j])) / 100.0 * 1000.0 * percent
             
             colorValueStr = colorValueStr.appendingFormat("%04x", Int(colorValue))

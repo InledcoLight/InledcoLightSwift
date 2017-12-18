@@ -27,6 +27,7 @@
 		8F8C8B451F6CD403006F0461 /* ScanDeviceTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8C8B431F6CD403006F0461 /* ScanDeviceTableViewCell.swift */; };
 		8F8C8B461F6CD403006F0461 /* ScanDeviceTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8F8C8B441F6CD403006F0461 /* ScanDeviceTableViewCell.xib */; };
 		8F8CA5F51F5D05A100922993 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8CA5F41F5D05A100922993 /* BaseViewController.swift */; };
+		8F943C4C1FE78E76003FA09D /* SortManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F943C4B1FE78E76003FA09D /* SortManager.swift */; };
 		8F9766271FA81D7600EA5F2D /* ParameterModelHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F9766261FA81D7600EA5F2D /* ParameterModelHelper.swift */; };
 		8F9766291FA8485C00EA5F2D /* OldParameterModelHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F9766281FA8485C00EA5F2D /* OldParameterModelHelper.swift */; };
 		8F9952EE1F9064ED00155C82 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F9952ED1F9064ED00155C82 /* SettingViewController.swift */; };
@@ -110,6 +111,7 @@
 		8F8C8B431F6CD403006F0461 /* ScanDeviceTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScanDeviceTableViewCell.swift; sourceTree = "<group>"; };
 		8F8C8B441F6CD403006F0461 /* ScanDeviceTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ScanDeviceTableViewCell.xib; sourceTree = "<group>"; };
 		8F8CA5F41F5D05A100922993 /* BaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
+		8F943C4B1FE78E76003FA09D /* SortManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortManager.swift; sourceTree = "<group>"; };
 		8F9766261FA81D7600EA5F2D /* ParameterModelHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParameterModelHelper.swift; sourceTree = "<group>"; };
 		8F9766281FA8485C00EA5F2D /* OldParameterModelHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OldParameterModelHelper.swift; sourceTree = "<group>"; };
 		8F9952ED1F9064ED00155C82 /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
@@ -378,6 +380,14 @@
 			path = BaseClass;
 			sourceTree = "<group>";
 		};
+		8F943C4A1FE78E63003FA09D /* SortManager */ = {
+			isa = PBXGroup;
+			children = (
+				8F943C4B1FE78E76003FA09D /* SortManager.swift */,
+			);
+			path = SortManager;
+			sourceTree = "<group>";
+		};
 		8F9766251FA81D2500EA5F2D /* ParameterModelHelper */ = {
 			isa = PBXGroup;
 			children = (
@@ -643,6 +653,7 @@
 			isa = PBXGroup;
 			children = (
 				8FC2A3C11F8B686500BEAE90 /* InledcoLightSwift-Bridging-Header.h */,
+				8F943C4A1FE78E63003FA09D /* SortManager */,
 				8F9766251FA81D2500EA5F2D /* ParameterModelHelper */,
 				8F9F8B4B1FA33CCF006E562D /* LayoutTools */,
 				8F4C88681FA1AA4D00C8D37D /* SystemInfoTools */,
@@ -976,6 +987,7 @@
 				8FBD22F01F971C7B006B73C9 /* DeviceCodeInfo.swift in Sources */,
 				8F9952FD1F9090EC00155C82 /* LanguageTableViewCell.swift in Sources */,
 				8FE76F151F2EB09100FC9634 /* AppDelegate.swift in Sources */,
+				8F943C4C1FE78E76003FA09D /* SortManager.swift in Sources */,
 				8F74C8A51F91F01900032C06 /* StringManager.swift in Sources */,
 				8F66B5FD1F7DE8550086E350 /* DeviceModel.swift in Sources */,
 				8F9F8B541FA34767006E562D /* AutoColorEditViewController.swift in Sources */,

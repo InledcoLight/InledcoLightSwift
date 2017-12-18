@@ -46,8 +46,7 @@ class LanguageManager {
         // 用户已设置，或者已读取当前系统语言
         single.currentLanguageFlag = single.getCurrentLanguageFlag()
         single.languageFilePath = Bundle.main.path(forResource: single.currentLanguageFlag.rawValue, ofType: "lproj")
-        if single.languageFilePath == nil
-        {
+        if single.languageFilePath == nil {
             single.bundle = nil
         } else {
             single.bundle = Bundle.init(path: single.languageFilePath!)
@@ -63,7 +62,6 @@ class LanguageManager {
         // 1.获取用户设置的语言
         let languageStr = UserDefaults.standard.object(forKey: self.userLangDefineFlag) as? String
         switch languageStr {
-            
         case LanguageFlag.auto.rawValue?:
             return LanguageFlag.auto
         case LanguageFlag.english.rawValue?:
@@ -74,7 +72,6 @@ class LanguageManager {
             return LanguageFlag.chinese
         default:
             return LanguageFlag.auto
-            
         }
     }
     
