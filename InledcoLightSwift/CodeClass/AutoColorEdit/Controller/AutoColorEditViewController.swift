@@ -110,7 +110,7 @@ class AutoColorEditViewController: BaseViewController, UITableViewDelegate, UITa
                 self.addTimePoint = self.dateformatter.string(from: datePicker.date).convertFormatTimeToHexTime()
                 
                 datePicker.addTarget(self, action: #selector(self.datePickerChanged(sender:)), for: .valueChanged)
-                let datePickerAlert = LGAlertView.init(viewAndTitle: self.languageManager.getTextForKey(key: "timePoint"), message: self.languageManager.getTextForKey(key: "timePointMessage"), style: LGAlertViewStyle.alert, view: datePicker, buttonTitles: [self.languageManager.getTextForKey(key: "Done")], cancelButtonTitle: self.languageManager.getTextForKey(key: "Cancel"), destructiveButtonTitle: "")
+                let datePickerAlert = LGAlertView.init(viewAndTitle: self.languageManager.getTextForKey(key: "timePoint"), message: self.languageManager.getTextForKey(key: "timePointMessage"), style: LGAlertViewStyle.alert, view: datePicker, buttonTitles: [self.languageManager.getTextForKey(key: "done")], cancelButtonTitle: self.languageManager.getTextForKey(key: "cancel"), destructiveButtonTitle: "")
                 
                 datePickerAlert?.actionHandler = {
                     (alertView, title, index) in

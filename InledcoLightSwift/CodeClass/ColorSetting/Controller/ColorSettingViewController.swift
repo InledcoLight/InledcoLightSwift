@@ -123,6 +123,7 @@ class ColorSettingViewController: BaseViewController {
         let renameDeviceAlert = LGAlertView.init(textFieldsAndTitle: self.languageManager.getTextForKey(key: "rename"), message: "", numberOfTextFields: 1, textFieldsSetupHandler: nil, buttonTitles: [self.languageManager.getTextForKey(key: "cancel"), self.languageManager.getTextForKey(key: "confirm")], cancelButtonTitle: "", destructiveButtonTitle: "")
         
         let nameTextField = renameDeviceAlert?.textFieldsArray[0] as! UITextField
+        nameTextField.textAlignment = .center
         nameTextField.text = self.devcieName!
         
         renameDeviceAlert?.actionHandler = {

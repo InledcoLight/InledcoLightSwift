@@ -8,14 +8,12 @@
 
 // 实现数组按照模型中的字符串的属性的值进行排序，使用泛型
 class SortManager<T> {
-    typealias compareAction = (T, T) -> Bool
-    
     /// 冒泡排序
     /// - parameter models: 要排序的数组
     /// - parameter compareAction: 比较规则
     ///
     /// - returns: Void
-    class func bubbleSort(models: inout [T], compareAction: compareAction) -> Void {
+    class func bubbleSort(models: inout [T], compareAction: (T, T) -> Bool) -> Void {
         var swapped = true
         
         // 冒泡排序，但是比较的规则使用compareAction实现
