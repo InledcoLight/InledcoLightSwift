@@ -58,10 +58,12 @@ class AutoColorChartView: UIView, ChartViewDelegate {
     }
     
     /// 更新自动模式曲线图，其中
-    /// - parameter one:
-    /// - parameter two:
-    ///
-    /// - returns:
+    /// - parameter channelNum: 通道数量
+    /// - parameter colorArray: 所有通道颜色值
+    /// - parameter colorTitleArray: 所有通道的标题
+    /// - parameter timePointArray: 所有时间点
+    /// - parameter timePointValueDic: 所有时间对应的颜色值
+    /// - returns: Void
     func updateGraph(channelNum: Int, colorArray: [UIColor]?, colorTitleArray: [String]?, timePointArray: [String]?, timePointValueDic: [Int: String]?) -> Void {
         let data = LineChartData()
         var value: ChartDataEntry?
@@ -118,6 +120,7 @@ class AutoColorChartView: UIView, ChartViewDelegate {
             line = LineChartDataSet(values: lineChartEntry, label: colorTitleArray?[i])
             
             line?.circleRadius = CGFloat(4.0)
+            line?.circleColors[0] = colorArray![i]
             line?.colors[0] = colorArray![i]
             
             data.addDataSet(line!)
@@ -141,91 +144,12 @@ class AutoColorChartView: UIView, ChartViewDelegate {
         lineChart?.moveViewToX(100)
     }
     
-    func updateOldGraph(channelNum: Int, colorArray: [UIColor]?, colorTitleArray: [String]?, timePointArray: [String]?, timePointValueDic: [Int: String]?) -> Void {
-        let data = LineChartData()
-        var value: ChartDataEntry?
-        var line: LineChartDataSet?
-        // x坐标
-        var xAxis: Double = 0.0
-        // y坐标
-        var yAxis: Double?
-        var colorStr: String?
-        for i in 0 ..< channelNum {
-            lineChartEntry.removeAll()
-            
-            // 添加0点的点
-            xAxis = (self.lineChart?.chartXMin)!
-            colorStr = timePointValueDic?[(timePointValueDic?.keys.count)! - 1]
-            yAxis = Double((colorStr! as NSString).substring(with: NSRange.init(location: i * 2, length: 2)).hexToInt16()) / 100.0
-            
-            value = ChartDataEntry(x: Double(xAxis), y: yAxis!)
-            
-            lineChartEntry.append(value!)
-            
-            var timeIndex = 0
-            for timeStr in timePointArray! {
-                xAxis = Double(timeStr.converTimeStrToMinute(timeStr: timeStr)!)
-                if timeIndex == 0 || timeIndex == (timePointArray?.count)! - 1 {
-                    // 取最后一个
-                    colorStr = timePointValueDic?[(timePointValueDic?.keys.count)! - 1]
-                } else {
-                    // 取对应值
-                    if timeIndex % 2 == 0 {
-                        colorStr = timePointValueDic?[timeIndex / 2 - 1]
-                    } else {
-                        colorStr = timePointValueDic?[(timeIndex - 1) / 2]
-                    }
-                }
-                
-                yAxis = Double((colorStr! as NSString).substring(with: NSRange.init(location: i * 2, length: 2)).hexToInt16()) / 100.0
-                
-                value = ChartDataEntry(x: Double(xAxis), y: yAxis!)
-                
-                timeIndex = timeIndex + 1
-                
-                lineChartEntry.append(value!)
-            }
-        
-            // 添加24点的点
-            xAxis = (self.lineChart?.chartXMax)!
-            colorStr = timePointValueDic?[(timePointValueDic?.keys.count)! - 1]
-            yAxis = Double((colorStr! as NSString).substring(with: NSRange.init(location: i * 2, length: 2)).hexToInt16()) / 100.0
-            
-            value = ChartDataEntry(x: Double(xAxis), y: yAxis!)
-            
-            lineChartEntry.append(value!)
-            
-            line = LineChartDataSet(values: lineChartEntry, label: colorTitleArray?[i])
-            
-            line?.circleRadius = CGFloat(4.0)
-            line?.colors.removeAll()
-            line?.colors.append(colorArray![i])
-            
-            data.addDataSet(line!)
-        }
-        
-        // 增加一条线，用来实现预览功能
-        lineChartEntry.removeAll()
-        for i in 0 ..< Int((lineChart?.chartXMax)!) {
-            value = ChartDataEntry(x: Double(i), y: 0)
-            lineChartEntry.append(value!)
-        }
-        
-        line = LineChartDataSet(values: lineChartEntry, label: nil)
-        line?.circleRadius = 0.0
-        
-        data.addDataSet(line!)
-        
-        lineChart?.data = data
-        
-        lineChart?.moveViewToX(100)
-    }
-    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 }
 
+// 实现自定义显示坐标轴显示格式
 class MyXAxisValueFormatter: NSObject, IAxisValueFormatter {
     func stringForValue(_ value: Double, axis: AxisBase?) -> String {
         if Int(value) % 60 == 0 {
@@ -241,32 +165,3 @@ class MyYAxisValueFormatter: NSObject, IAxisValueFormatter {
         return String.init(format: "%.0f%%", value * 100)
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

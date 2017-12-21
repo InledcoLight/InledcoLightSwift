@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = '62374D10486D54E4DFA95DFEFF383085'
+               BlueprintIdentifier = '01E9FE51F89215D0FFFCF2A90DD7B4B8'
                BlueprintName = 'HGCircularSlider'
                ReferencedContainer = 'container:Pods.xcodeproj'
                BuildableName = 'HGCircularSlider.framework'>

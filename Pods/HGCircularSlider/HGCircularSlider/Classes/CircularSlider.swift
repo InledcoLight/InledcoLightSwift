@@ -201,8 +201,7 @@ open class CircularSlider: UIControl {
             // the minimum between the height/2 and the width/2
             var radius =  min(bounds.center.x, bounds.center.y)
             // all elements should be inside the view rect, for that we should subtract the highest value between the radius of thumb and the line width
-            // radius -= max(lineWidth, (thumbRadius + thumbLineWidth))
-            radius -= lineWidth / 2
+            radius -= max(lineWidth, (thumbRadius + thumbLineWidth))
             return radius
         }
     }
