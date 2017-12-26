@@ -69,7 +69,7 @@ class ManualCircleView: UIView {
         }
         
         let percentLabelWidth = centerCircleWidth
-        percentLabel.layer.zPosition = 1000
+        percentLabel.layer.zPosition = -1000
         percentLabel.backgroundColor = UIColor.gray
         percentLabel.frame = CGRect(x: 0.0, y: 0.0, width: Double(percentLabelWidth), height: Double(percentLabelWidth))
         percentLabel.textColor = UIColor.white

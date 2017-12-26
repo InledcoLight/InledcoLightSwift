@@ -201,7 +201,7 @@ class DeviceViewController: BaseViewController,UITableViewDelegate,UITableViewDa
         super.setViews()
         
         self.title = self.languageManager.getTextForKey(key: "home")
-        // self.automaticallyAdjustsScrollViewInsets = false
+        self.automaticallyAdjustsScrollViewInsets = false
         self.deviceTableView.delegate = self
         self.deviceTableView.dataSource = self
         self.deviceTableView.backgroundColor = UIColor.clear
