@@ -116,26 +116,24 @@ class AutoColorEditViewController: BaseViewController, UITableViewDelegate, UITa
                     (alertView, title, index) in
                     if index == 0 {
                         // 更新模型
-                        var index = 0
+                        var insertIndex = 0
                         for timeStr in self.editParameterModel.timePointArray {
                             if timeStr.converTimeStrToMinute(timeStr: timeStr)! > (self.addTimePoint?.converTimeStrToMinute(timeStr: self.addTimePoint))! {
                                 break
                             }
                             
-                            index = index + 1
+                            insertIndex = insertIndex + 1
                         }
                         
-                        self.editParameterModel.timePointArray.insert(self.addTimePoint!, at: index)
+                        self.editParameterModel.timePointArray.insert(self.addTimePoint!, at: insertIndex)
                         self.editParameterModel.timePointNum = self.editParameterModel.timePointNum + 1
                         
                         for i in (0 ..< self.editParameterModel.timePointValueDic.keys.count).reversed()   {
-                            if i > index {
-                                self.editParameterModel.timePointValueDic[i + 1] = self.editParameterModel.timePointValueDic[i]
-                            } else if i <= index {
-                                // self.editParameterModel.timePointValueDic[i + 1] = self.editParameterModel.timePointValueDic[i]
-                                self.editParameterModel.timePointValueDic[index] = ""
+                            self.editParameterModel.timePointValueDic[i + 1] = self.editParameterModel.timePointValueDic[i]
+                            if i == insertIndex {
+                                self.editParameterModel.timePointValueDic[insertIndex] = ""
                                 for _ in 0 ..< self.editParameterModel.channelNum! * 2 {
-                                    self.editParameterModel.timePointValueDic[index]?.append("0")
+                                    self.editParameterModel.timePointValueDic[insertIndex]?.append("0")
                                 }
                                 
                                 break
@@ -143,7 +141,7 @@ class AutoColorEditViewController: BaseViewController, UITableViewDelegate, UITa
                         }
                         
                         // 更新视图
-                        self.updateSliderColor(index: index)
+                        self.updateSliderColor(index: insertIndex)
                     }
                 }
                 
@@ -159,10 +157,8 @@ class AutoColorEditViewController: BaseViewController, UITableViewDelegate, UITa
                 let confirmAction = UIAlertAction(title: self.languageManager.getTextForKey(key: "confirm"), style: .default, handler: { (action) in
                     self.editParameterModel.timePointNum = self.editParameterModel.timePointNum - 1
                     self.editParameterModel.timePointArray.remove(at: self.selectedTimePointIndex!)
-                    for i in (0 ..< self.editParameterModel.timePointValueDic.keys.count - 2).reversed() {
-                        if i > self.selectedTimePointIndex! {
+                    for i in self.selectedTimePointIndex! ..< self.editParameterModel.timePointValueDic.keys.count - 1 {
                             self.editParameterModel.timePointValueDic[i] = self.editParameterModel.timePointValueDic[i + 1]
-                        }
                     }
                     
                     self.editParameterModel.timePointValueDic.removeValue(forKey: self.editParameterModel.timePointValueDic.keys.count - 1)

@@ -385,7 +385,7 @@ class BlueToothManager: NSObject, BLEManagerDelegate {
             self.isReceiveDataAll = true
             
             // 根据命令类型，处理返回的数据
-            print("发送的命令：\(self.currentCommandType),receivedData=\(String(self.receivedData))")
+            // print("发送的命令：\(self.currentCommandType),receivedData=\(String(self.receivedData))")
             // 旧协议部分
             switch self.currentCommandType {
             case .SYNCTIME_COMMAND:
@@ -428,7 +428,7 @@ class BlueToothManager: NSObject, BLEManagerDelegate {
             self.isReceiveDataAll = true
             
             // 根据命令类型，处理返回的数据
-            print("发送的命令：\(self.currentCommandType),receivedData=\(String(self.receivedData))")
+            // print("发送的命令：\(self.currentCommandType),receivedData=\(String(self.receivedData))")
             switch self.currentCommandType {
             case .SYNCTIME_COMMAND,
                  .POWERON_COMMAND,

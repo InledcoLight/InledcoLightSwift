@@ -384,9 +384,8 @@ class ColorSettingViewController: BaseViewController {
         
         timeCountArray.removeAll()
         timeCountIntervalArray.removeAll()
-        for index in 0 ..< (self.editParameterModel?.timePointArray)!.count {
-            let timeStr = self.editParameterModel?.timePointArray[index]
-            timeCountArray.append((timeStr?.converTimeStrToMinute(timeStr: timeStr)!)!)
+        for (index, value) in (self.editParameterModel?.timePointArray.enumerated())! {
+            timeCountArray.append(value.converTimeStrToMinute(timeStr: value)!)
             
             if index ==  ((self.editParameterModel?.timePointArray)!.count - 1) {
                 timeCountIntervalArray.append(timeCountArray[index] - timeCountArray[index - 1])

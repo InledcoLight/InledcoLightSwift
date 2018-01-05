@@ -193,13 +193,6 @@ class ScanDeviceViewController: BaseViewController,BLEManagerDelegate,UITableVie
         if !self.isScan {
             return
         }
-
-        // print("需要连接的设备*****************")
-//        for device in self.deviceNeedConnectDataSourceArray {
-//            let deviceModel: DeviceModel = device as! DeviceModel
-//            print("设备\(String(describing: deviceModel.deviceName)),\(String(describing: deviceModel.uuidString))")
-//        }
-        // print("需要连接的设备*****************")
         
         // 连接那些没有广播数据的设备
         // 1.手动停止扫描
@@ -208,29 +201,23 @@ class ScanDeviceViewController: BaseViewController,BLEManagerDelegate,UITableVie
         if self.deviceNeedConnectDataSourceArray.count > self.connectIndex {
             let deviceModel: DeviceModel = self.deviceNeedConnectDataSourceArray.object(at: self.connectIndex) as! DeviceModel
             // 2.开始连接设备
-            // print("开始连接\(String(describing: deviceModel.deviceName)),\(String(describing: deviceModel.uuidString))")
             self.bleManager.connect(toDevice: self.bleManager.getDeviceByUUID(deviceModel.uuidString))
         }
     }
     
     func connectDeviceSuccess(_ device: CBPeripheral!, error: Error!) {
-        //print("连接成功，前！")
         if !self.isScan {
             return
         }
-        //print("连接成功，后！")
         // 读取广播数据
         self.bleManager.readDeviceAdvertData(device)
     }
     
     func receiveDeviceAdvertData(_ dataStr: String!, device: CBPeripheral!) {
-        //print("接收到广播数据，前！")
         if !self.isScan {
             return
         }
-        //print("接收到广播数据，后！")
         if (self.connectIndex >= self.deviceNeedConnectDataSourceArray.count){
-            
             //print("接收到广播数据，索引大于数组长度！")
             return;
         }
@@ -244,12 +231,10 @@ class ScanDeviceViewController: BaseViewController,BLEManagerDelegate,UITableVie
     
     func didDisconnectDevice(_ device: CBPeripheral!, error: Error!) {
         // 断开设备成功，连接下一个设备
-        //print("设备断开成功")
         self.connectIndex = self.connectIndex + 1
         if self.deviceNeedConnectDataSourceArray.count > self.connectIndex{
             let deviceModel: DeviceModel = self.deviceNeedConnectDataSourceArray.object(at: self.connectIndex) as! DeviceModel
-            
-            // print("连接设备\(String(describing: deviceModel.name))")
+
             self.bleManager.connect(toDevice: self.bleManager.getDeviceByUUID(deviceModel.uuidString))
         }
     }
@@ -366,26 +351,4 @@ class ScanDeviceViewController: BaseViewController,BLEManagerDelegate,UITableVie
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-    func printDeviceInfo(deviceInfo: DeviceInfo) -> Void {
-        print(deviceInfo.cb)
-        print(deviceInfo.advertisementDic.keys)
-        
-        print("""
-            
-            macAddrss = \(deviceInfo.macAddrss)\r\n UUIDString = \(deviceInfo.uuidString)\r\n localName = \(deviceInfo.localName)\r\n name = \(deviceInfo.name) \r\n RSSI = \(deviceInfo.rssi) \r\n
-            
-            """)
-        
-    }
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
