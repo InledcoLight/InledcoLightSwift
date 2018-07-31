@@ -30,7 +30,7 @@ class ScanDeviceViewController: BaseViewController,BLEManagerDelegate,UITableVie
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        // 初始化工作
         self.prepareData()
         self.setViews()
         
@@ -140,6 +140,7 @@ class ScanDeviceViewController: BaseViewController,BLEManagerDelegate,UITableVie
         
         for device in array {
             let deviceInfo: DeviceInfo = device as! DeviceInfo
+            print("MAC地址:" + deviceInfo.macAddrss)
             // 查询数据库中是否
             let result = DeviceDataCoreManager.getDataWithFromTableWithCol(tableName: DeviceDataCoreManager.deviceTableName, colName: DeviceDataCoreManager.deviceTableUuidName, colVal: deviceInfo.uuidString)
             if result.count > 0 {

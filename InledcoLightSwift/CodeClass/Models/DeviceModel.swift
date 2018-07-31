@@ -38,4 +38,13 @@ class DeviceModel: NSObject {
     class func sortByName(preModel: DeviceModel, nextModel: DeviceModel) -> Bool {
         return preModel.name! > nextModel.name!
     }
+    
+    /// 按照设备uuid排序
+    /// - parameter preModel: 前一个设备
+    /// - parameter nextModel: 后一个设备
+    ///
+    /// - returns: 如果前一个设备比后一个设备大，按字母顺序，则返回True，否则返回False
+    class func sortByUuid(preModel: DeviceModel, nextModel: DeviceModel) -> Bool {
+        return preModel.uuidString! > nextModel.uuidString!
+    }
 }

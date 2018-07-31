@@ -154,11 +154,15 @@ class DeviceViewController: BaseViewController,UITableViewDelegate,UITableViewDa
     }
     
     override func prepareData() {
-        // 这里只做从数据库中的操作
         super.prepareData()
+        
+        // 初始化蓝牙数据
         prepareBluetoothData()
+        
+        // 初始化弹出框
         createAlertController()
         
+        // 从数据库读取设备数据
         queryDeviceDataFromDatabase()
     }
     

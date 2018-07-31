@@ -39,7 +39,6 @@ class ColorSettingViewController: BaseViewController {
          * 3.自动界面
          */
         
-        // Do any additional setup after loading the view.
         prepareData()
         setViews()
     }
@@ -261,7 +260,7 @@ class ColorSettingViewController: BaseViewController {
         }
     }
     
-    /// 从参数模型中获取用户半分比
+    /// 从参数模型中获取用户百分比
     /// - parameter one:
     /// - parameter two:
     ///
@@ -293,7 +292,6 @@ class ColorSettingViewController: BaseViewController {
     
     func setAutoModeViews() -> Void {
         if self.manualModeView != nil {
-            print("隐藏手动模式界面")
             self.manualModeView?.isHidden = true
         }
         
@@ -304,7 +302,7 @@ class ColorSettingViewController: BaseViewController {
             
             // 1.自动模式曲线图
             let autoColorChartViewFrame = CGRect(x: 0, y: 0, width: (autoModeView?.frame.size.width)!, height: (autoModeView?.frame.size.width)!)
-            autoColorChartView = AutoColorChartView(frame: autoColorChartViewFrame, channelNum: (parameterModel?.channelNum)!, colorArray:deviceInfo?.channelColorArray, colorTitleArray: deviceInfo?.channelColorTitleArray, timePointArray: parameterModel?.timePointArray, timePointValueDic: parameterModel?.timePointValueDic)
+            autoColorChartView = AutoColorChartView(frame: autoColorChartViewFrame, channelNum: (parameterModel?.channelNum)!, colorArray: deviceInfo?.channelColorArray, colorTitleArray: deviceInfo?.channelColorTitleArray, timePointArray: parameterModel?.timePointArray, timePointValueDic: parameterModel?.timePointValueDic)
             
             autoModeView?.addSubview(autoColorChartView!)
             

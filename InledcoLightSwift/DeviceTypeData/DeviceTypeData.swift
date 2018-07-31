@@ -97,25 +97,3 @@ class DeviceTypeData {
         return deviceCodeInfo
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
