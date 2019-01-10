@@ -68,7 +68,9 @@ class LayoutToolsView: UIView {
             if index <= (harfButtonNum + 1) {
                 xPostion = xPostion + CGFloat(index - harfButtonNum - 1) * (viewInterval + viewWidth) - viewWidth / CGFloat(2)
             } else {
-                xPostion = xPostion + CGFloat(index - harfButtonNum - 1) * viewInterval + viewWidth / CGFloat(2)
+                let intervals = CGFloat(index - harfButtonNum - 1) * viewInterval
+                let viewWidths = CGFloat(index - 2 * harfButtonNum) * viewWidth + viewWidth / CGFloat(2)
+                xPostion = xPostion + intervals + viewWidths
             }
         }
         

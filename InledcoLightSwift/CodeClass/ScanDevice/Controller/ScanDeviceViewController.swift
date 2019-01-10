@@ -296,6 +296,7 @@ class ScanDeviceViewController: BaseViewController,BLEManagerDelegate,UITableVie
             
             // 3.添加设备
             let saveDevice = NSEntityDescription.insertNewObject(forEntityName: DeviceDataCoreManager.deviceTableName, into: context) as! BleDevice
+            
             saveDevice.name = deviceModel.name
             saveDevice.typeCode = deviceModel.typeCode
             saveDevice.uuid = deviceModel.uuidString
